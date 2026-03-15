@@ -1,0 +1,323 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer_m9NzUG": {
+      "type": "footer",
+      "blocks": {
+        "menu_yXqNPJ": {
+          "type": "menu",
+          "name": "t:names.menu",
+          "settings": {
+            "menu": "customer-account-main-menu",
+            "heading": "Information",
+            "menu_spacing": 12,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "heading_preset": "h5",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "menu_Q6eYYp": {
+          "type": "menu",
+          "name": "t:names.menu",
+          "settings": {
+            "menu": "footer",
+            "heading": "Help",
+            "menu_spacing": 12,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "heading_preset": "h5",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "menu_p37kB8": {
+          "type": "menu",
+          "name": "t:names.menu",
+          "settings": {
+            "menu": "main-menu",
+            "heading": "Quick links",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "heading_preset": "h5",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "group_H6VpwJ": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 6,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_LWt8Pz": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Join the fragrance circle<br/></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_f9CFLH": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Get updates on new scents, special promotions, and exclusive perfume releases<br/></p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_YQcJ8V": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": ""
+              },
+              "blocks": {}
+            },
+            "email_signup_UGn6am": {
+              "type": "email-signup",
+              "settings": {
+                "width": "custom",
+                "custom_width": 56,
+                "inherit_color_scheme": true,
+                "color_scheme": "",
+                "heading": "",
+                "heading_preset": "h3",
+                "border_style": "all",
+                "border_width": 1.5,
+                "border_radius": 100,
+                "input_type_preset": "paragraph",
+                "style_class": "button",
+                "display_type": "arrow",
+                "label": "Sign up",
+                "integrated_button": true,
+                "button_type_preset": "paragraph",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "custom_liquid_xy6fDc": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": "{% comment %}\nSocial icons — Facebook / Instagram / Pinterest\nروابط Roshas Perfume (نهائي)\n{% endcomment %}\n\n<style>\n  .onhow-social-container{display:flex;justify-content:center;align-items:center;gap:2rem;padding:2rem 0;flex-wrap:wrap;max-width:100%}\n  .onhow-social-icon{display:inline-flex;align-items:center;justify-content:center;width:3.5rem;height:3.5rem;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,.05) 100%);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);color:#000;text-decoration:none;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.175,.885,.32,1.275);transform:translateY(0);box-shadow:0 4px 15px rgba(0,0,0,.1)}\n  .onhow-social-icon:hover{transform:translateY(-8px) scale(1.1);box-shadow:0 12px 35px rgba(0,0,0,.2);border-color:rgba(255,255,255,.4)}\n  .onhow-social-icon::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.4) 50%,transparent 100%);transition:left .6s ease}\n  .onhow-social-icon:hover::before{left:100%}\n  .onhow-social-icon svg{width:1.5rem;height:1.5rem;transition:all .3s ease;position:relative;z-index:2}\n  .onhow-social-icon:hover svg{transform:scale(1.2)}\n\n  .onhow-facebook:hover{background:linear-gradient(135deg,#1877f2 0%,#42a5f5 100%);color:#fff}\n  .onhow-instagram:hover{background:linear-gradient(135deg,#e1306c 0%,#f56040 50%,#fcaf45 100%);color:#fff}\n  .onhow-pinterest:hover{background:linear-gradient(135deg,#e60023 0%,#b3001b 100%);color:#fff}\n\n  @media (max-width:749px){.onhow-social-container{gap:1.5rem;padding:1.5rem 0}.onhow-social-icon{width:3rem;height:3rem}.onhow-social-icon svg{width:1.25rem;height:1.25rem}}\n  @media (max-width:550px){.onhow-social-container{gap:1rem}.onhow-social-icon{width:2.75rem;height:2.75rem}}\n</style>\n\n<div class=\"onhow-social-container\">\n  {%- assign facebook_url  = 'https://web.facebook.com/profile.php?id=61553709003627' -%}\n  {%- assign instagram_url = 'https://www.instagram.com/roshas_perfume/' -%}\n  {%- assign pinterest_url = 'https://www.pinterest.com/RoshasPerfume/' -%}\n\n  {%- if facebook_url != blank -%}\n    <a href=\"{{ facebook_url }}\" class=\"onhow-social-icon onhow-facebook\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Visit our Facebook page\">\n      <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"currentColor\">\n        <path d=\"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z\"/>\n      </svg>\n    </a>\n  {%- endif -%}\n\n  {%- if instagram_url != blank -%}\n    <a href=\"{{ instagram_url }}\" class=\"onhow-social-icon onhow-instagram\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Visit our Instagram page\">\n      <!-- لماذا outline: لضبط الشكل كما طلبت والتلوّن تلقائياً -->\n      <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n        <rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"5\" ry=\"5\"/>\n        <circle cx=\"12\" cy=\"12\" r=\"4\"/>\n        <circle cx=\"17.5\" cy=\"6.5\" r=\"1.2\"/>\n      </svg>\n    </a>\n  {%- endif -%}\n\n  {%- if pinterest_url != blank -%}\n    <a href=\"{{ pinterest_url }}\" class=\"onhow-social-icon onhow-pinterest\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Visit our Pinterest page\">\n      <!-- Pinterest circle \"P\" -->\n      <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"currentColor\">\n        <path d=\"M12 0C5.373 0 0 5.373 0 12c0 4.991 3.657 9.128 8.438 10.125-.117-.86-.217-2.187.05-3.141.24-.86 1.604-5.77 1.604-5.77s-.41-.83-.41-2.055c0-1.93 1.12-3.37 2.51-3.37 1.18 0 1.75.885 1.75 1.945 0 1.185-.755 2.958-1.145 4.596-.33 1.406.703 2.55 2.09 2.55 2.507 0 4.207-2.645 4.207-6.201 0-3.24-2.327-5.506-5.648-5.506-3.85 0-6.11 2.888-6.11 5.876 0 1.16.45 2.404 1.01 3.08.11.13.12.24.09.37-.1.41-.33 1.31-.38 1.5-.06.24-.19.29-.44.18-1.65-.77-2.68-3.11-2.68-5.01 0-4.07 2.96-7.82 8.56-7.82 4.55 0 7.86 3.26 7.86 7.63 0 4.9-3.08 8.85-7.37 8.85-1.44 0-2.79-.75-3.25-1.63 0 0-.78 2.97-.97 3.7-.29 1.09-1.07 2.41-1.59 3.23C10.71 23.84 11.35 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z\"/>\n      </svg>\n    </a>\n  {%- endif -%}\n</div>"
+              },
+              "blocks": {}
+            },
+            "custom_liquid_bLtmyf": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": ""
+              },
+              "blocks": {}
+            },
+            "custom_liquid_yViJnn": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": ""
+              },
+              "blocks": {}
+            },
+            "custom_liquid_QyYJMq": {
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
+              "settings": {
+                "custom_liquid": ""
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_LWt8Pz",
+            "text_f9CFLH",
+            "custom_liquid_YQcJ8V",
+            "email_signup_UGn6am",
+            "custom_liquid_xy6fDc",
+            "custom_liquid_bLtmyf",
+            "custom_liquid_yViJnn",
+            "custom_liquid_QyYJMq"
+          ]
+        }
+      },
+      "block_order": [
+        "menu_yXqNPJ",
+        "menu_Q6eYYp",
+        "menu_p37kB8",
+        "group_H6VpwJ"
+      ],
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 20,
+        "color_scheme": "scheme-2",
+        "padding-block-start": 30,
+        "padding-block-end": 30
+      }
+    },
+    "footer_utilities_jLGE8U": {
+      "type": "footer-utilities",
+      "blocks": {
+        "footer_copyright_jweRK8": {
+          "type": "footer-copyright",
+          "settings": {
+            "show_powered_by": false,
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "footer_policy_list_VCdnpa": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "social_links_Ew63Kq": {
+          "type": "social-links",
+          "disabled": true,
+          "settings": {
+            "facebook_url": "https://www.facebook.com/",
+            "instagram_url": "https://www.instagram.com/",
+            "youtube_url": "",
+            "tiktok_url": "",
+            "twitter_url": "",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "https://www.pinterest.com/RoshasPerfume/",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "footer_copyright_jweRK8",
+        "footer_policy_list_VCdnpa",
+        "social_links_Ew63Kq"
+      ],
+      "name": "t:names.utilities",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 24,
+        "divider_thickness": 0,
+        "color_scheme": "scheme-2",
+        "padding-block-start": 20,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "footer_m9NzUG",
+    "footer_utilities_jLGE8U"
+  ]
+}
