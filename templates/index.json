@@ -1186,6 +1186,51 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "new_hero_jYUBRa": {
+      "type": "new-hero",
+      "blocks": {
+        "slide_AfnLbt": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/178_1496355_A26F035_DH26_Instit_Parfum_DIG_3200x1800_c08fafde-3cf1-4292-a013-78c787a0e052.webp",
+            "subtitle": "THE MASTERPIECE COLLECTION",
+            "heading": "Where Scent Becomes Art",
+            "description": "Curating the world's most prestigious olfactory masterpieces — from Dior to Tom Ford.",
+            "button_label": "Shop Now",
+            "button_link": ""
+          }
+        },
+        "slide_fChhkG": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/DIOR_DIGITAL_RESIZING_ASSETS_HOME_3200x1800px.webp",
+            "subtitle": "THE MASTERPIECE COLLECTION",
+            "heading": "Perfume tells stories",
+            "description": "Our most-loved fragrances – handpicked for your festive moments. Shop ROSHAS bestsellers this winter",
+            "button_label": "Shop Now",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_AfnLbt",
+        "slide_fChhkG"
+      ],
+      "name": "New Hero Slider",
+      "settings": {
+        "overlay_opacity": 30,
+        "heading_font_size_desktop": 80,
+        "heading_font_size_tablet": 60,
+        "heading_font_size_mobile": 40,
+        "description_font_size_desktop": 18,
+        "description_font_size_tablet": 16,
+        "description_font_size_mobile": 14,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "padding_top_mobile": 20,
+        "padding_bottom_mobile": 20
+      }
     }
   },
   "order": [
@@ -1194,6 +1239,7 @@
     "section_RFrETV",
     "product_list_fa6P9H",
     "hero_zxKQRj",
-    "featured_blog_posts_acGTXX"
+    "featured_blog_posts_acGTXX",
+    "new_hero_jYUBRa"
   ]
 }
