@@ -224,16 +224,18 @@
     font-weight: 500;
     font-style: italic;
     color: #1a1a1a;
-    margin-bottom: 10px;
-  }
-
-  .mega-featured-subtitle {
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #888;
-    margin-bottom: 30px;
+   /* Mega Menu Vendor Styles */
+  .mega-vendor-link {
+    font-size: 14px;
     font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #666;
+    transition: color 0.3s ease;
+  }
+  .mega-menu-list li {
+    margin-bottom: 12px;
+  }
   }
 
   .mega-featured-btn {
@@ -510,12 +512,18 @@
                                 assign desc = block_item.settings.custom_description
                                 render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: true
                               elsif block_item.type == 'mega_manual_brand'
-                                assign vendor_name = block_item.settings.vendor_name | strip
-                                if vendor_name != blank
-                                  assign vendor_encoded = vendor_name | url_encode
-                                  assign item_url = "/collections/vendors?q=" | append: vendor_encoded
-                                  render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
-                                endif
+                                assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />'
+                                for vendor_item in vendor_list_raw
+                                  assign brands_by_comma = vendor_item | split: ','
+                                  for vendor_name_raw in brands_by_comma
+                                    assign vendor_name = vendor_name_raw | strip_html | strip
+                                    if vendor_name != blank
+                                      assign vendor_encoded = vendor_name | url_encode
+                                      assign item_url = "/collections/vendors?q=" | append: vendor_encoded
+                                      render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
+                                    endif
+                                  endfor
+                                endfor
                               elsif block_item.type == 'mega_tag_item'
                                 assign tag = block_item.settings.tag_name
                                 assign coll_context = block_item.settings.collection
@@ -571,12 +579,18 @@
                                 assign desc = block_item.settings.custom_description
                                 render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: true
                               elsif block_item.type == 'mega_manual_brand'
-                                assign vendor_name = block_item.settings.vendor_name | strip
-                                if vendor_name != blank
-                                  assign vendor_encoded = vendor_name | url_encode
-                                  assign item_url = "/collections/vendors?q=" | append: vendor_encoded
-                                  render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
-                                endif
+                                assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />'
+                                for vendor_item in vendor_list_raw
+                                  assign brands_by_comma = vendor_item | split: ','
+                                  for vendor_name_raw in brands_by_comma
+                                    assign vendor_name = vendor_name_raw | strip_html | strip
+                                    if vendor_name != blank
+                                      assign vendor_encoded = vendor_name | url_encode
+                                      assign item_url = "/collections/vendors?q=" | append: vendor_encoded
+                                      render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
+                                    endif
+                                  endfor
+                                endfor
                               elsif block_item.type == 'mega_tag_item'
                                 assign tag = block_item.settings.tag_name
                                 assign coll_context = block_item.settings.collection
@@ -593,6 +607,75 @@
                             -%}
                           {%- endif -%}
                         {%- endfor -%}
+                      </ul>
+                    </div>
+
+                    <!-- Column 4: Third Collection List -->
+                    <div class="mega-column" style="flex: 1;">
+                      <h4 class="mega-column-title">{{ mega_block.settings.col3_heading }}</h4>
+                      <ul class="mega-menu-list">
+                        <!-- Navigation Menu (Dropdown-style multi-selection) -->
+                        {%- if mega_block.settings.col3_menu != blank -%}
+                          {%- for link_item in linklists[mega_block.settings.col3_menu].links -%}
+                            <li>
+                              <a href="{{ link_item.url }}">
+                                <span class="collection-title">{{ link_item.title }}</span>
+                              </a>
+                            </li>
+                          {%- endfor -%}
+                        {%- endif -%}
+
+                        <!-- Block-based Items (Single entries) -->
+                        {%- for block_item in section.blocks -%}
+                          {%- liquid
+                            assign item_trigger = block_item.settings.trigger_label | downcase | strip
+                            assign current_link_title = link.title | downcase | strip
+                          -%}
+                          {%- if item_trigger == current_link_title and block_item.settings.column == '3' -%}
+                            {%- liquid
+                              if block_item.type == 'mega_item'
+                                assign coll = block_item.settings.collection
+                                assign item_url = coll.url
+                                assign title = block_item.settings.custom_title | default: coll.title
+                                assign desc = block_item.settings.custom_description | default: coll.description
+                                render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: false
+                              elsif block_item.type == 'mega_brand_item'
+                                assign coll = block_item.settings.collection
+                                assign item_url = coll.url
+                                assign title = block_item.settings.custom_title | default: coll.title
+                                assign desc = block_item.settings.custom_description
+                                render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: true
+                              elsif block_item.type == 'mega_manual_brand'
+                                assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />'
+                                for vendor_item in vendor_list_raw
+                                  assign brands_by_comma = vendor_item | split: ','
+                                  for vendor_name_raw in brands_by_comma
+                                    assign vendor_name = vendor_name_raw | strip_html | strip
+                                    if vendor_name != blank
+                                      assign vendor_encoded = vendor_name | url_encode
+                                      assign item_url = "/collections/vendors?q=" | append: vendor_encoded
+                                      render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
+                                    endif
+                                  endfor
+                                endfor
+                              elsif block_item.type == 'mega_tag_item'
+                                assign tag = block_item.settings.tag_name
+                                assign coll_context = block_item.settings.collection
+                                assign tag_handle = tag | handleize
+                                if coll_context != blank
+                                  assign item_url = coll_context.url | append: '/' | append: tag_handle
+                                else
+                                  assign item_url = '/collections/all/' | append: tag_handle
+                                endif
+                                assign title = block_item.settings.custom_title | default: tag
+                                assign desc = block_item.settings.custom_description
+                                render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: false
+                              endif
+                            -%}
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </ul>
+                    </div>
                       </ul>
                     </div>
                   </div>
@@ -891,7 +974,8 @@
           "label": "Column",
           "options": [
             { "value": "1", "label": "Column 1" },
-            { "value": "2", "label": "Column 2" }
+            { "value": "2", "label": "Column 2" },
+            { "value": "3", "label": "Column 3" }
           ],
           "default": "1"
         },
@@ -931,7 +1015,8 @@
           "label": "Column",
           "options": [
             { "value": "1", "label": "Column 1" },
-            { "value": "2", "label": "Column 2" }
+            { "value": "2", "label": "Column 2" },
+            { "value": "3", "label": "Column 3" }
           ],
           "default": "1"
         },
@@ -954,37 +1039,7 @@
         }
       ]
     },
-    {
-      "type": "mega_all_vendors",
-      "name": "Auto - All Store Brands",
-      "settings": [
-        {
-          "type": "text",
-          "id": "trigger_label",
-          "label": "Trigger Link Label",
-          "default": "Brands",
-          "info": "Automatically lists all vendors from your store"
-        },
-        {
-          "type": "select",
-          "id": "column",
-          "label": "Column",
-          "options": [
-            { "value": "1", "label": "Column 1" },
-            { "value": "2", "label": "Column 2" }
-          ],
-          "default": "1"
-        },
-        {
-          "type": "range",
-          "id": "limit",
-          "min": 5,
-          "max": 100,
-          "step": 5,
-          "label": "Max Brands to show",
-          "default": 20
-        },
-    },
+
     {
       "type": "mega_manual_brand",
       "name": "Brand - Manual Entry",
@@ -1002,15 +1057,17 @@
           "label": "Column",
           "options": [
             { "value": "1", "label": "Column 1" },
-            { "value": "2", "label": "Column 2" }
+            { "value": "2", "label": "Column 2" },
+            { "value": "3", "label": "Column 3" }
           ],
           "default": "1"
         },
         {
-          "type": "text",
-          "id": "vendor_name",
-          "label": "Brand Name",
-          "placeholder": "e.g. Giorgio Armani"
+          "type": "textarea",
+          "id": "vendor_names",
+          "label": "Brand Names (One per line)",
+          "info": "Enter multiple brand names. Put each brand on its own line (e.g. Chanel, then enter, then Gucci).",
+          "placeholder": "Chanel\nGucci\nGiorgio Armani"
         }
       ]
     }

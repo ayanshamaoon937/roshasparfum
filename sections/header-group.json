@@ -73,16 +73,6 @@
     "custom_header": {
       "type": "custom-header",
       "blocks": {
-        "mega_item_CL9ndV": {
-          "type": "mega_item",
-          "settings": {
-            "trigger_label": "Collections",
-            "column": "1",
-            "collection": "",
-            "custom_title": "",
-            "custom_description": ""
-          }
-        },
         "collections_mega_Ymaiwi": {
           "type": "collections_mega",
           "settings": {
@@ -189,25 +179,24 @@
             "bottom_right_link": ""
           }
         },
-        "mega_all_vendors_Tg7PXV": {
-          "type": "mega_all_vendors",
+        "mega_manual_brand_eWWkAn": {
+          "type": "mega_manual_brand",
           "settings": {
             "trigger_label": "Brands",
             "column": "1",
-            "limit": 10
+            "vendor_names": "Boss\nBurberry\nBvlgari\nCarolina Herrera\nChanel\nChloé\nCreed\nDAVIDOFF\nDe Marly\nDior\nDolce&Gabbana\nDunhill\nEmporio Armani\nGiorgio Armani\nGivenchy"
           }
         },
-        "mega_all_vendors_Jw4z7U": {
-          "type": "mega_all_vendors",
+        "mega_manual_brand_7fy3wX": {
+          "type": "mega_manual_brand",
           "settings": {
             "trigger_label": "Brands",
             "column": "2",
-            "limit": 10
+            "vendor_names": "Gucci\nHermès\nJean Paul Gaultier\nKAYALI\nLancôme\nLaverne\nMarc Jacobs\nMontblanc\nNarcisco\nPrada\nRabanne\nRoshas\nTom Ford\nValentino\nVersace\nVictoria's Secret\nViktor & Rolf\nYves Saint Laurent"
           }
         }
       },
       "block_order": [
-        "mega_item_CL9ndV",
         "collections_mega_Ymaiwi",
         "mega_item_y9WWPT",
         "mega_item_jrz7F3",
@@ -217,8 +206,8 @@
         "mega_item_KNMPUt",
         "mega_item_rJALhh",
         "brands_mega_xACHdm",
-        "mega_all_vendors_Tg7PXV",
-        "mega_all_vendors_Jw4z7U"
+        "mega_manual_brand_eWWkAn",
+        "mega_manual_brand_7fy3wX"
       ],
       "settings": {
         "logo_image": "shopify://shop_images/logo.png",
