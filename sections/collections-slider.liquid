@@ -1,0 +1,562 @@
+{%- style -%}
+  .collections-slider-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background-color: #000;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collections-slider-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      min-height: 100vh;
+    }
+  }
+
+  .col-slider-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .col-slider-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.1);
+  }
+
+  .col-slider-bg-image.active {
+    opacity: 1;
+    z-index: 2;
+    transform: scale(1);
+  }
+
+  .col-slider-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%);
+    z-index: 3;
+  }
+
+  .col-slider-content-slider {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 5%;
+  }
+
+  .col-slider-slide-content {
+    display: none;
+    max-width: 650px;
+    animation: slideUpFade 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .col-slider-slide-content.active {
+    display: block;
+  }
+
+  @keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .col-slider-subtitle {
+     font-family: var(--font-body--family), sans-serif;
+     font-size: 11px;
+     letter-spacing: 4px;
+     text-transform: uppercase;
+     color: {{ section.settings.subtitle_color }};
+     margin-bottom: 30px;
+     display: block;
+     font-weight: 600;
+  }
+
+  .col-slider-heading {
+    font-family: var(--font-heading--family), serif;
+    line-height: 1.1;
+    margin-bottom: {{ section.settings.heading_margin_bottom }}px;
+    color: {{ section.settings.heading_color }};
+    font-weight: {{ section.settings.heading_font_weight }};
+    font-size: {{ section.settings.heading_font_size_mobile }}px;
+  }
+
+  .col-slider-description {
+    font-family: var(--font-body--family), sans-serif;
+    line-height: var(--line-height--body-loose);
+    margin-bottom: {{ section.settings.desc_margin_bottom }}px;
+    max-width: 450px;
+    color: {{ section.settings.desc_color }};
+    font-weight: {{ section.settings.desc_font_weight }};
+    font-size: {{ section.settings.desc_font_size }}px;
+    opacity: 0.8;
+  }
+
+  .col-slider-button {
+    font-family: var(--font-body--family), sans-serif;
+    display: inline-block;
+    padding: 18px 45px;
+    background-color: {{ section.settings.btn_bg_color }};
+    color: {{ section.settings.btn_color }};
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: {{ section.settings.btn_font_size }}px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    transition: all 0.4s ease;
+    border: 1px solid {{ section.settings.btn_border_color }};
+  }
+
+  .col-slider-button:hover {
+    background-color: transparent;
+    color: #fff;
+    border-color: #fff;
+  }
+
+  @media screen and (min-width: 750px) {
+    .col-slider-heading {
+      font-size: {{ section.settings.heading_font_size_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .col-slider-heading {
+      font-size: {{ section.settings.heading_font_size_desktop }}px;
+    }
+  }
+
+  /* Right Side Navigation Bars */
+  .col-slider-nav-bars {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 10;
+    align-items: flex-end;
+  }
+
+  .col-slider-bar {
+    width: 30px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+
+  .col-slider-bar:hover {
+    width: 45px;
+    background: rgba(255,255,255,0.6);
+  }
+
+  .col-slider-bar.active {
+    width: 60px;
+    background: {{ section.settings.btn_bg_color }};
+  }
+
+  /* Big Slide Number Backdrop */
+  .col-slider-number-backdrop {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 25vw;
+    font-family: var(--font-heading--family);
+    color: rgba(255,255,255,0.03);
+    z-index: 4;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    font-weight: 700;
+  }
+
+  @media screen and (max-width: 749px) {
+    .col-slider-nav-bars {
+      right: 20px;
+    }
+    .col-slider-number-backdrop {
+        display: none;
+    }
+  }
+{%- endstyle -%}
+
+<section class="collections-slider-{{ section.id }}" id="CollectionsSlider-{{ section.id }}">
+  <div class="col-slider-bg-container">
+    {%- for block in section.blocks -%}
+      {%- assign bg_image = block.settings.image | default: block.settings.collection.featured_image -%}
+      {%- if bg_image != blank -%}
+        {%- liquid
+          assign image_class = 'col-slider-bg-image'
+          if forloop.first
+            assign image_class = image_class | append: ' active'
+          endif
+        -%}
+        {{ bg_image 
+           | image_url: width: 3840 
+           | image_tag: 
+             loading: 'eager', 
+             class: image_class,
+             data-index: forloop.index0
+        }}
+      {%- else -%}
+        <div class="col-slider-bg-image {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+           {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="col-slider-overlay"></div>
+  
+  <div class="col-slider-number-backdrop" id="BackdropText-{{ section.id }}">01</div>
+
+  <div class="col-slider-content-slider">
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign collection = collections[block.settings.collection]
+        assign heading = block.settings.heading | default: collection.title
+        assign description = block.settings.description | default: collection.description | strip_html | truncate: 150
+      -%}
+      <div 
+        class="col-slider-slide-content {% if forloop.first %}active{% endif %}" 
+        data-index="{{ forloop.index0 }}"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.subtitle != blank -%}
+          <span class="col-slider-subtitle">{{ block.settings.subtitle }}</span>
+        {%- endif -%}
+        
+        <h2 class="col-slider-heading">{{ heading }}</h2>
+
+        {%- if description != blank -%}
+          <p class="col-slider-description">{{ description }}</p>
+        {%- endif -%}
+
+        <a href="{{ collection.url | default: '#' }}" class="col-slider-button">
+          {{ block.settings.button_label | default: 'Explore Collection' }}
+        </a>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="col-slider-nav-bars">
+    {%- for block in section.blocks -%}
+      <div 
+        class="col-slider-bar {% if forloop.first %}active{% endif %}" 
+        data-index="{{ forloop.index0 }}"
+        title="Go to slide {{ forloop.index }}"
+      ></div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('#CollectionsSlider-{{ section.id }}');
+    if (!section) return;
+
+    const bars = section.querySelectorAll('.col-slider-bar');
+    const bgImages = section.querySelectorAll('.col-slider-bg-image');
+    const contents = section.querySelectorAll('.col-slider-slide-content');
+    const backdropText = section.querySelector('#BackdropText-{{ section.id }}');
+
+    bars.forEach(bar => {
+      bar.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        const slideNum = (parseInt(index) + 1).toString().padStart(2, '0');
+
+        // Update Nav Bars
+        bars.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update Backdrop Number
+        if (backdropText) {
+          backdropText.innerText = slideNum;
+        }
+
+        // Update Background Images
+        bgImages.forEach(img => img.classList.remove('active'));
+        const activeImg = section.querySelector(`.col-slider-bg-image[data-index="${index}"]`);
+        if (activeImg) {
+          activeImg.classList.add('active');
+        }
+
+        // Update Text Content
+        contents.forEach(c => c.classList.remove('active'));
+        const activeContent = section.querySelector(`.col-slider-slide-content[data-index="${index}"]`);
+        if (activeContent) {
+          activeContent.classList.add('active');
+        }
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Collection Slider (Bars)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Styles"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Text Highlighting"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Heading Style"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "min": 40,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size (Desktop)",
+      "default": 90
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_tablet",
+      "min": 30,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size (Tablet)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "min": 24,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Description Style"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 16
+    },
+    {
+      "type": "select",
+      "id": "desc_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "desc_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Button Style"
+    },
+    {
+      "type": "color",
+      "id": "btn_color",
+      "label": "Button Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Button Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "btn_font_size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 13
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Collection Slide",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Background Image"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle (Top Tagline)",
+          "default": "BOLD & SOPHISTICATED"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading Override",
+          "info": "Uses collection title if blank"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description Override",
+          "info": "Uses collection description if blank"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "default": "Explore Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Slider (Bars)",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

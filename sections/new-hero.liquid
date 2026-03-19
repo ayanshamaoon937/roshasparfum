@@ -4,7 +4,7 @@
     padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     position: relative;
     overflow: hidden;
-    min-height: 80vh;
+    min-height: calc(100vh - var(--header-total-height, 120px));
     display: flex;
     align-items: center;
     background-color: transparent;
@@ -14,7 +14,7 @@
     .new-hero-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
-      min-height: 100vh;
+      min-height: calc(100vh - var(--header-total-height, 120px));
     }
   }
 
@@ -27,6 +27,24 @@
     z-index: 0;
   }
 
+  .new-hero-slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    z-index: 1;
+  }
+
+  .new-hero-slide-item.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+  }
+
   .new-hero-bg-image {
     position: absolute;
     top: 0;
@@ -34,23 +52,21 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
   }
 
-  .new-hero-bg-image.active {
-    opacity: 1;
-    z-index: 2;
-  }
-
-  .new-hero-overlay {
+  .new-hero-slide-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
     z-index: 3;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+
+  .new-hero-slide-overlay.active {
+    opacity: 1;
   }
 
   .new-hero-content-slider {
@@ -200,9 +216,9 @@
 
   @media screen and (max-width: 749px) {
     .new-hero-{{ section.id }} {
-      min-height: 90vh;
+      min-height: calc(100vh - var(--header-total-height, 120px));
       align-items: flex-start;
-      padding-top: 100px;
+      padding-top: 50px;
     }
     .new-hero-slider-thumbs {
       right: 20px;
@@ -218,29 +234,36 @@
 <section class="new-hero-{{ section.id }}" id="NewHero-{{ section.id }}">
   <div class="new-hero-bg-container" id="BgContainer-{{ section.id }}">
     {%- for block in section.blocks -%}
-      {%- if block.settings.image != blank -%}
-        {%- liquid
-          assign image_class = 'new-hero-bg-image'
-          if forloop.first
-            assign image_class = image_class | append: ' active'
-          endif
-        -%}
-        {{ block.settings.image 
-           | image_url: width: 3840 
-           | image_tag: 
-             loading: 'eager', 
-             class: image_class,
-             data-index: forloop.index0
-        }}
-      {%- else -%}
-        <div class="new-hero-bg-image {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
-           {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-        </div>
-      {%- endif -%}
+      {%- liquid
+         assign slide_index = forloop.index0
+         assign is_active = false
+         if forloop.first
+           assign is_active = true
+         endif
+      -%}
+      
+      <div class="new-hero-slide-item {% if is_active %}active{% endif %}" data-index="{{ slide_index }}">
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image 
+             | image_url: width: 3840 
+             | image_tag: 
+               loading: 'eager', 
+               class: 'new-hero-bg-image',
+               data-index: slide_index
+          }}
+        {%- else -%}
+          <div class="new-hero-bg-image">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+
+        {%- assign opacity = block.settings.overlay_opacity | divided_by: 100.0 -%}
+        <div 
+          class="new-hero-slide-overlay {% if is_active %}active{% endif %}" 
+          style="background-color: {{ block.settings.overlay_color | default: '#000000' }}; opacity: {{ opacity }};"
+          data-index="{{ slide_index }}"
+        ></div>
+      </div>
     {%- endfor -%}
   </div>
-
-  <div class="new-hero-overlay"></div>
 
   <div class="new-hero-content-slider">
     {%- for block in section.blocks -%}
@@ -288,38 +311,55 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const section = document.querySelector('#NewHero-{{ section.id }}');
-    if (!section) return;
+  function initNewHero() {
+    const sections = document.querySelectorAll('[id^="NewHero-"]');
+    
+    sections.forEach(section => {
+      // Avoid duplicated initialization
+      if (section.dataset.initialized) return;
+      section.dataset.initialized = "true";
 
-    const thumbs = section.querySelectorAll('.new-hero-thumb');
-    const bgImages = section.querySelectorAll('.new-hero-bg-image');
-    const contents = section.querySelectorAll('.new-hero-slide-content');
+      const thumbs = section.querySelectorAll('.new-hero-thumb');
+      const bgImages = section.querySelectorAll('.new-hero-bg-image');
+      const contents = section.querySelectorAll('.new-hero-slide-content');
 
-    thumbs.forEach(thumb => {
-      thumb.addEventListener('click', function() {
-        const index = this.getAttribute('data-index');
+      thumbs.forEach(thumb => {
+        thumb.addEventListener('click', function(e) {
+          e.preventDefault();
+          const index = this.getAttribute('data-index');
+          if (index === null) return;
 
-        // Update thumbs
-        thumbs.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
+          console.log('Slide switch to:', index);
 
-        // Update bg images
-        bgImages.forEach(img => img.classList.remove('active'));
-        const activeImg = section.querySelector(`.new-hero-bg-image[data-index="${index}"]`);
-        if (activeImg) {
-          activeImg.classList.add('active');
-        }
+          // Update thumbs
+          thumbs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
 
-        // Update content
-        contents.forEach(c => c.classList.remove('active'));
-        const activeContent = section.querySelector(`.new-hero-slide-content[data-index="${index}"]`);
-        if (activeContent) {
-          activeContent.classList.add('active');
-        }
+          // Update bg items (images & slide overlays)
+          const slideItems = section.querySelectorAll('.new-hero-slide-item');
+          slideItems.forEach(item => item.classList.remove('active'));
+          const targetItem = [...slideItems].find(item => item.getAttribute('data-index') === index);
+          if (targetItem) targetItem.classList.add('active');
+
+          // Update content
+          contents.forEach(c => c.classList.remove('active'));
+          const targetContent = [...contents].find(c => c.getAttribute('data-index') === index);
+          if (targetContent) targetContent.classList.add('active');
+        });
       });
     });
-  });
+  }
+
+  // Run on first load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNewHero);
+  } else {
+    initNewHero();
+  }
+
+  // Support Shopify Theme Editor re-loads
+  document.addEventListener('shopify:section:load', initNewHero);
+  document.addEventListener('shopify:section:reorder', initNewHero);
 </script>
 
 {% schema %}
@@ -476,6 +516,26 @@
           "id": "description",
           "label": "Description",
           "default": "Curating the world's most prestigious olfactory masterpieces — from Dior to Tom Ford."
+        },
+        {
+          "type": "header",
+          "content": "Overlay Settings"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay Color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "min": 0,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "label": "Overlay Opacity",
+          "default": 30
         },
         {
           "type": "text",

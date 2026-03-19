@@ -1,0 +1,48 @@
+{% style %}
+  /* Import Google Fonts for reliability */
+  @import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+  /* Local Font Assets (Flattened for Shopify compatibility) */
+  @font-face {
+    font-family: 'Jost';
+    src: url('{{ "Jost-Regular.ttf" | asset_url }}') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Jost';
+    src: url('{{ "Jost-Bold.ttf" | asset_url }}') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Playfair Display';
+    src: url('{{ "PlayfairDisplay-Regular.ttf" | asset_url }}') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Playfair Display';
+    src: url('{{ "PlayfairDisplay-Bold.ttf" | asset_url }}') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --font-display: 'Playfair Display', serif !important;
+    --font-body: 'Jost', sans-serif !important;
+    
+    /* Map to theme standard variables for global coverage */
+    --font-heading--family: 'Playfair Display', serif !important;
+    --font-body--family: 'Jost', sans-serif !important;
+    --font-subheading--family: 'Jost', sans-serif !important;
+    --font-accent--family: 'Playfair Display', serif !important;
+  }
+{% endstyle %}

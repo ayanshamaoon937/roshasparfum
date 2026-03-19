@@ -1,4 +1,7 @@
-
+{%- liquid
+  assign autoplay_enabled = section.settings.autoplay
+  assign speed = section.settings.speed | default: 5
+-%}
 
 {% if section.blocks.size > 1 %}
   <script
@@ -8,119 +11,109 @@
   ></script>
 {% endif %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<aside
-  class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
-  style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;"
->
-  {% liquid
-    assign autoplay = false
-    assign show_arrows = false
-    if section.blocks.size > 1
-      assign autoplay = true
-      assign show_arrows = true
-    endif
-  %}
+{% style %}
+  .announcement-bar-{{ section.id }} {
+    background-color: {{ section.settings.bg_color | default: '#000000' }};
+    color: {{ section.settings.text_color | default: '#ffffff' }};
+    border-bottom: {{ section.settings.divider_width | default: 0 }}px solid rgba(0,0,0,0.1);
+    {% render 'spacing-padding', settings: section.settings %}
+  }
 
+  .announcement-bar-{{ section.id }} .announcement-bar__slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 40px;
+  }
+
+  .announcement-bar-{{ section.id }} .announcement-bar__slides {
+    position: relative;
+    height: 1.5em; /* Define a height for the vertical slide */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .announcement-bar-{{ section.id }} .announcement-bar__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+    transform: translateY(100%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    width: 100%;
+  }
+
+  /* Active state */
+  .announcement-bar-{{ section.id }} .announcement-bar__slide[aria-hidden="false"] {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Exit state (moving up) */
+  .announcement-bar-{{ section.id }} .announcement-bar__slide[aria-hidden="true"] {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Override text block styles to inherit colors */
+  .announcement-bar-{{ section.id }} .announcement-bar__text {
+    color: inherit !important;
+    margin: 0;
+  }
+
+  .announcement-bar-{{ section.id }} .slideshow-control {
+    color: {{ section.settings.text_color | default: '#ffffff' }};
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+{% endstyle %}
+
+<aside class="announcement-bar-{{ section.id }}">
   <announcement-bar-component
     class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
+    {% if autoplay_enabled and section.blocks.size > 1 %}
+      autoplay="{{ speed }}" aria-live="polite"
     {% endif %}
   >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
+    {% if section.blocks.size > 1 %}
+      <button class="slideshow-control slideshow-control--previous" on-click="/previous" aria-label="Previous">
+        {% render 'icon', icon: 'chevron-left' %}
+      </button>
     {% endif %}
 
     <div class="announcement-bar__slides">
       {% content_for 'blocks' %}
     </div>
+
+    {% if section.blocks.size > 1 %}
+      <button class="slideshow-control slideshow-control--next" on-click="/next" aria-label="Next">
+        {% render 'icon', icon: 'chevron-right' %}
+      </button>
+    {% endif %}
   </announcement-bar-component>
 </aside>
-
-{% stylesheet %}
-  .announcement-bar {
-    border-block-end: var(--border-bottom-width) solid var(--color-border);
-  }
-
-  .announcement-bar__slider {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: relative;
-
-    @media screen and (max-width: 749px) {
-      grid-column: 1 / -1;
-    }
-  }
-
-  .announcement-bar__slides {
-    display: grid;
-    grid: [stack] auto / [stack] auto;
-    width: calc(100% - var(--button-size) * 2);
-    max-width: 680px;
-    margin-inline: auto;
-  }
-
-  .announcement-bar__slides > * {
-    grid-area: stack;
-  }
-
-  .announcement-bar__slide {
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-
-    &[aria-hidden='true'] {
-      opacity: 0;
-      visibility: hidden;
-    }
-  }
-
-  .announcement-bar__slider slideshow-arrows {
-    padding: 0;
-    mix-blend-mode: normal;
-  }
-
-  .announcement-bar__slider slideshow-arrows .slideshow-control {
-    color: var(--color-foreground);
-  }
-
-  .announcement-bar__slider .slideshow-control {
-    display: flex;
-    padding: 0;
-    width: var(--button-size);
-    height: var(--button-size);
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    animation: none;
-
-    @media screen and (min-width: 750px) {
-      --slideshow-control-offset: calc((var(--button-size) - var(--icon-size-xs)) / 2);
-
-      .section--page-width &.slideshow-control--previous {
-        transform: translateX(var(--slideshow-control-offset));
-      }
-    }
-  }
-
-  .announcement-bar__slider .slideshow-control .svg-wrapper {
-    width: var(--icon-size-xs);
-    height: var(--icon-size-xs);
-  }
-
-  .announcement-bar__slide {
-    place-content: center;
-  }
-
-  .announcement-bar__text:first-child {
-    margin: 0;
-  }
-
-  .announcement-bar__link {
-    position: absolute;
-    inset: 0;
-  }
-{% endstylesheet %}
 
 {% schema %}
 {
@@ -135,6 +128,12 @@
   },
   "settings": [
     {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay enabled",
+      "default": true
+    },
+    {
       "type": "range",
       "id": "speed",
       "label": "t:settings.scroll_speed",
@@ -145,29 +144,19 @@
     },
     {
       "type": "header",
-      "content": "t:content.appearance"
+      "content": "Appearance"
     },
     {
-      "type": "select",
-      "id": "section_width",
-      "label": "t:settings.section_width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "page-width"
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#1a1a1a"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "default": "scheme-4",
-      "label": "t:settings.color_scheme"
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
     },
     {
       "type": "range",
@@ -175,7 +164,7 @@
       "label": "t:settings.divider_thickness",
       "min": 0,
       "max": 5,
-      "step": 0.5,
+      "step": 1,
       "unit": "px",
       "default": 0
     },
@@ -206,13 +195,7 @@
   ],
   "presets": [
     {
-      "name": "t:names.announcement_bar",
-      "blocks": {
-        "announcement_1": {
-          "type": "_announcement"
-        }
-      },
-      "block_order": ["announcement_1"]
+      "name": "t:names.announcement_bar"
     }
   ]
 }

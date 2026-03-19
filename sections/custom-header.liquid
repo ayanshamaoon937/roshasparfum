@@ -1,0 +1,775 @@
+{%- liquid
+  assign main_menu = section.settings.menu
+  assign logo_image = section.settings.logo_image
+  assign logo_text = section.settings.logo_text | default: shop.name
+-%}
+
+{% style %}
+  .custom-header {
+    background: #ffffff;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+    transition: all 0.3s ease;
+  }
+
+  .header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+
+  /* Logo */
+  .header-logo {
+    flex: 0 0 200px;
+  }
+
+  .logo-link {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    max-height: 50px;
+    width: auto;
+  }
+
+  /* Navigation */
+  .header-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-list {
+    display: flex;
+    gap: 35px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+
+  .nav-link {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #808080;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 10px 0 5px 2px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #000000;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-link:hover {
+    color: #000000;
+  }
+
+  .nav-link .chevron {
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-item:hover .chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Icons */
+  .header-icons {
+    flex: 0 0 200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .header-icon-link {
+    color: #000;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .header-icon-link:hover {
+    opacity: 0.7;
+  }
+
+  .header-icon-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-count-badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: #808080;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mega Menu Container */
+  .mega-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border-top: 1px solid #f5f5f5;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 10;
+  }
+
+  .nav-item:hover .mega-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mega-menu-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 50px;
+  }
+
+  .mega-columns-wrap {
+    display: grid;
+    grid-template-columns: 320px 1fr 1fr;
+    gap: 80px;
+    align-items: flex-start;
+  }
+
+  /* Featured Column Styling */
+  .mega-featured-col {
+    background: #fcfcfc;
+    padding: 40px;
+    border: 1px solid #f2f2f2;
+    text-align: center;
+  }
+
+  .mega-featured-image-wrap {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 25px;
+    background: #fff;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mega-featured-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .mega-featured-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 500;
+    font-style: italic;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+
+  .mega-featured-subtitle {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 30px;
+    font-weight: 500;
+  }
+
+  .mega-featured-btn {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #000;
+    text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #000;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .mega-featured-btn:hover {
+    color: #808080;
+    border-color: #808080;
+  }
+
+  .mega-featured-shop-now {
+    background: #808080;
+    color: #fff;
+    padding: 14px 35px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.4s ease;
+  }
+
+  .mega-featured-shop-now::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #000000;
+    transition: width 0.4s ease;
+    z-index: -1;
+  }
+
+  .mega-featured-shop-now:hover::before {
+    width: 100%;
+  }
+
+  .mega-featured-shop-now:hover {
+    color: #ffffff;
+  }
+
+  /* List Columns */
+  .mega-column-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #1a1a1a;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .mega-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mega-menu-list li {
+    margin-bottom: 15px;
+  }
+
+  .mega-menu-list a {
+    color: #444;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    display: block;
+  }
+
+  .mega-menu-list a:hover {
+    color: #808080;
+  }
+
+  .mega-menu-list span.desc {
+    display: block;
+    font-size: 10px;
+    color: #999;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Bottom Bar */
+  .mega-bottom-bar {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    border-top: 1px solid #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mega-bottom-disclaimer {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #999;
+  }
+
+  .mega-bottom-view-all {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #808080;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .mega-bottom-view-all:hover {
+    text-decoration: underline;
+  }
+
+  /* Grid Layout Fix */
+  .mega-columns-wrap {
+    display: flex;
+    gap: 60px;
+    flex: 1;
+  }
+
+{% endstyle %}
+
+<header class="custom-header">
+  <div class="header-container">
+    <!-- Logo -->
+    <div class="header-logo">
+      <a href="/" class="logo-link">
+        {% if logo_image %}
+          <img src="{{ logo_image | img_url: '400x' }}" alt="{{ logo_text }}" class="logo-img">
+        {% else %}
+          {{ logo_text }}
+        {% endif %}
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="header-nav">
+      <ul class="nav-list">
+        {% for link in main_menu.links %}
+          {%- liquid
+            assign has_mega = false
+            assign mega_block = null
+            for block in section.blocks
+              assign trigger = block.settings.trigger_label | downcase | strip
+              assign link_title = link.title | downcase | strip
+              if trigger == link_title
+                assign has_mega = true
+                assign mega_block = block
+                break
+              endif
+            endfor
+          -%}
+
+          <li class="nav-item">
+            <a href="{{ link.url }}" class="nav-link">
+              {{ link.title }}
+              {% if has_mega %}
+                <span class="chevron">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              {% endif %}
+            </a>
+
+            {% if has_mega %}
+              <div class="mega-menu">
+                <div class="mega-menu-content">
+                  <!-- Navigation Columns Wrap (3 Columns) -->
+                  <div class="mega-columns-wrap">
+                    <!-- Column 1: Featured Highlight -->
+                    {%- assign featured_product = mega_block.settings.featured_product -%}
+                    <div class="mega-column mega-featured-col" style="flex: 0.7;">
+                      <div class="mega-featured-highlight" style="margin-bottom: 12px;">
+                        <span class="star">★</span> FEATURED HIGHLIGHT
+                      </div>
+                      <div class="mega-featured-card-internal">
+                        {%- if featured_product != blank or mega_block.settings.featured_image != blank -%}
+                          <div class="mega-featured-image-wrap">
+                            <img 
+                              src="{% if mega_block.settings.featured_image != blank %}{{ mega_block.settings.featured_image | img_url: '400x400', crop: 'center' }}{% else %}{{ featured_product.featured_image | img_url: '400x400', crop: 'center' }}{% endif %}" 
+                              class="mega-featured-image" 
+                              alt="{{ mega_block.settings.featured_title | default: featured_product.title }}"
+                            >
+                          </div>
+                        {%- endif -%}
+                        <h3 class="mega-featured-title" style="margin: 12px 0 4px;">{{ mega_block.settings.featured_title | default: featured_product.title }}</h3>
+                        <p class="mega-featured-subtitle">{{ mega_block.settings.featured_subtitle }}</p>
+                        
+                        {% if mega_block.type == 'collections_mega' %}
+                          <a href="{{ mega_block.settings.featured_link | default: featured_product.url }}" class="mega-featured-shop-now">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            {{ mega_block.settings.featured_button_text | default: 'SHOP NOW' }}
+                          </a>
+                        {% else %}
+                          <a href="{{ mega_block.settings.featured_link | default: featured_product.url }}" class="mega-featured-btn">
+                            {{ mega_block.settings.featured_button_text | default: 'EXPLORE THE ATELIER' }}
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </a>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <!-- Column 2: First Collection List -->
+                    <div class="mega-column" style="flex: 1;">
+                      <h4 class="mega-column-title">{{ mega_block.settings.col1_heading }}</h4>
+                      <ul class="mega-menu-list">
+                        {%- for collection in mega_block.settings.col1_menu -%}
+                          <li>
+                            <a href="{{ collection.url }}">
+                              {{ collection.title }}
+                              {% if collection.description != blank %}
+                                <span class="desc">{{ collection.description | strip_html | truncate: 60 }}</span>
+                              {% endif %}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+
+                    <!-- Column 3: Second Collection List -->
+                    <div class="mega-column" style="flex: 1;">
+                      <h4 class="mega-column-title">{{ mega_block.settings.col2_heading }}</h4>
+                      <ul class="mega-menu-list">
+                        {%- for collection in mega_block.settings.col2_menu -%}
+                          <li>
+                            <a href="{{ collection.url }}">
+                              {{ collection.title }}
+                              {% if collection.description != blank %}
+                                <span class="desc">{{ collection.description | strip_html | truncate: 60 }}</span>
+                              {% endif %}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bottom Bar -->
+                <div class="mega-bottom-bar">
+                  <div class="mega-bottom-disclaimer">
+                    {{ mega_block.settings.bottom_left_text | default: 'AUTHENTICITY GUARANTEED ON EVERY PURCHASE' }}
+                  </div>
+                  <a href="{{ mega_block.settings.bottom_right_link }}" class="mega-bottom-view-all">
+                    {{ mega_block.settings.bottom_right_label | default: 'VIEW ALL' }}
+                  </a>
+                </div>
+              </div>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <!-- Icons -->
+    <div class="header-icons">
+      <a href="/search" class="header-icon-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </a>
+      <a href="/apps/wishlist" class="header-icon-link">
+        <svg viewBox="0 0 50 50" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M15,7c-7.16797,0 -13,5.83203 -13,13c0,14.76172 16.69531,22.04688 22.375,26.78125l0.625,0.53125l0.625,-0.53125c5.67969,-4.73437 22.375,-12.01953 22.375,-26.78125c0,-7.16797 -5.83203,-13 -13,-13c-4.05469,0 -7.61719,1.92578 -10,4.84375c-2.38281,-2.91797 -5.94531,-4.84375 -10,-4.84375zM15,9c3.83594,0 7.1875,1.96875 9.15625,4.9375l0.84375,1.25l0.84375,-1.25c1.96875,-2.96875 5.32031,-4.9375 9.15625,-4.9375c6.08594,0 11,4.91406 11,11c0,12.89844 -14.40625,19.57422 -21,24.78125c-6.59375,-5.20703 -21,-11.88281 -21,-24.78125c0,-6.08594 4.91406,-11 11,-11z"></path></svg>
+      </a>
+      <a href="/account" class="header-icon-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      </a>
+      <a href="/cart" class="header-icon-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <span class="cart-count-badge">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  function updateHeaderHeight() {
+    const header = document.querySelector('.custom-header');
+    const announcement = document.querySelector('.header-announcements') || document.querySelector('[class*="announcement-bar-"]');
+    let totalHeight = 0;
+    
+    if (header) {
+      totalHeight += header.offsetHeight;
+    }
+    if (announcement) {
+      totalHeight += announcement.offsetHeight;
+    }
+    
+    document.documentElement.style.setProperty('--header-total-height', totalHeight + 'px');
+  }
+
+  window.addEventListener('load', updateHeaderHeight);
+  window.addEventListener('resize', updateHeaderHeight);
+  document.addEventListener('shopify:section:load', updateHeaderHeight);
+  updateHeaderHeight();
+</script>
+
+{% schema %}
+{
+  "name": "Custom Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text",
+      "default": "ROSHAS"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu",
+      "default": "main-menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collections_mega",
+      "name": "Mega Menu - Collections",
+      "settings": [
+        {
+          "type": "text",
+          "id": "trigger_label",
+          "label": "Trigger Link Label",
+          "info": "Should match the link title in the main menu (e.g. Collections)",
+          "default": "Collections"
+        },
+        {
+          "type": "header",
+          "content": "Column 1"
+        },
+        {
+          "type": "text",
+          "id": "col1_heading",
+          "label": "Column 1 Heading",
+          "default": "Categories"
+        },
+        {
+          "type": "collection_list",
+          "id": "col1_menu",
+          "label": "Column 1 Collections"
+        },
+        {
+          "type": "header",
+          "content": "Column 2"
+        },
+        {
+          "type": "text",
+          "id": "col2_heading",
+          "label": "Column 2 Heading",
+          "default": "Specialties"
+        },
+        {
+          "type": "collection_list",
+          "id": "col2_menu",
+          "label": "Column 2 Collections"
+        },
+        {
+          "type": "header",
+          "content": "Featured Item"
+        },
+        {
+          "type": "product",
+          "id": "featured_product",
+          "label": "Featured Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "featured_image",
+          "label": "Featured Image (Override)"
+        },
+        {
+          "type": "text",
+          "id": "featured_title",
+          "label": "Featured Title (Override)"
+        },
+        {
+          "type": "text",
+          "id": "featured_subtitle",
+          "label": "Featured Subtitle",
+          "default": "BEST SELLER OF THE MONTH"
+        },
+        {
+          "type": "url",
+          "id": "featured_link",
+          "label": "Featured Link (Override)"
+        },
+        {
+          "type": "text",
+          "id": "featured_button_text",
+          "label": "Button Text",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "header",
+          "content": "Bottom Bar"
+        },
+        {
+          "type": "text",
+          "id": "bottom_left_text",
+          "label": "Left Text",
+          "default": "AUTHENTICITY GUARANTEED ON ALL PURCHASES"
+        },
+        {
+          "type": "text",
+          "id": "bottom_right_label",
+          "label": "Right Link Label",
+          "default": "VIEW ALL COLLECTIONS"
+        },
+        {
+          "type": "url",
+          "id": "bottom_right_link",
+          "label": "Right Link"
+        }
+      ]
+    },
+    {
+      "type": "brands_mega",
+      "name": "Mega Menu - Brands",
+      "settings": [
+        {
+          "type": "text",
+          "id": "trigger_label",
+          "label": "Trigger Link Label",
+          "info": "Should match the link title in the main menu (e.g. Brands)",
+          "default": "Brands"
+        },
+        {
+          "type": "header",
+          "content": "Column 1"
+        },
+        {
+          "type": "text",
+          "id": "col1_heading",
+          "label": "Column 1 Heading",
+          "default": "Designer Houses"
+        },
+        {
+          "type": "collection_list",
+          "id": "col1_menu",
+          "label": "Column 1 Collections"
+        },
+        {
+          "type": "header",
+          "content": "Column 2"
+        },
+        {
+          "type": "text",
+          "id": "col2_heading",
+          "label": "Column 2 Heading",
+          "default": "Luxury & Niche"
+        },
+        {
+          "type": "collection_list",
+          "id": "col2_menu",
+          "label": "Column 2 Collections"
+        },
+        {
+          "type": "header",
+          "content": "Featured Item"
+        },
+        {
+          "type": "product",
+          "id": "featured_product",
+          "label": "Featured Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "featured_image",
+          "label": "Featured Image (Override)"
+        },
+        {
+          "type": "text",
+          "id": "featured_title",
+          "label": "Featured Title (Override)"
+        },
+        {
+          "type": "text",
+          "id": "featured_subtitle",
+          "label": "Featured Subtitle",
+          "default": "FEATURED DESIGNER OF THE WEEK"
+        },
+        {
+          "type": "url",
+          "id": "featured_link",
+          "label": "Featured Link (Override)"
+        },
+        {
+          "type": "text",
+          "id": "featured_button_text",
+          "label": "Button Text",
+          "default": "EXPLORE THE ATELIER"
+        },
+        {
+          "type": "header",
+          "content": "Bottom Bar"
+        },
+        {
+          "type": "text",
+          "id": "bottom_left_text",
+          "label": "Left Text",
+          "default": "AUTHENTICITY GUARANTEED ON ALL BRANDS"
+        },
+        {
+          "type": "text",
+          "id": "bottom_right_label",
+          "label": "Right Link Label",
+          "default": "VIEW ALL BRANDS"
+        },
+        {
+          "type": "url",
+          "id": "bottom_right_link",
+          "label": "Right Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Header"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{%- liquid
+  assign block = block
+  assign section = section
+-%}
+
+<a href="{{ block.settings.link | default: '#' }}" class="brand-card">
+  <div class="brand-logo-wrap">
+    {%- if block.settings.logo != blank -%}
+      <img 
+        src="{{ block.settings.logo | img_url: '400x' }}" 
+        alt="{{ block.settings.brand_name }}"
+        loading="lazy"
+        width="{{ block.settings.logo.width }}"
+        height="{{ block.settings.logo.height }}"
+      >
+    {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  
+  <div class="brand-info">
+    {%- if block.settings.location != blank -%}
+      <span class="brand-location">{{ block.settings.location }}</span>
+    {%- endif -%}
+    
+    {%- if block.settings.brand_name != blank -%}
+      <h3 class="brand-name">{{ block.settings.brand_name }}</h3>
+    {%- endif -%}
+    
+    {%- if block.settings.brand_desc != blank -%}
+      <p class="brand-description">{{ block.settings.brand_desc }}</p>
+    {%- endif -%}
+  </div>
+</a>

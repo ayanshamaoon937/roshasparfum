@@ -146,25 +146,253 @@
     "
   >
     {{ children }}
+    <div class="product-card__vendor-label">{{ product.vendor }}</div>
   </div>
 </product-card>
 {%- if settings.transition_to_main_product -%}
   </product-card-link>
 {%- endif -%}
 
-{% stylesheet %}
-  product-card-link,
-  :not(product-card-link) product-card {
-    width: 100%;
+{% style %}
+  .product-card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
   }
 
-  .product-card__placeholder-image svg {
+  /* Force correct ordering of blocks */
+  .product-card .card-gallery { 
+    order: 1; 
+    margin-bottom: 15px !important; 
+  }
+  
+  .product-card slideshow-slides {
+    min-height: 415px !important;
+    display: flex !important;
+  }
+  
+  .product-card .card-gallery img {
+    object-fit: cover !important;
+    height: 415px !important;
+    width: 100% !important;
+  }
+  .product-card .product-card__vendor-label { order: 2; display: block !important; }
+  .product-card .text-block, 
+  .product-card product-title,
+  .product-card h2,
+  .product-card h3 { 
+    order: 3; 
+  }
+  .product-card product-price { order: 4; }
+
+  /* Vendor Label Styling */
+  .product-card__vendor-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #787676; /* Muted Gold */
+    letter-spacing: 0.15em;
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 5px;
+  }
+
+  /* Product Title Styling (Serif) */
+  .product-card .text-block,
+  .product-card product-title,
+  .product-card .text-block p, 
+  .product-card .text-block a,
+  .product-card h2,
+  .product-card h3 {
+    font-family: var(--font-display) !important;
+    font-size: 22px !important;
+    color: #000000 !important; /* Gold for title */
+    margin: 0 0 8px 0 !important;
+    line-height: 1.2;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    background: transparent !important; /* Remove any gold bars */
+    border: none !important;
+    box-shadow: none !important;
+    text-align: left !important;
+  }
+
+  /* Price Styling */
+  .product-card product-price,
+  .product-card product-price .price {
+    font-family: var(--font-body) !important;
+    font-size: 14px !important;
+    color: #141414 !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+    text-align: left !important;
+    display: block !important;
+  }
+
+  .product-card .product-card__vendor-label {
+    font-family: var(--font-body) !important;
+    text-align: left !important;
+  }
+
+  /* Ensure Add to Cart component is full width */
+  .product-card add-to-cart-component {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  /* HOT Badge Styling Override (via CSS since snippet is separate) */
+  .product-card .product-badges__badge {
+    background: #000 !important;
+    color: #fff !important;
+    font-size: 10px !important;
+    letter-spacing: 0.1em;
+    padding: 6px 12px !important;
+    border-radius: 0 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Reset default block spacings */
+  .product-card .spacing-style {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .product-card p {
+     margin: 0 !important;
+  }
+
+  .product-card__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(10, 10, 10, 0.15);
+    opacity: 1;
+    transition: background-color 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .product-card:hover .product-card__overlay {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  /* Activity Buttons (Wishlist, Quickview) */
+  .product-card__actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 15;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .product-card:hover .product-card__actions {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .product-card__action-btn {
+    width: 38px;
+    height: 38px;
+    background: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+  }
+
+  .product-card__action-btn:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  .product-card__action-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Add to Cart Bar */
+  .product-card .quick-add {
+    z-index: 10;
+    inset: auto 0 0 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none;
+  }
+
+  .product-card .quick-add__button {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s ease;
+    display: flex !important;
+    visibility: hidden;
+    background-color: #808080 !important;
+    color: #fff !important;
+    min-height: 45px;
+    height: 45px;
+    border-radius: 0 !important;
+    width: 100% !important;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    font-weight: 400;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: none;
+    text-transform: uppercase;
+  }
+
+  .product-card .quick-add__button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
+    background-color: #000000;
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+  }
+
+  .product-card .quick-add__button:hover::before {
+    transform: translateX(0);
+  }
+
+  .product-card .quick-add__button:hover {
+    color: #ffffff !important;
+  }
+
+  .product-card .quick-add__button .svg-wrapper,
+  .product-card .quick-add__button svg {
+    fill: none;
+    color: inherit;
+    width: 20px;
+    height: 20px;
+  }
+
+  .product-card:hover .quick-add__button {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
   }
 
   @media screen and (max-width: 749px) {
-    .product-card slideshow-arrows .slideshow-control {
-      display: none;
+    .product-card .quick-add__button {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
     }
   }
 
@@ -195,19 +423,6 @@
     display: none;
   }
 
-  /* Hover effect for single variant product cards and product blocks */
-
-  /* stylelint-disable selector-max-specificity */
-  :is(.product-card):has(.quick-add__product-form-component--single-variant) .card-gallery:hover {
-    & .quick-add__button--choose {
-      display: none;
-    }
-
-    & .quick-add__button--add {
-      display: grid;
-    }
-  }
-
   .product-card[data-no-swatch-selected] slideshow-component[data-generic-media-size='1'] slideshow-arrows {
     display: none;
   }
@@ -225,4 +440,45 @@
   .product-card [data-available-count='0'] ~ svg {
     display: block;
   }
-{% endstylesheet %}
+  .card-gallery slideshow-arrows .slideshow-control {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    min-height: 28px !important;
+    max-width: 28px !important;
+    max-height: 28px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    padding: 0 !important;
+    opacity: 0 !important;
+    visibility: visible !important;
+    mix-blend-mode: normal !important;
+    animation: none !important;
+    transform: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  .card-gallery:hover slideshow-arrows .slideshow-control {
+    opacity: 1 !important;
+  }
+
+  .card-gallery slideshow-arrows {
+    mix-blend-mode: normal !important;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    margin: 16px !important;
+     padding: 0 !important;
+  }
+
+  .card-gallery slideshow-arrows .slideshow-control svg {
+    width: 14px !important;
+    height: 14px !important;
+    fill: none !important;
+  }
+{% endstyle %}

@@ -1,0 +1,265 @@
+<script
+  src="{{ 'marquee.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{%- style -%}
+  .brands-marquee-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    border-bottom: {{ section.settings.border_bottom_width }}px solid {{ section.settings.border_bottom_color }};
+    overflow: hidden;
+  }
+
+  .brands-marquee-inner-{{ section.id }} {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  marquee-component {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee__wrapper {
+    display: flex;
+    gap: {{ section.settings.gap }}px;
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .marquee__content {
+    min-width: max-content;
+    display: flex;
+    gap: {{ section.settings.gap }}px;
+  }
+
+  .marquee__repeated-items {
+    min-width: max-content;
+    display: flex;
+    gap: {{ section.settings.gap }}px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .brand-logo-item {
+    display: inline-block;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .brand-logo-item:hover {
+    opacity: 0.7;
+  }
+
+  .brand-logo-item img {
+    height: auto;
+    max-height: {{ section.settings.logo_height }}px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    marquee-component:not([data-disabled]) .marquee__wrapper {
+      animation: marquee-motion var(--marquee-speed) linear infinite var(--marquee-direction);
+    }
+  }
+
+  @keyframes marquee-motion {
+    to {
+      transform: translate3d(calc(-50% - ({{ section.settings.gap }}px / 2)), 0, 0);
+    }
+  }
+{%- endstyle -%}
+
+<div class="brands-marquee-{{ section.id }}">
+  <div class="brands-marquee-inner-{{ section.id }}">
+    <marquee-component
+      data-speed-factor="{{ section.settings.speed_factor }}"
+      data-movement-direction="{{ section.settings.movement_direction }}"
+      style="
+        --marquee-direction: {{ section.settings.movement_direction }};
+        --marquee-gap: {{ section.settings.gap }}px;
+      "
+    >
+      <div class="marquee__wrapper" ref="wrapper">
+        <div class="marquee__content" ref="content">
+          <div class="marquee__repeated-items" ref="marqueeItems[]">
+            {%- for block in section.blocks -%}
+              <div class="brand-logo-item" {{ block.shopify_attributes }}>
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}">
+                {%- endif -%}
+                
+                {%- if block.settings.image != blank -%}
+                  {{ block.settings.image | image_url: height: 100 | image_tag: loading: 'lazy', alt: block.settings.image.alt | default: 'Brand Logo' }}
+                {%- elsif block.settings.brand_name != blank -%}
+                   <span style="font-family: var(--font-body--family); font-size: 16px; letter-spacing: 2px; text-transform: uppercase;">{{ block.settings.brand_name }}</span>
+                {%- else -%}
+                  {{ 'logo' | placeholder_svg_tag: 'placeholder-svg' | style: 'width: 100px; height: 30px;' }}
+                {%- endif -%}
+
+                {%- if block.settings.link != blank -%}
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </marquee-component>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brands Marquee",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 800,
+      "max": 2000,
+      "step": 100,
+      "unit": "px",
+      "label": "Section Max Width",
+      "default": 1400
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Border Bottom"
+    },
+    {
+      "type": "range",
+      "id": "border_bottom_width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Border Bottom Width",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_bottom_color",
+      "label": "Border Bottom Color",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "header",
+      "content": "Marquee Settings"
+    },
+    {
+      "type": "range",
+      "id": "speed_factor",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "label": "Speed Factor (Higher is slower)",
+      "default": 40
+    },
+    {
+      "type": "select",
+      "id": "movement_direction",
+      "label": "Movement Direction",
+      "options": [
+        { "value": "normal", "label": "Right to Left" },
+        { "value": "reverse", "label": "Left to Right" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 20,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Gap between logos",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Max Height",
+      "default": 30
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Brand Logo"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name (Fallback)",
+          "info": "Used if no image is provided"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Brand Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands Marquee",
+      "blocks": [
+        { "type": "brand", "settings": { "brand_name": "Chanel" } },
+        { "type": "brand", "settings": { "brand_name": "Tom Ford" } },
+        { "type": "brand", "settings": { "brand_name": "Gucci" } },
+        { "type": "brand", "settings": { "brand_name": "YSL" } },
+        { "type": "brand", "settings": { "brand_name": "Armani" } },
+        { "type": "brand", "settings": { "brand_name": "Versace" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

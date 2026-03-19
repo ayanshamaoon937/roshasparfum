@@ -1,26 +1,43 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "header",
   "name": "Header",
   "sections": {
-    "header_announcements_9jGBFp": {
+    "header_announcements_YqiCLX": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
+        "announcement_BGCAdD": {
           "type": "_announcement",
           "settings": {
-            "text": "Valentine’s Gifts That Smell Like Love!",
+            "text": "✦ 100% Authentic International Fragrances ✦",
             "link": "",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_6LUE4Y": {
+          "type": "_announcement",
+          "settings": {
+            "text": "✦ Express Delivery (5 Days) Now Available ✦",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_NpgXqJ": {
+          "type": "_announcement",
+          "settings": {
+            "text": "✦ Secure Payments via Stripe & Apple Pay ✦",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
             "weight": "",
             "letter_spacing": "normal",
             "case": "none"
@@ -29,90 +46,76 @@
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_BGCAdD",
+        "announcement_6LUE4Y",
+        "announcement_NpgXqJ"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
+        "autoplay": true,
         "speed": 5,
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "divider_width": 1,
+        "bg_color": "#1a1a1a",
+        "text_color": "#ffffff",
+        "divider_width": 0,
         "padding-block-start": 15,
         "padding-block-end": 15
       }
     },
-    "header_section": {
-      "type": "header",
+    "custom_header": {
+      "type": "custom-header",
       "blocks": {
-        "header-logo": {
-          "type": "_header-logo",
-          "static": true,
+        "brands_mega_xACHdm": {
+          "type": "brands_mega",
           "settings": {
-            "hide_logo_on_home_page": false,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "trigger_label": "Brands",
+            "col1_heading": "Designer Houses",
+            "col1_menu": [],
+            "col2_heading": "Luxury & Niche",
+            "col2_menu": [],
+            "featured_product": "",
+            "featured_title": "Maison Christian Dior",
+            "featured_subtitle": "FEATURED DESIGNER OF THE WEEK",
+            "featured_link": "",
+            "featured_button_text": "EXPLORE THE ATELIER",
+            "bottom_left_text": "AUTHENTICITY GUARANTEED ON ALL BRANDS",
+            "bottom_right_label": "VIEW ALL BRANDS",
+            "bottom_right_link": ""
+          }
         },
-        "header-menu": {
-          "type": "_header-menu",
-          "static": true,
+        "collections_mega_Ymaiwi": {
+          "type": "collections_mega",
           "settings": {
-            "menu": "main-menu",
-            "color_scheme": "scheme-1",
-            "type_font_primary_size": "0.875rem",
-            "menu_font_style": "regular",
-            "type_font_primary_link": "body",
-            "type_case_primary_link": "none",
-            "menu_style": "featured_products",
-            "featured_products_aspect_ratio": "4 / 5",
-            "featured_collections_aspect_ratio": "16 / 9",
-            "image_border_radius": 0,
-            "navigation_bar": false,
-            "color_scheme_navigation_bar": "",
-            "drawer_accordion": false,
-            "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
-          },
-          "blocks": {}
+            "trigger_label": "Collections",
+            "col1_heading": "Hot Selling Collections",
+            "col1_menu": [
+              "unisex"
+            ],
+            "col2_heading": "Specialties",
+            "col2_menu": [],
+            "featured_product": "acqua-di-gio-eau-de-parfum",
+            "featured_title": "Libre Eau de Parfum",
+            "featured_subtitle": "BEST SELLER OF THE MONTH",
+            "featured_link": "",
+            "featured_button_text": "SHOP NOW",
+            "bottom_left_text": "AUTHENTICITY GUARANTEED ON ALL PURCHASES",
+            "bottom_right_label": "VIEW ALL COLLECTIONS",
+            "bottom_right_link": ""
+          }
         }
       },
+      "block_order": [
+        "brands_mega_xACHdm",
+        "collections_mega_Ymaiwi"
+      ],
       "settings": {
-        "logo_position": "left",
-        "menu_position": "center",
-        "menu_row": "top",
-        "show_search": true,
-        "search_position": "right",
-        "search_row": "top",
-        "show_country": true,
-        "country_selector_style": false,
-        "show_language": true,
-        "localization_font": "heading",
-        "localization_font_size": "0.875rem",
-        "localization_position": "right",
-        "localization_row": "top",
-        "section_width": "page-width",
-        "section_height": "standard",
-        "enable_sticky_header": "always",
-        "divider_width": 0,
-        "divider_size": "page-width",
-        "border_width": 0,
-        "color_scheme_top": "scheme-5",
-        "color_scheme_bottom": "",
-        "color_scheme_transparent": "scheme-5",
-        "enable_transparent_header_home": true,
-        "home_color_scheme": "inverse",
-        "enable_transparent_header_product": false,
-        "product_color_scheme": "default",
-        "enable_transparent_header_collection": false,
-        "collection_color_scheme": "default"
+        "logo_image": "shopify://shop_images/logo.png",
+        "logo_text": "ROSHAS",
+        "menu": "new-menu"
       }
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
-    "header_section"
+    "header_announcements_YqiCLX",
+    "custom_header"
   ]
 }

@@ -126,7 +126,7 @@
         assign media_list_to_show = all_media
       endif
 
-      if all_media.size > 2 and generic_media_size > 0
+      if all_media.size > 1
         assign show_arrows = true
       endif
 
@@ -210,6 +210,7 @@
         slides: slides,
         slide_count: all_media.size,
         show_arrows: show_arrows,
+        icon_style: 'chevron',
         attributes: slideshow_attributes
       %}
     </a>
@@ -241,9 +242,117 @@
     %}
   {%- endif -%}
   {{ children }}
+  <div class="product-card__overlay"></div>
+  <div class="product-card__actions">
+    <button class="product-card__action-btn wishlist" aria-label="Add to Wishlist">
+      <svg viewBox="0 0 50 50" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M15,7c-7.16797,0 -13,5.83203 -13,13c0,14.76172 16.69531,22.04688 22.375,26.78125l0.625,0.53125l0.625,-0.53125c5.67969,-4.73437 22.375,-12.01953 22.375,-26.78125c0,-7.16797 -5.83203,-13 -13,-13c-4.05469,0 -7.61719,1.92578 -10,4.84375c-2.38281,-2.91797 -5.94531,-4.84375 -10,-4.84375zM15,9c3.83594,0 7.1875,1.96875 9.15625,4.9375l0.84375,1.25l0.84375,-1.25c1.96875,-2.96875 5.32031,-4.9375 9.15625,-4.9375c6.08594,0 11,4.91406 11,11c0,12.89844 -14.40625,19.57422 -21,24.78125c-6.59375,-5.20703 -21,-11.88281 -21,-24.78125c0,-6.08594 4.91406,-11 11,-11z"></path></svg>
+    </button>
+    <button class="product-card__action-btn quick-view" aria-label="Quick View">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+    </button>
+  </div>
 </div>
 
-{% stylesheet %}
+{% style %}
+  .card-gallery {
+    position: relative;
+    overflow: hidden;
+    background-color: #0a0a0a00;
+  }
+
+  .product-card__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 0, 0, 0.2); /* Red overlay by default */
+    opacity: 1;
+    transition: background-color 0.3s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .card-gallery:hover .product-card__overlay {
+    background-color: rgba(0, 0, 0, 0.3); /* Black overlay on hover */
+  }
+
+  /* Actions (Wishlist & Quick View) */
+  .product-card__actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  .card-gallery:hover .product-card__actions {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .product-card__action-btn {
+    width: 38px;
+    height: 38px;
+    background: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+  }
+
+  .product-card__action-btn:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  .product-card__action-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Add to Cart Bar within gallery */
+  .card-gallery .quick-add {
+    z-index: 5;
+    inset: auto 0 0 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: none;
+  }
+
+  .card-gallery .quick-add__button {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex !important;
+    visibility: hidden;
+    background-color: #000 !important;
+    color: #fff !important;
+    height: 54px;
+    border-radius: 0 !important;
+    width: 100% !important;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    font-size: 13px;
+  }
+
+  .card-gallery:hover .quick-add__button {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+
+
   .card-gallery {
     overflow: hidden;
     container-type: inline-size; /* Make card-gallery a container */
@@ -406,4 +515,4 @@
   [product-grid-view='zoom-out'] .card-gallery .slideshow-control {
     min-width: auto;
   }
-{% endstylesheet %}
+{% endstyle %}
