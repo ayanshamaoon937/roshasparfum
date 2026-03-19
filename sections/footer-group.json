@@ -47,7 +47,14 @@
         "footer_text": "An olfactory sanctuary dedicated to the world's most prestigious fragrances. Authenticity is our heritage, modern luxury is our signature.",
         "contact_link": "shopify://pages/contact",
         "location_text": "AMMAN, JORDAN",
-        "copyright_text": "ROSHAS PARFUM. CURATED INTERNATIONALLY, DELIVERED REGIONALLY."
+        "show_social": true,
+        "social_instagram": "#",
+        "social_facebook": "#",
+        "social_twitter": "#",
+        "social_pinterest": "",
+        "social_tiktok": "#",
+        "copyright_text": "ROSHAS PARFUM. CURATED INTERNATIONALLY, DELIVERED REGIONALLY.",
+        "show_payment": true
       }
     }
   },
