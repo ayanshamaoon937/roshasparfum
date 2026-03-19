@@ -1,0 +1,8 @@
+<li>
+  <a href="{{ item_url }}">
+    <span class="{% if is_vendor %}mega-vendor-link{% else %}collection-title{% endif %}">{{ title }}</span>
+    {% if desc != blank %}
+      <span class="desc">{{ desc | strip_html | truncate: 80 }}</span>
+    {% endif %}
+  </a>
+</li>

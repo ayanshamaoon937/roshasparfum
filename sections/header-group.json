@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header",
@@ -64,22 +73,14 @@
     "custom_header": {
       "type": "custom-header",
       "blocks": {
-        "brands_mega_xACHdm": {
-          "type": "brands_mega",
+        "mega_item_CL9ndV": {
+          "type": "mega_item",
           "settings": {
-            "trigger_label": "Brands",
-            "col1_heading": "Designer Houses",
-            "col1_menu": [],
-            "col2_heading": "Luxury & Niche",
-            "col2_menu": [],
-            "featured_product": "",
-            "featured_title": "Maison Christian Dior",
-            "featured_subtitle": "FEATURED DESIGNER OF THE WEEK",
-            "featured_link": "",
-            "featured_button_text": "EXPLORE THE ATELIER",
-            "bottom_left_text": "AUTHENTICITY GUARANTEED ON ALL BRANDS",
-            "bottom_right_label": "VIEW ALL BRANDS",
-            "bottom_right_link": ""
+            "trigger_label": "Collections",
+            "column": "1",
+            "collection": "",
+            "custom_title": "",
+            "custom_description": ""
           }
         },
         "collections_mega_Ymaiwi": {
@@ -87,11 +88,9 @@
           "settings": {
             "trigger_label": "Collections",
             "col1_heading": "Hot Selling Collections",
-            "col1_menu": [
-              "unisex"
-            ],
+            "col1_menu": "",
             "col2_heading": "Specialties",
-            "col2_menu": [],
+            "col2_menu": "",
             "featured_product": "acqua-di-gio-eau-de-parfum",
             "featured_title": "Libre Eau de Parfum",
             "featured_subtitle": "BEST SELLER OF THE MONTH",
@@ -101,11 +100,125 @@
             "bottom_right_label": "VIEW ALL COLLECTIONS",
             "bottom_right_link": ""
           }
+        },
+        "mega_item_y9WWPT": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "1",
+            "collection": "womens-perfume",
+            "custom_title": "",
+            "custom_description": "Elegant & Floral scents"
+          }
+        },
+        "mega_item_jrz7F3": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "1",
+            "collection": "mens-perfume",
+            "custom_title": "",
+            "custom_description": "Bold & Woody aromas"
+          }
+        },
+        "mega_item_hLXYyM": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "1",
+            "collection": "unisex",
+            "custom_title": "",
+            "custom_description": "Versatile & Shared notes"
+          }
+        },
+        "mega_item_akKfgf": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "1",
+            "collection": "new-arrivals",
+            "custom_title": "",
+            "custom_description": "Exclusive & Unique blends"
+          }
+        },
+        "mega_item_egPizP": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "2",
+            "collection": "gift-set",
+            "custom_title": "",
+            "custom_description": "The perfect luxury present"
+          }
+        },
+        "mega_item_KNMPUt": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "2",
+            "collection": "fragrance-bestsellers",
+            "custom_title": "",
+            "custom_description": "Pure Oud & Oriental luxury"
+          }
+        },
+        "mega_item_rJALhh": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "2",
+            "collection": "frontpage",
+            "custom_title": "",
+            "custom_description": "Elevate your space"
+          }
+        },
+        "brands_mega_xACHdm": {
+          "type": "brands_mega",
+          "settings": {
+            "trigger_label": "Brands",
+            "col1_heading": "Designer Houses",
+            "col1_menu": "",
+            "col2_heading": "Luxury & Niche",
+            "col2_menu": "",
+            "featured_product": "dior-homme-parfum",
+            "featured_title": "Maison Christian Dior",
+            "featured_subtitle": "FEATURED DESIGNER OF THE WEEK",
+            "featured_link": "",
+            "featured_button_text": "EXPLORE THE ATELIER",
+            "bottom_left_text": "AUTHENTICITY GUARANTEED ON ALL BRANDS",
+            "bottom_right_label": "",
+            "bottom_right_link": ""
+          }
+        },
+        "mega_all_vendors_Tg7PXV": {
+          "type": "mega_all_vendors",
+          "settings": {
+            "trigger_label": "Brands",
+            "column": "1",
+            "limit": 10
+          }
+        },
+        "mega_all_vendors_Jw4z7U": {
+          "type": "mega_all_vendors",
+          "settings": {
+            "trigger_label": "Brands",
+            "column": "2",
+            "limit": 10
+          }
         }
       },
       "block_order": [
+        "mega_item_CL9ndV",
+        "collections_mega_Ymaiwi",
+        "mega_item_y9WWPT",
+        "mega_item_jrz7F3",
+        "mega_item_hLXYyM",
+        "mega_item_akKfgf",
+        "mega_item_egPizP",
+        "mega_item_KNMPUt",
+        "mega_item_rJALhh",
         "brands_mega_xACHdm",
-        "collections_mega_Ymaiwi"
+        "mega_all_vendors_Tg7PXV",
+        "mega_all_vendors_Jw4z7U"
       ],
       "settings": {
         "logo_image": "shopify://shop_images/logo.png",
