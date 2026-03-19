@@ -224,7 +224,19 @@
     font-weight: 500;
     font-style: italic;
     color: #1a1a1a;
-   /* Mega Menu Vendor Styles */
+    margin-bottom: 10px;
+  }
+
+  .mega-featured-subtitle {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 30px;
+    font-weight: 500;
+  }
+
+  /* Mega Menu Vendor Styles */
   .mega-vendor-link {
     font-size: 14px;
     font-weight: 500;
@@ -235,7 +247,7 @@
   }
   .mega-menu-list li {
     margin-bottom: 12px;
-  }
+    list-style: none !important;
   }
 
   .mega-featured-btn {
@@ -391,7 +403,7 @@
   /* Grid Layout Fix */
   .mega-columns-wrap {
     display: flex;
-    gap: 60px;
+    gap: 30px;
     flex: 1;
   }
 
@@ -464,7 +476,7 @@
                         
                         {% if mega_block.type == 'collections_mega' %}
                           <a href="{{ mega_block.settings.featured_link | default: featured_product.url }}" class="mega-featured-shop-now">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                             {{ mega_block.settings.featured_button_text | default: 'SHOP NOW' }}
                           </a>
                         {% else %}
@@ -480,17 +492,6 @@
                     <div class="mega-column" style="flex: 1;">
                       <h4 class="mega-column-title">{{ mega_block.settings.col1_heading }}</h4>
                       <ul class="mega-menu-list">
-                        <!-- Navigation Menu (Dropdown-style multi-selection) -->
-                        {%- if mega_block.settings.col1_menu != blank -%}
-                          {%- for link_item in linklists[mega_block.settings.col1_menu].links -%}
-                            <li>
-                              <a href="{{ link_item.url }}">
-                                <span class="collection-title">{{ link_item.title }}</span>
-                              </a>
-                            </li>
-                          {%- endfor -%}
-                        {%- endif -%}
-
                         <!-- Block-based Items (Single entries) -->
                         {%- for block_item in section.blocks -%}
                           {%- liquid
@@ -547,17 +548,6 @@
                     <div class="mega-column" style="flex: 1;">
                       <h4 class="mega-column-title">{{ mega_block.settings.col2_heading }}</h4>
                       <ul class="mega-menu-list">
-                        <!-- Navigation Menu (Dropdown-style multi-selection) -->
-                        {%- if mega_block.settings.col2_menu != blank -%}
-                          {%- for link_item in linklists[mega_block.settings.col2_menu].links -%}
-                            <li>
-                              <a href="{{ link_item.url }}">
-                                <span class="collection-title">{{ link_item.title }}</span>
-                              </a>
-                            </li>
-                          {%- endfor -%}
-                        {%- endif -%}
-
                         <!-- Block-based Items (Single entries) -->
                         {%- for block_item in section.blocks -%}
                           {%- liquid
@@ -610,74 +600,63 @@
                       </ul>
                     </div>
 
-                    <!-- Column 4: Third Collection List -->
-                    <div class="mega-column" style="flex: 1;">
-                      <h4 class="mega-column-title">{{ mega_block.settings.col3_heading }}</h4>
-                      <ul class="mega-menu-list">
-                        <!-- Navigation Menu (Dropdown-style multi-selection) -->
-                        {%- if mega_block.settings.col3_menu != blank -%}
-                          {%- for link_item in linklists[mega_block.settings.col3_menu].links -%}
-                            <li>
-                              <a href="{{ link_item.url }}">
-                                <span class="collection-title">{{ link_item.title }}</span>
-                              </a>
-                            </li>
-                          {%- endfor -%}
-                        {%- endif -%}
-
-                        <!-- Block-based Items (Single entries) -->
-                        {%- for block_item in section.blocks -%}
-                          {%- liquid
-                            assign item_trigger = block_item.settings.trigger_label | downcase | strip
-                            assign current_link_title = link.title | downcase | strip
-                          -%}
-                          {%- if item_trigger == current_link_title and block_item.settings.column == '3' -%}
+                    {%- if mega_block.type == 'brands_mega' -%}
+                      <!-- Column 4: Third Collection List -->
+                      <div class="mega-column" style="flex: 1;">
+                        <h4 class="mega-column-title">{{ mega_block.settings.col3_heading }}</h4>
+                        <ul class="mega-menu-list">
+                          <!-- Block-based Items (Single entries) -->
+                          {%- for block_item in section.blocks -%}
                             {%- liquid
-                              if block_item.type == 'mega_item'
-                                assign coll = block_item.settings.collection
-                                assign item_url = coll.url
-                                assign title = block_item.settings.custom_title | default: coll.title
-                                assign desc = block_item.settings.custom_description | default: coll.description
-                                render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: false
-                              elsif block_item.type == 'mega_brand_item'
-                                assign coll = block_item.settings.collection
-                                assign item_url = coll.url
-                                assign title = block_item.settings.custom_title | default: coll.title
-                                assign desc = block_item.settings.custom_description
-                                render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: true
-                              elsif block_item.type == 'mega_manual_brand'
-                                assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />'
-                                for vendor_item in vendor_list_raw
-                                  assign brands_by_comma = vendor_item | split: ','
-                                  for vendor_name_raw in brands_by_comma
-                                    assign vendor_name = vendor_name_raw | strip_html | strip
-                                    if vendor_name != blank
-                                      assign vendor_encoded = vendor_name | url_encode
-                                      assign item_url = "/collections/vendors?q=" | append: vendor_encoded
-                                      render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
-                                    endif
-                                  endfor
-                                endfor
-                              elsif block_item.type == 'mega_tag_item'
-                                assign tag = block_item.settings.tag_name
-                                assign coll_context = block_item.settings.collection
-                                assign tag_handle = tag | handleize
-                                if coll_context != blank
-                                  assign item_url = coll_context.url | append: '/' | append: tag_handle
-                                else
-                                  assign item_url = '/collections/all/' | append: tag_handle
-                                endif
-                                assign title = block_item.settings.custom_title | default: tag
-                                assign desc = block_item.settings.custom_description
-                                render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: false
-                              endif
+                              assign item_trigger = block_item.settings.trigger_label | downcase | strip
+                              assign current_link_title = link.title | downcase | strip
                             -%}
-                          {%- endif -%}
-                        {%- endfor -%}
-                      </ul>
-                    </div>
-                      </ul>
-                    </div>
+                            {%- if item_trigger == current_link_title and block_item.settings.column == '3' -%}
+                              {%- liquid
+                                if block_item.type == 'mega_item'
+                                  assign coll = block_item.settings.collection
+                                  assign item_url = coll.url
+                                  assign title = block_item.settings.custom_title | default: coll.title
+                                  assign desc = block_item.settings.custom_description | default: coll.description
+                                  render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: false
+                                elsif block_item.type == 'mega_brand_item'
+                                  assign coll = block_item.settings.collection
+                                  assign item_url = coll.url
+                                  assign title = block_item.settings.custom_title | default: coll.title
+                                  assign desc = block_item.settings.custom_description
+                                  render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: true
+                                elsif block_item.type == 'mega_manual_brand'
+                                  assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />'
+                                  for vendor_item in vendor_list_raw
+                                    assign brands_by_comma = vendor_item | split: ','
+                                    for vendor_name_raw in brands_by_comma
+                                      assign vendor_name = vendor_name_raw | strip_html | strip
+                                      if vendor_name != blank
+                                        assign vendor_encoded = vendor_name | url_encode
+                                        assign item_url = "/collections/vendors?q=" | append: vendor_encoded
+                                        render 'mega-menu-item-link', item_url: item_url, title: vendor_name, is_vendor: true
+                                      endif
+                                    endfor
+                                  endfor
+                                elsif block_item.type == 'mega_tag_item'
+                                  assign tag = block_item.settings.tag_name
+                                  assign coll_context = block_item.settings.collection
+                                  assign tag_handle = tag | handleize
+                                  if coll_context != blank
+                                    assign item_url = coll_context.url | append: '/' | append: tag_handle
+                                  else
+                                    assign item_url = '/collections/all/' | append: tag_handle
+                                  endif
+                                  assign title = block_item.settings.custom_title | default: tag
+                                  assign desc = block_item.settings.custom_description
+                                  render 'mega-menu-item-link', item_url: item_url, title: title, desc: desc, is_vendor: false
+                                endif
+                              -%}
+                            {%- endif -%}
+                          {%- endfor -%}
+                        </ul>
+                      </div>
+                    {%- endif -%}
                   </div>
                 </div>
 
@@ -709,7 +688,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
       </a>
       <a href="/cart" class="header-icon-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
         <span class="cart-count-badge">{{ cart.item_count }}</span>
       </a>
     </div>
@@ -776,13 +755,7 @@
           "type": "text",
           "id": "col1_heading",
           "label": "Column 1 Heading",
-          "default": "Categories"
-        },
-        {
-          "type": "link_list",
-          "id": "col1_menu",
-          "label": "Column 1 Menu (Navigation Menu)",
-          "info": "Dropdown selection for multiple links/tags managed via Online Store > Navigation"
+          "default": "Shop by Collection"
         },
         {
           "type": "header",
@@ -792,13 +765,7 @@
           "type": "text",
           "id": "col2_heading",
           "label": "Column 2 Heading",
-          "default": "Specialties"
-        },
-        {
-          "type": "link_list",
-          "id": "col2_menu",
-          "label": "Column 2 Menu (Navigation Menu)",
-          "info": "Dropdown selection for multiple links/tags managed via Online Store > Navigation"
+          "default": "All Collections"
         },
         {
           "type": "header",
@@ -877,12 +844,6 @@
           "default": "Designer Houses"
         },
         {
-          "type": "link_list",
-          "id": "col1_menu",
-          "label": "Column 1 Menu (Navigation Menu)",
-          "info": "Dropdown selection for multiple links/tags managed via Online Store > Navigation"
-        },
-        {
           "type": "header",
           "content": "Column 2"
         },
@@ -893,10 +854,14 @@
           "default": "Luxury & Niche"
         },
         {
-          "type": "link_list",
-          "id": "col2_menu",
-          "label": "Column 2 Menu (Navigation Menu)",
-          "info": "Dropdown selection for multiple links/tags managed via Online Store > Navigation"
+          "type": "header",
+          "content": "Column 3"
+        },
+        {
+          "type": "text",
+          "id": "col3_heading",
+          "label": "Column 3 Heading",
+          "default": "New Arrivals"
         },
         {
           "type": "header",

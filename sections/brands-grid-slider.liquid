@@ -240,8 +240,10 @@
     <div class="brands-layout-wrap">
       {%- if is_slider -%}
         <slideshow-component
-          infinite="false"
+          infinite="{{ section.settings.autoplay | default: false }}"
           initial-slide="0"
+          autoplay="{{ section.settings.autoplay | default: false }}"
+          autoplay-speed="{{ section.settings.autoplay_speed | default: 5000 }}"
           style="--slideshow-timeline: {% render 'timeline-scope', count: section.blocks.size, prefix: 'brand' %};"
         >
           <slideshow-container ref="slideshowContainer">
@@ -279,6 +281,26 @@
 {
   "name": "Brands Grid & Slider",
   "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "ms",
+      "label": "Autoplay Speed",
+      "default": 5000
+    },
     {
       "type": "select",
       "id": "layout_type",

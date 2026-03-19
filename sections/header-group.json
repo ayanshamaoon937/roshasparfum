@@ -78,9 +78,7 @@
           "settings": {
             "trigger_label": "Collections",
             "col1_heading": "Hot Selling Collections",
-            "col1_menu": "",
             "col2_heading": "Specialties",
-            "col2_menu": "",
             "featured_product": "acqua-di-gio-eau-de-parfum",
             "featured_title": "Libre Eau de Parfum",
             "featured_subtitle": "BEST SELLER OF THE MONTH",
@@ -166,9 +164,8 @@
           "settings": {
             "trigger_label": "Brands",
             "col1_heading": "Designer Houses",
-            "col1_menu": "",
             "col2_heading": "Luxury & Niche",
-            "col2_menu": "",
+            "col3_heading": "New Arrivals",
             "featured_product": "dior-homme-parfum",
             "featured_title": "Maison Christian Dior",
             "featured_subtitle": "FEATURED DESIGNER OF THE WEEK",
@@ -184,7 +181,7 @@
           "settings": {
             "trigger_label": "Brands",
             "column": "1",
-            "vendor_names": "Boss\nBurberry\nBvlgari\nCarolina Herrera\nChanel\nChloé\nCreed\nDAVIDOFF\nDe Marly\nDior\nDolce&Gabbana\nDunhill\nEmporio Armani\nGiorgio Armani\nGivenchy"
+            "vendor_names": "Boss\nBurberry\nBvlgari\nCarolina Herrera\nChanel\nChloé\nCreed\nDAVIDOFF\nDe Marly\nDior\nDolce&Gabbana"
           }
         },
         "mega_manual_brand_7fy3wX": {
@@ -192,7 +189,15 @@
           "settings": {
             "trigger_label": "Brands",
             "column": "2",
-            "vendor_names": "Gucci\nHermès\nJean Paul Gaultier\nKAYALI\nLancôme\nLaverne\nMarc Jacobs\nMontblanc\nNarcisco\nPrada\nRabanne\nRoshas\nTom Ford\nValentino\nVersace\nVictoria's Secret\nViktor & Rolf\nYves Saint Laurent"
+            "vendor_names": "Dunhill\nEmporio Armani\nGiorgio Armani\nGivenchy\nGucci\nHermès\nJean Paul Gaultier\nKAYALI\nLancôme\nLaverne\nMarc Jacobs"
+          }
+        },
+        "mega_manual_brand_6xra8F": {
+          "type": "mega_manual_brand",
+          "settings": {
+            "trigger_label": "Brands",
+            "column": "3",
+            "vendor_names": "Montblanc\nNarcisco\nPrada\nRabanne\nRoshas\nTom Ford\nValentino\nVersace\nVictoria's Secret\nViktor & Rolf\nYves Saint Laurent"
           }
         }
       },
@@ -207,7 +212,8 @@
         "mega_item_rJALhh",
         "brands_mega_xACHdm",
         "mega_manual_brand_eWWkAn",
-        "mega_manual_brand_7fy3wX"
+        "mega_manual_brand_7fy3wX",
+        "mega_manual_brand_6xra8F"
       ],
       "settings": {
         "logo_image": "shopify://shop_images/logo.png",

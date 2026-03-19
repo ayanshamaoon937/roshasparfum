@@ -1,10 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer",
   "sections": {
     "custom_footer": {
       "type": "custom-footer",
-      "settings": {}
+      "blocks": {
+        "link_list_Mk3hiV": {
+          "type": "link_list",
+          "settings": {
+            "title": "COLLECTIONS",
+            "menu": "collections"
+          }
+        },
+        "link_list_tyGfC3": {
+          "type": "link_list",
+          "settings": {
+            "title": "Quick Links",
+            "menu": "new-menu"
+          }
+        },
+        "link_list_KW4XBG": {
+          "type": "link_list",
+          "settings": {
+            "title": "Legal",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_Mk3hiV",
+        "link_list_tyGfC3",
+        "link_list_KW4XBG"
+      ],
+      "settings": {
+        "logo_image": "shopify://shop_images/logo-white.png",
+        "logo_text": "ROSHAS",
+        "footer_text": "An olfactory sanctuary dedicated to the world's most prestigious fragrances. Authenticity is our heritage, modern luxury is our signature.",
+        "contact_link": "shopify://pages/contact",
+        "location_text": "AMMAN, JORDAN",
+        "copyright_text": "ROSHAS PARFUM. CURATED INTERNATIONALLY, DELIVERED REGIONALLY."
+      }
     }
   },
   "order": [

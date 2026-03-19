@@ -49,7 +49,7 @@
       font-family: var(--font-body);
       font-size: 10px;
       letter-spacing: 0.25em;
-      color: #b59b61;
+      color: #808080;
       text-transform: uppercase;
       font-weight: 500;
     }
@@ -147,41 +147,43 @@
 
     .section-resource-list__footer {
       text-align: center;
-      margin-top: 60px;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      margin-top: 50px;
     }
 
     .trending-view-all {
       display: inline-block;
-      padding: 18px 50px;
-      border: 1px solid #e0e0e0;
+      padding: 16px 45px;
+      border: 1px solid #1a1a1a;
       text-decoration: none !important;
-      color: #1a1a1a !important;
+      color: #ffffff !important;
       font-family: var(--font-body);
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.2em;
+      font-weight: 500;
       transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-      background: transparent;
+      background: #1a1a1a;
     }
 
     .trending-view-all:hover {
-      background-color: #1a1a1a;
-      color: #ffffff !important;
+      background-color: transparent;
+      color: #1a1a1a !important;
       border-color: #1a1a1a;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
     .section-resource-list {
-      padding-top: 80px !important;
-      padding-bottom: 80px !important;
+      padding-top: {{ section.settings.padding-block-start }}px !important;
+      padding-bottom: {{ section.settings.padding-block-end }}px !important;
       background-color: #ffffff !important;
     }
 
     .section-background {
       display: none !important;
+    }
+    slideshow-slides[gutters*='start'] {
+      padding-inline-start: 0 !important;
     }
   {% endstyle %}
   {% liquid
@@ -590,20 +592,20 @@
       "id": "padding-block-start",
       "label": "t:settings.top",
       "min": 0,
-      "max": 100,
-      "step": 1,
+      "max": 150,
+      "step": 2,
       "unit": "px",
-      "default": 0
+      "default": 80
     },
     {
       "type": "range",
       "id": "padding-block-end",
       "label": "t:settings.bottom",
       "min": 0,
-      "max": 100,
-      "step": 1,
+      "max": 150,
+      "step": 2,
       "unit": "px",
-      "default": 0
+      "default": 80
     }
   ],
   "presets": [

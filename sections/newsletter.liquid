@@ -39,7 +39,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: {{ section.settings.overlay_color }};
+    background: {{ section.settings.overlay_color | default: '#000000' }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     z-index: 2;
   }
 
@@ -362,7 +363,17 @@
       "type": "color",
       "id": "overlay_color",
       "label": "Overlay Color",
-      "default": "rgba(0,0,0,0.7)"
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 70
     },
     {
       "type": "color",

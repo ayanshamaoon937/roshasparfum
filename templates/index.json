@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "new_hero_jYUBRa": {
@@ -10,6 +19,8 @@
             "subtitle": "THE MASTERPIECE COLLECTION",
             "heading": "Where Scent Becomes Art",
             "description": "Curating the world's most prestigious olfactory masterpieces — from Dior to Tom Ford.",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
             "button_label": "Shop Now",
             "button_link": ""
           }
@@ -21,6 +32,8 @@
             "subtitle": "THE MASTERPIECE COLLECTION",
             "heading": "Perfume tells stories",
             "description": "Our most-loved fragrances – handpicked for your festive moments. Shop ROSHAS bestsellers this winter",
+            "overlay_color": "#000000",
+            "overlay_opacity": 50,
             "button_label": "Shop Now",
             "button_link": ""
           }
@@ -43,6 +56,189 @@
         "padding_bottom": 36,
         "padding_top_mobile": 20,
         "padding_bottom_mobile": 20
+      }
+    },
+    "product_list_fa6P9H": {
+      "type": "product-list",
+      "blocks": {
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "t:names.product_card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery_677WP3": {
+              "type": "_product-card-gallery",
+              "name": "t:names.product_card_media",
+              "settings": {
+                "image_ratio": "adapt",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "product_title_YXxMTj": {
+              "type": "product-title",
+              "name": "t:names.product_title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "price_JQzVV4": {
+              "type": "price",
+              "name": "t:names.product_price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "h6",
+                "width": "100%",
+                "alignment": "center",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "product_card_gallery_677WP3",
+            "product_title_YXxMTj",
+            "price_JQzVV4"
+          ]
+        }
+      },
+      "name": "Featured collection",
+      "settings": {
+        "collection": "all",
+        "subtitle": "MOST WANTED",
+        "title": "Trending Now",
+        "description": "<p>Discover the scents that are defining the modern era. Curated selections from the world's most prestigious ateliers.</p>",
+        "show_view_all": true,
+        "view_all_text": "Explore Global Trending",
+        "layout_type": "grid",
+        "carousel_on_mobile": false,
+        "max_products": 8,
+        "columns": 4,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 24,
+        "rows_gap": 24,
+        "icons_style": "arrow",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "horizontal_alignment": "center",
+        "gap": 24,
+        "color_scheme": "scheme-2",
+        "padding-block-start": 70,
+        "padding-block-end": 70
+      }
+    },
+    "collections_slider_Y8VXJp": {
+      "type": "collections-slider",
+      "blocks": {
+        "slide_DmtKbX": {
+          "type": "slide",
+          "settings": {
+            "collection": "new-arrivals",
+            "subtitle": "",
+            "heading": "",
+            "description": "",
+            "button_label": "Explore Collection"
+          }
+        },
+        "slide_R8tyCt": {
+          "type": "slide",
+          "settings": {
+            "collection": "fragrance-bestsellers",
+            "subtitle": "",
+            "heading": "",
+            "description": "",
+            "button_label": "Explore Collection"
+          }
+        },
+        "slide_bCAwwM": {
+          "type": "slide",
+          "settings": {
+            "collection": "frontpage",
+            "subtitle": "BOLD & SOPHISTICATED",
+            "heading": "",
+            "description": "",
+            "button_label": "Explore Collection"
+          }
+        }
+      },
+      "block_order": [
+        "slide_DmtKbX",
+        "slide_R8tyCt",
+        "slide_bCAwwM"
+      ],
+      "name": "Collection Slider (Bars)",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": 5000,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "subtitle_color": "#d4af37",
+        "heading_color": "#ffffff",
+        "heading_font_size_desktop": 90,
+        "heading_font_size_tablet": 60,
+        "heading_font_size_mobile": 40,
+        "heading_font_weight": "400",
+        "heading_margin_bottom": 30,
+        "desc_color": "#ffffff",
+        "desc_font_size": 16,
+        "desc_font_weight": "400",
+        "desc_margin_bottom": 40,
+        "btn_color": "#000000",
+        "btn_bg_color": "#e6be5a",
+        "btn_border_color": "#e6be5a",
+        "btn_font_size": 13
       }
     },
     "product_list_EEnkLe": {
@@ -161,470 +357,158 @@
         "horizontal_alignment": "center",
         "gap": 28,
         "color_scheme": "scheme-2",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 70,
+        "padding-block-end": 70
       }
     },
-    "section_RFrETV": {
-      "type": "section",
+    "collection_grid_XrnmQQ": {
+      "type": "collection-grid",
       "blocks": {
-        "group_478MQp": {
-          "type": "group",
+        "collection_3wyWYL": {
+          "type": "collection",
           "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 32,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "custom_height": 100,
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-5",
-            "background_media": "image",
-            "video_position": "cover",
-            "background_image": "shopify://shop_images/Miss_Dior__das_Eau_de_Parfum_von_Dior_mit_Couture-Schleife___DIOR.jpg",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "hero-apparel-2",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 40,
-            "padding-inline-end": 40
-          },
-          "blocks": {
-            "spacer_VdRmnr": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
-            "text_WWbcpD": {
-              "type": "text",
-              "settings": {
-                "text": "<p>W<a href=\"https://roshasparfum.com/womans-perfume/\">oman’s perfume</a></p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_HRAJ7k": {
-              "type": "button",
-              "settings": {
-                "label": "Shop now",
-                "link": "shopify://collections/womens-perfume",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "spacer_VdRmnr",
-            "text_WWbcpD",
-            "button_HRAJ7k"
-          ]
+            "collection": "womens-perfume",
+            "image": "shopify://shop_images/Miss_Dior__das_Eau_de_Parfum_von_Dior_mit_Couture-Schleife___DIOR.jpg",
+            "subtitle": "",
+            "heading": "",
+            "description": ""
+          }
         },
-        "group_qbYfmW": {
-          "type": "group",
+        "collection_zcFQY7": {
+          "type": "collection",
           "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 32,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "custom_height": 100,
-            "inherit_color_scheme": false,
-            "color_scheme": "scheme-5",
-            "background_media": "image",
-            "video_position": "cover",
-            "background_image": "shopify://shop_images/Dior_Perfume_Designer_Colognes_Fragrances_for_Women___DIOR.jpg",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "hero-apparel-1",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 40,
-            "padding-inline-end": 40
-          },
-          "blocks": {
-            "spacer_cjdJfC": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
-            "text_w9nTqx": {
-              "type": "text",
-              "settings": {
-                "text": "<p><a href=\"https://roshasparfum.com/mens-perfumes/\">Men’s perfumes</a></p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "h3",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_yWfDW7": {
-              "type": "button",
-              "settings": {
-                "label": "Shop now",
-                "link": "shopify://collections/mens-perfume",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "spacer_cjdJfC",
-            "text_w9nTqx",
-            "button_yWfDW7"
-          ]
+            "collection": "mens-perfume",
+            "image": "shopify://shop_images/Dior_Perfume_Designer_Colognes_Fragrances_for_Women___DIOR.jpg",
+            "subtitle": "",
+            "heading": "",
+            "description": ""
+          }
+        },
+        "collection_p3HrgC": {
+          "type": "collection",
+          "settings": {
+            "collection": "unisex",
+            "image": "shopify://shop_images/Fim_de_Ano_com_Givenchy_-_E_na_Gira_Ofertas___Givenchy__Irresistible_Givenchy_-_Eau_de_Parfum_Feminino__Apenas_ame_e_deixe_ir___Disponivel_no_site_acesse_no_link_da_bio.png",
+            "subtitle": "",
+            "heading": "Unisex Perfume",
+            "description": ""
+          }
         }
       },
       "block_order": [
-        "group_478MQp",
-        "group_qbYfmW"
+        "collection_3wyWYL",
+        "collection_zcFQY7",
+        "collection_p3HrgC"
       ],
-      "name": "t:names.split_showcase",
+      "name": "Collection Grid 3-Items",
       "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
-        "section_width": "full-width",
-        "section_height": "large",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "background_color": "#f9f9f9",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "heading_font_size_desktop": 48,
+        "heading_font_size_tablet": 36,
+        "heading_font_size_mobile": 28,
+        "heading_font_weight": "400",
+        "heading_color": "#ffffff",
+        "heading_margin_bottom": 20,
+        "desc_font_size": 14,
+        "desc_font_weight": "400",
+        "desc_color": "#ffffff",
+        "desc_margin_bottom": 30,
+        "btn_font_size": 12,
+        "btn_color": "#ffffff",
+        "btn_bg_color": "rgba(0,0,0,0)",
+        "btn_border_width": 0,
+        "btn_border_color": "rgba(0,0,0,0)"
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "brands_grid_slider_custom": {
+      "type": "brands-grid-slider",
       "blocks": {
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
+        "b2": {
+          "type": "brand",
           "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "center",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "center",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
-        }
-      },
-      "name": "Featured collection",
-      "settings": {
-        "collection": "all",
-        "subtitle": "MOST WANTED",
-        "title": "Trending Now",
-        "description": "<p>Discover the scents that are defining the modern era. Curated selections from the world's most prestigious ateliers.</p>",
-        "show_view_all": true,
-        "view_all_text": "Explore Global Trending",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 24,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "center",
-        "gap": 24,
-        "color_scheme": "scheme-2",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "hero_zxKQRj": {
-      "type": "hero",
-      "blocks": {
-        "text_DwTqFx": {
-          "type": "text",
-          "settings": {
-            "text": "<h1>New arrivals</h1>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "logo": "shopify://shop_images/dior-perfumes-logo.png",
+            "location": "PARIS",
+            "brand_name": "DIOR",
+            "brand_desc": "TIMELESS FRENCH ELEGANCE",
+            "link": ""
+          }
         },
-        "text_wcqqNq": {
-          "type": "text",
+        "b1": {
+          "type": "brand",
           "settings": {
-            "text": "<p>Made with care and unconditionally loved by our customers.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 32,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "logo": "shopify://shop_images/burberry-perfumes-logo-in-black-and-white.png",
+            "location": "LONDON",
+            "brand_name": "BURBERRY",
+            "brand_desc": "BRITISH HERITAGE LUXURY",
+            "link": ""
+          }
         },
-        "button_yCNKRP": {
-          "type": "button",
-          "name": "t:names.button",
+        "b3": {
+          "type": "brand",
           "settings": {
-            "label": "Shop now",
-            "link": "shopify://collections/new-arrivals",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "logo": "shopify://shop_images/boss-perfumes-logo.png",
+            "location": "METZINGEN",
+            "brand_name": "HUGO BOSS",
+            "brand_desc": "MODERN MASCULINE POWER",
+            "link": ""
+          }
+        },
+        "b4": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/gucci-perfumes-logo.png",
+            "location": "FLORENCE",
+            "brand_name": "GUCCI",
+            "brand_desc": "ITALIAN EXTRAVAGANCE",
+            "link": ""
+          }
+        },
+        "brand_NQRzFe": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/prada-perfumes-logo.png",
+            "location": "MILAN",
+            "brand_name": "PRADA",
+            "brand_desc": "AVANT-GARDE SOPHISTICATION",
+            "link": ""
+          }
         }
       },
       "block_order": [
-        "text_DwTqFx",
-        "text_wcqqNq",
-        "button_yCNKRP"
+        "b2",
+        "b1",
+        "b3",
+        "b4",
+        "brand_NQRzFe"
       ],
-      "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "image_2": "shopify://shop_images/Fim_de_Ano_com_Givenchy_-_E_na_Gira_Ofertas___Givenchy__Irresistible_Givenchy_-_Eau_de_Parfum_Feminino__Apenas_ame_e_deixe_ir___Disponivel_no_site_acesse_no_link_da_bio_3.jpg",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": true,
-        "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/Holiday_Season_2022.jpg",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
-        "overlay_color": "#00000026",
-        "overlay_style": "gradient",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "autoplay": true,
+        "autoplay_speed": 5000,
+        "layout_type": "slider",
+        "columns_desktop": 4,
+        "columns_mobile": "1",
+        "gap_desktop": 24,
+        "bg_color": "#ffffff",
+        "subtitle": "THE ROSHAS CURATION",
+        "title": "The Ateliers",
+        "description": "We partner exclusively with authorized maisons to bring you the global icons of olfactory art.",
+        "logo_max_width": 120,
+        "border_color": "#f0f0f0",
+        "hover_border_color": "#000000",
+        "hover_content_color": "#000000",
+        "loc_size": 10,
+        "loc_weight": "600",
+        "loc_color": "#808080",
+        "name_size": 24,
+        "name_weight": "500",
+        "name_color": "#1a1a1a",
+        "desc_size": 9,
+        "desc_weight": "400",
+        "desc_color": "#808080"
       }
     },
     "featured_blog_posts_acGTXX": {
@@ -749,6 +633,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "name": "t:names.blog_posts_carousel",
       "settings": {
         "blog": "news",
@@ -769,288 +654,14 @@
         "padding-block-end": 48
       }
     },
-    "brands_marquee_JWnXpn": {
-      "type": "brands-marquee",
-      "blocks": {
-        "brand_W9JLzK": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Chanel",
-            "link": ""
-          }
-        },
-        "brand_4XwTzb": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Tom Ford",
-            "link": ""
-          }
-        },
-        "brand_ddcDwn": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Gucci",
-            "link": ""
-          }
-        },
-        "brand_r9YQxW": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "YSL",
-            "link": ""
-          }
-        },
-        "brand_UbQmDB": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Armani",
-            "link": ""
-          }
-        },
-        "brand_LDEYQa": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Versace",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "brand_W9JLzK",
-        "brand_4XwTzb",
-        "brand_ddcDwn",
-        "brand_r9YQxW",
-        "brand_UbQmDB",
-        "brand_LDEYQa"
-      ],
-      "name": "Brands Marquee",
-      "settings": {
-        "background_color": "#ffffff",
-        "max_width": 1400,
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "border_bottom_width": 1,
-        "border_bottom_color": "#eeeeee",
-        "speed_factor": 40,
-        "movement_direction": "normal",
-        "gap": 60,
-        "logo_height": 30
-      }
-    },
-    "collection_grid_XrnmQQ": {
-      "type": "collection-grid",
-      "blocks": {
-        "collection_3wyWYL": {
-          "type": "collection",
-          "settings": {
-            "collection": "womens-perfume",
-            "subtitle": "",
-            "heading": "",
-            "description": ""
-          }
-        },
-        "collection_zcFQY7": {
-          "type": "collection",
-          "settings": {
-            "collection": "mens-perfume",
-            "subtitle": "",
-            "heading": "",
-            "description": ""
-          }
-        },
-        "collection_p3HrgC": {
-          "type": "collection",
-          "settings": {
-            "collection": "unisex",
-            "subtitle": "",
-            "heading": "Unisex Perfume",
-            "description": ""
-          }
-        }
-      },
-      "block_order": [
-        "collection_3wyWYL",
-        "collection_zcFQY7",
-        "collection_p3HrgC"
-      ],
-      "name": "Collection Grid 3-Items",
-      "settings": {
-        "background_color": "#ffffff",
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 40,
-        "heading_font_size_desktop": 48,
-        "heading_font_size_tablet": 36,
-        "heading_font_size_mobile": 28,
-        "heading_font_weight": "400",
-        "heading_color": "#ffffff",
-        "heading_margin_bottom": 20,
-        "desc_font_size": 14,
-        "desc_font_weight": "400",
-        "desc_color": "#ffffff",
-        "desc_margin_bottom": 30,
-        "btn_font_size": 12,
-        "btn_color": "#ffffff",
-        "btn_bg_color": "rgba(0,0,0,0)",
-        "btn_border_width": 0,
-        "btn_border_color": "rgba(0,0,0,0)"
-      }
-    },
-    "collections_slider_Y8VXJp": {
-      "type": "collections-slider",
-      "blocks": {
-        "slide_DmtKbX": {
-          "type": "slide",
-          "settings": {
-            "collection": "new-arrivals",
-            "subtitle": "",
-            "heading": "",
-            "description": "",
-            "button_label": "Explore Collection"
-          }
-        },
-        "slide_R8tyCt": {
-          "type": "slide",
-          "settings": {
-            "collection": "fragrance-bestsellers",
-            "subtitle": "",
-            "heading": "",
-            "description": "",
-            "button_label": "Explore Collection"
-          }
-        },
-        "slide_bCAwwM": {
-          "type": "slide",
-          "settings": {
-            "collection": "frontpage",
-            "subtitle": "BOLD & SOPHISTICATED",
-            "heading": "",
-            "description": "",
-            "button_label": "Explore Collection"
-          }
-        }
-      },
-      "block_order": [
-        "slide_DmtKbX",
-        "slide_R8tyCt",
-        "slide_bCAwwM"
-      ],
-      "name": "Collection Slider (Bars)",
-      "settings": {
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "subtitle_color": "#d4af37",
-        "heading_color": "#ffffff",
-        "heading_font_size_desktop": 90,
-        "heading_font_size_tablet": 60,
-        "heading_font_size_mobile": 40,
-        "heading_font_weight": "400",
-        "heading_margin_bottom": 30,
-        "desc_color": "#ffffff",
-        "desc_font_size": 16,
-        "desc_font_weight": "400",
-        "desc_margin_bottom": 40,
-        "btn_color": "#000000",
-        "btn_bg_color": "#e6be5a",
-        "btn_border_color": "#e6be5a",
-        "btn_font_size": 13
-      }
-    },
-    "brands_grid_slider_custom": {
-      "type": "brands-grid-slider",
-      "blocks": {
-        "b1": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Dior",
-            "location": "PARIS",
-            "brand_desc": "TIMELESS FRENCH ELEGANCE"
-          }
-        },
-        "b2": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Chanel",
-            "location": "PARIS",
-            "brand_desc": "THE ULTIMATE LUXURY STATEMENT"
-          }
-        },
-        "b3": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Tom Ford",
-            "location": "NEW YORK",
-            "brand_desc": "MODERN SOPHISTICATION"
-          }
-        },
-        "b4": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Gucci",
-            "location": "FLORENCE",
-            "brand_desc": "ITALIAN CRAFTSMANSHIP"
-          }
-        },
-        "b5": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "YSL",
-            "location": "PARIS",
-            "brand_desc": "REBELLIOUS PARISIAN COUTURE"
-          }
-        },
-        "b6": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Versace",
-            "location": "MILANO",
-            "brand_desc": "MEDITERRANEAN HERITAGE"
-          }
-        },
-        "b7": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Prada",
-            "location": "PARIS",
-            "brand_desc": "AVANT-GARDE LUXURY"
-          }
-        },
-        "b8": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Hermès",
-            "location": "PARIS",
-            "brand_desc": "PINNACLE OF CRAFTSMANSHIP"
-          }
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4",
-        "b5",
-        "b6",
-        "b7",
-        "b8"
-      ],
-      "settings": {
-        "layout_type": "grid",
-        "columns_desktop": 4,
-        "gap_desktop": 24,
-        "title": "The Ateliers"
-      }
-    },
     "newsletter_eYNjCm": {
       "type": "newsletter",
       "name": "Luxury Newsletter",
       "settings": {
         "image": "shopify://shop_images/hero-collection.jpg",
-        "overlay_color": "#000000b3",
-        "accent_color": "#e6be5a",
+        "overlay_color": "#000000",
+        "overlay_opacity": 70,
+        "accent_color": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 80,
         "padding_top_mobile": 40,
@@ -1077,12 +688,78 @@
         "privacy_text": "<p>BY JOINING, YOU AGREE TO OUR TERMS & PRIVACY POLICY</p>"
       }
     },
+    "1773914832eaad83ee": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_testimonials_carousel_Yjhywb": {
+          "type": "shopify://apps/judge-me-reviews/blocks/testimonials_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": false,
+            "reviews_selection": "product_reviews",
+            "products": [],
+            "star_rating": "all",
+            "max_reviews": 20,
+            "quote_marks_size": "hidden",
+            "product_name_text_size": "small",
+            "verified_badge_style": "icon",
+            "card_height": "medium",
+            "text_size": "small",
+            "stars_size": "medium",
+            "arrows_position": "bottom",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "quote_marks_style": "serif",
+            "card_color": "#f9f9f9",
+            "stars_and_quote_marks_color": "#fdcc0d",
+            "text_color": "#000000",
+            "arrows_color": "#000000",
+            "show_border": false,
+            "border_color": "#108474",
+            "show_drop_shadow": false,
+            "transition_speed": 5,
+            "header_text": "What Our Clients Say",
+            "show_average_rating": false
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_testimonials_carousel_Yjhywb"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "features_marquee_custom": {
       "type": "features-marquee",
       "blocks": {
         "f1": {
           "type": "feature",
           "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-shield-alert w-5 h-5 text-gold\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"></path><path d=\"M12 8v4\"></path><path d=\"M12 16h.01\"></path></svg>",
             "heading": "Guaranteed",
             "description": "QUALITY CONTROL"
           }
@@ -1090,6 +767,7 @@
         "f2": {
           "type": "feature",
           "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-earth w-5 h-5 text-gold\"><path d=\"M21.54 15H17a2 2 0 0 0-2 2v4.54\"></path><path d=\"M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17\"></path><path d=\"M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05\"></path><circle cx=\"12\" cy=\"12\" r=\"10\"></circle></svg>",
             "heading": "Sourcing",
             "description": "GLOBAL NETWORK"
           }
@@ -1097,6 +775,7 @@
         "f3": {
           "type": "feature",
           "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-credit-card w-5 h-5 text-gold\"><rect width=\"20\" height=\"14\" x=\"2\" y=\"5\" rx=\"2\"></rect><line x1=\"2\" x2=\"22\" y1=\"10\" y2=\"10\"></line></svg>",
             "heading": "Secure",
             "description": "ENCRYPTED PAY"
           }
@@ -1104,6 +783,7 @@
         "f4": {
           "type": "feature",
           "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-refresh-cw w-5 h-5 text-gold\"><path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\"></path><path d=\"M21 3v5h-5\"></path><path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\"></path><path d=\"M8 16H3v5\"></path></svg>",
             "heading": "Returns",
             "description": "EASY EXCHANGE"
           }
@@ -1111,6 +791,7 @@
         "f5": {
           "type": "feature",
           "settings": {
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-shield-check w-5 h-5 text-gold\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"></path><path d=\"m9 12 2 2 4-4\"></path></svg>",
             "heading": "Authentic",
             "description": "OFFICIAL PARTNERS"
           }
@@ -1126,8 +807,15 @@
       "settings": {
         "speed": 35,
         "bg_color": "#ffffff",
+        "border_color": "#f0f0f0",
+        "icon_max_width": 30,
+        "icon_color": "#000000",
         "heading_size": 18,
-        "desc_size": 10
+        "heading_weight": "600",
+        "heading_color": "#1a1a1a",
+        "desc_size": 10,
+        "desc_weight": "400",
+        "desc_color": "#999999"
       }
     }
   },
@@ -1136,13 +824,11 @@
     "product_list_fa6P9H",
     "collections_slider_Y8VXJp",
     "product_list_EEnkLe",
-    "brands_grid_slider_custom",
     "collection_grid_XrnmQQ",
-    "section_RFrETV",
-    "hero_zxKQRj",
+    "brands_grid_slider_custom",
     "featured_blog_posts_acGTXX",
-    "brands_marquee_JWnXpn",
-    "features_marquee_custom",
-    "newsletter_eYNjCm"
+    "newsletter_eYNjCm",
+    "1773914832eaad83ee",
+    "features_marquee_custom"
   ]
 }

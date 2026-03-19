@@ -4,7 +4,7 @@
     padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     position: relative;
     overflow: hidden;
-    min-height: 80vh;
+    min-height: 550px;
     display: flex;
     align-items: center;
     background-color: #000;
@@ -14,7 +14,7 @@
     .collections-slider-{{ section.id }} {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
-      min-height: 100vh;
+      min-height: 700px;
     }
   }
 
@@ -113,22 +113,23 @@
   .col-slider-button {
     font-family: var(--font-body--family), sans-serif;
     display: inline-block;
-    padding: 18px 45px;
-    background-color: {{ section.settings.btn_bg_color }};
-    color: {{ section.settings.btn_color }};
+    padding: 16px 45px;
+    background-color: #808080;
+    color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: {{ section.settings.btn_font_size }}px;
-    letter-spacing: 3px;
-    font-weight: 700;
-    transition: all 0.4s ease;
-    border: 1px solid {{ section.settings.btn_border_color }};
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: none;
   }
 
   .col-slider-button:hover {
-    background-color: transparent;
-    color: #fff;
-    border-color: #fff;
+    background-color: #ffffff;
+    transform: translateY(-3px);
+    color: #000000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   }
 
   @media screen and (min-width: 750px) {
@@ -151,27 +152,28 @@
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
     z-index: 10;
     align-items: flex-end;
   }
 
   .col-slider-bar {
-    width: 30px;
-    height: 2px;
-    background: rgba(255,255,255,0.2);
+    width: 25px;
+    height: 5px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.3);
     cursor: pointer;
-    transition: all 0.4s ease;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   }
 
   .col-slider-bar:hover {
-    width: 45px;
     background: rgba(255,255,255,0.6);
+    width: 35px;
   }
 
   .col-slider-bar.active {
-    width: 60px;
-    background: {{ section.settings.btn_bg_color }};
+    width: 65px;
+    background: #eec244;
   }
 
   /* Big Slide Number Backdrop */
@@ -279,15 +281,20 @@
     const bgImages = section.querySelectorAll('.col-slider-bg-image');
     const contents = section.querySelectorAll('.col-slider-slide-content');
     const backdropText = section.querySelector('#BackdropText-{{ section.id }}');
+    
+    let currentIndex = 0;
+    const totalSlides = bars.length;
+    const autoplay = {{ section.settings.autoplay | default: false }};
+    const autoplaySpeed = {{ section.settings.autoplay_speed | default: 5000 }};
+    let autoplayInterval;
 
-    bars.forEach(bar => {
-      bar.addEventListener('click', function() {
-        const index = this.getAttribute('data-index');
-        const slideNum = (parseInt(index) + 1).toString().padStart(2, '0');
+    function goToSlide(index) {
+        currentIndex = parseInt(index);
+        const slideNum = (currentIndex + 1).toString().padStart(2, '0');
 
         // Update Nav Bars
         bars.forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
+        if (bars[currentIndex]) bars[currentIndex].classList.add('active');
 
         // Update Backdrop Number
         if (backdropText) {
@@ -296,19 +303,43 @@
 
         // Update Background Images
         bgImages.forEach(img => img.classList.remove('active'));
-        const activeImg = section.querySelector(`.col-slider-bg-image[data-index="${index}"]`);
+        const activeImg = section.querySelector(`.col-slider-bg-image[data-index="${currentIndex}"]`);
         if (activeImg) {
           activeImg.classList.add('active');
         }
 
         // Update Text Content
         contents.forEach(c => c.classList.remove('active'));
-        const activeContent = section.querySelector(`.col-slider-slide-content[data-index="${index}"]`);
+        const activeContent = section.querySelector(`.col-slider-slide-content[data-index="${currentIndex}"]`);
         if (activeContent) {
           activeContent.classList.add('active');
         }
+    }
+
+    bars.forEach(bar => {
+      bar.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        goToSlide(index);
+        resetAutoplay();
       });
     });
+
+    function startAutoplay() {
+        if (!autoplay) return;
+        autoplayInterval = setInterval(() => {
+            let nextIndex = (currentIndex + 1) % totalSlides;
+            goToSlide(nextIndex);
+        }, autoplaySpeed);
+    }
+
+    function resetAutoplay() {
+        if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+            startAutoplay();
+        }
+    }
+
+    startAutoplay();
   });
 </script>
 
@@ -316,6 +347,26 @@
 {
   "name": "Collection Slider (Bars)",
   "settings": [
+ {
+      "type": "header",
+      "content": "Autoplay Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "ms",
+      "label": "Autoplay Speed",
+      "default": 5000
+    },
     {
       "type": "header",
       "content": "Section Styles"
