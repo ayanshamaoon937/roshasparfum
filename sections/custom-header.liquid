@@ -600,7 +600,7 @@
                       </ul>
                     </div>
 
-                    {%- if mega_block.type == 'brands_mega' -%}
+                    {%- if mega_block.type == 'brands_mega' or mega_block.type == 'collections_mega' -%}
                       <!-- Column 4: Third Collection List -->
                       <div class="mega-column" style="flex: 1;">
                         <h4 class="mega-column-title">{{ mega_block.settings.col3_heading }}</h4>
@@ -766,6 +766,16 @@
           "id": "col2_heading",
           "label": "Column 2 Heading",
           "default": "All Collections"
+        },
+        {
+          "type": "header",
+          "content": "Column 3"
+        },
+        {
+          "type": "text",
+          "id": "col3_heading",
+          "label": "Column 3 Heading",
+          "default": "Arabic"
         },
         {
           "type": "header",

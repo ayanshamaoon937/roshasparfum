@@ -172,6 +172,9 @@
         "section_width": "page-width",
         "horizontal_alignment": "center",
         "gap": 24,
+        "background_color": "#d7d7d7",
+        "text_color": "#1a1a1a",
+        "line_color": "#5e5e5e",
         "color_scheme": "scheme-2",
         "padding-block-start": 70,
         "padding-block-end": 70
@@ -356,6 +359,9 @@
         "section_width": "page-width",
         "horizontal_alignment": "center",
         "gap": 28,
+        "background_color": "#ffffff",
+        "text_color": "#1a1a1a",
+        "line_color": "#e0e0e0",
         "color_scheme": "scheme-2",
         "padding-block-start": 70,
         "padding-block-end": 70
@@ -489,7 +495,7 @@
         "autoplay": true,
         "autoplay_speed": 5000,
         "layout_type": "slider",
-        "columns_desktop": 4,
+        "columns_desktop": 3,
         "columns_mobile": "1",
         "gap_desktop": 24,
         "bg_color": "#ffffff",
@@ -681,10 +687,10 @@
         "desc_margin_bottom": 0,
         "input_placeholder": "Enter your E-mail Address",
         "button_label": "CONFIRM SUBSCRIPTION",
-        "btn_bg_color": "#e6be5a",
-        "btn_color": "#000000",
-        "btn_border_color": "#e6be5a",
-        "btn_hover_bg_color": "#cfa53b",
+        "btn_bg_color": "#000000",
+        "btn_color": "#ffffff",
+        "btn_border_color": "#000000",
+        "btn_hover_bg_color": "#000000",
         "privacy_text": "<p>BY JOINING, YOU AGREE TO OUR TERMS & PRIVACY POLICY</p>"
       }
     },
@@ -795,6 +801,24 @@
             "location": "DUBAI"
           }
         },
+        "testimonial_LRcMeN": {
+          "type": "testimonial",
+          "settings": {
+            "is_featured": false,
+            "content": "<p>\"Finally found a trustworthy store for luxury fragrances in the region. Express delivery was fast and the Dior Sauvage smells exactly like the one I tested in-store.\"</p>",
+            "author": "Mohammad K.",
+            "location": "DUBAI"
+          }
+        },
+        "testimonial_rApy9P": {
+          "type": "testimonial",
+          "settings": {
+            "is_featured": false,
+            "content": "<p>\"Finally found a trustworthy store for luxury fragrances in the region. Express delivery was fast and the Dior Sauvage smells exactly like the one I tested in-store.\"</p>",
+            "author": "Mohammad K.",
+            "location": "DUBAI"
+          }
+        },
         "testimonial_yPtyij": {
           "type": "testimonial",
           "settings": {
@@ -816,6 +840,8 @@
       },
       "block_order": [
         "testimonial_mWHKDq",
+        "testimonial_LRcMeN",
+        "testimonial_rApy9P",
         "testimonial_yPtyij",
         "testimonial_FNGwMj"
       ],

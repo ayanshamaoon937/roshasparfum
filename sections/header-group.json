@@ -79,6 +79,7 @@
             "trigger_label": "Collections",
             "col1_heading": "Hot Selling Collections",
             "col2_heading": "Specialties",
+            "col3_heading": "Arabic",
             "featured_product": "acqua-di-gio-eau-de-parfum",
             "featured_title": "Libre Eau de Parfum",
             "featured_subtitle": "BEST SELLER OF THE MONTH",
@@ -107,6 +108,16 @@
             "collection": "mens-perfume",
             "custom_title": "",
             "custom_description": "Bold & Woody aromas"
+          }
+        },
+        "mega_item_ek6hXQ": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "3",
+            "collection": "frontpage",
+            "custom_title": "Arabic",
+            "custom_description": "Arabic"
           }
         },
         "mega_item_hLXYyM": {
@@ -205,6 +216,7 @@
         "collections_mega_Ymaiwi",
         "mega_item_y9WWPT",
         "mega_item_jrz7F3",
+        "mega_item_ek6hXQ",
         "mega_item_hLXYyM",
         "mega_item_akKfgf",
         "mega_item_egPizP",
