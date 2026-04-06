@@ -1,0 +1,722 @@
+{%- liquid
+  assign columns_desktop = section.settings.columns_desktop | default: 3
+  assign columns_mobile = section.settings.columns_mobile | default: 1
+  assign gap_desktop = section.settings.gap_desktop | default: 24
+-%}
+
+{%- style -%}
+  .brands-slider-{{ section.id }} {
+    padding: 80px 0;
+    background: {{ section.settings.bg_color | default: '#ffffff' }};
+  }
+
+  .brands-container {
+    max-width: {{ section.settings.container_width | default: 1400 }}px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+  }
+
+  .brands-header {
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .brands-header-center {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 500px;
+  }
+
+  .brands-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: {{ section.settings.header_subtitle_color | default: '#5e5e5e' }};
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
+  .brands-subtitle .line {
+    width: 30px;
+    height: 1px;
+    background: {{ section.settings.header_line_color | default: '#5e5e5e' }};
+    opacity: 0.5;
+  }
+
+  .brands-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    color: {{ section.settings.header_title_color | default: '#1a1a1a' }};
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .brands-desc {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    color: {{ section.settings.header_desc_color | default: '#666666' }};
+    max-width: 600px;
+    line-height: 1.6;
+    margin: 15px 0 0 0;
+  }
+
+  /* Slider Navigation */
+  .brands-nav-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+
+  /* Nav Buttons */
+  .brands-ctrl-btn {
+    width: 42px;
+    height: 42px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .brands-ctrl-btn:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+  .brands-ctrl-btn svg {
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+  }
+
+  /* Brand Cards Styles */
+  .brands-layout-wrap {
+    position: relative;
+  }
+
+  .brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    border: 1px solid {{ section.settings.border_color | default: '#f0f0f0' }};
+    background: #fff;
+    text-decoration: none !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .brand-logo-wrap {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    width: 100%;
+  }
+
+  .brand-logo-wrap img {
+    max-width: {{ section.settings.logo_max_width | default: 120 }}px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+  }
+
+  .brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .brand-location {
+    font-size: {{ section.settings.loc_size }}px;
+    font-weight: {{ section.settings.loc_weight }};
+    color: {{ section.settings.loc_color | default: '#f0f0f0' }};
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1;
+    transition: color 0.4s ease;
+  }
+
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: {{ section.settings.name_size }}px;
+    font-weight: {{ section.settings.name_weight }};
+    color: {{ section.settings.name_color | default: '#f0f0f0' }};
+    margin: 0;
+    line-height: 1.2;
+    transition: color 0.4s ease;
+  }
+
+  .brand-description {
+    font-size: {{ section.settings.desc_size }}px;
+    font-weight: {{ section.settings.desc_weight }};
+    color: {{ section.settings.desc_color | default: '#f0f0f0' }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    max-width: 180px;
+    transition: color 0.4s ease;
+  }
+
+  /* Hover Effects */
+  .brand-card:hover {
+    border-color: {{ section.settings.hover_border_color | default: '#b59b61' }};
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    z-index: 10;
+  }
+
+  .brand-card:hover .brand-logo-wrap img {
+    transform: scale(1.05);
+  }
+
+  .brand-card:hover .brand-location { 
+    color: {{ section.settings.hover_content_color | default: '#000000' }}; 
+  }
+  .brand-card:hover .brand-name { 
+    color: {{ section.settings.hover_content_color | default: '#000000' }}; 
+  }
+  .brand-card:hover .brand-description { 
+    color: {{ section.settings.hover_content_color | default: '#000000' }}; 
+  }
+
+  /* Slider layout */
+  .brands-slider-track-{{ section.id }} {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+  }
+  .brands-slide-{{ section.id }} {
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 768px) {
+    .brands-container { padding: 0 20px; }
+    .brands-title { font-size: 36px; }
+    .brands-header {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+    .brands-nav-wrap {
+       margin-top: 20px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="brands-slider-{{ section.id }}">
+  <div class="brands-container">
+    <div class="brands-header">
+      <div class="brands-header-center">
+        {%- if section.settings.subtitle != blank -%}
+          <div class="brands-subtitle">
+            <span class="line"></span>
+            {{ section.settings.subtitle }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h2 class="brands-title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="brands-desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="brands-nav-wrap">
+        <button class="brands-ctrl-btn" id="brands-prev-{{ section.id }}" aria-label="Previous">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="brands-ctrl-btn" id="brands-next-{{ section.id }}" aria-label="Next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="brands-layout-wrap" style="overflow: hidden;">
+      <div class="brands-slider-track-{{ section.id }}" id="brands-track-{{ section.id }}">
+        {%- for block in section.blocks -%}
+          <div class="brands-slide-{{ section.id }}" {{ block.shopify_attributes }}>
+            {%- render 'brand-card-item', block: block, section: section -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  function initBrandsSlider() {
+    var sectionId = '{{ section.id }}';
+    var track = document.getElementById('brands-track-' + sectionId);
+    if (!track) return;
+    var wrapper = track.parentElement;
+
+    var slidesPerViewDesktop = {{ columns_desktop }};
+    var slidesPerViewTablet  = {{ section.settings.columns_tablet | default: 2 }};
+    var slidesPerViewMobile  = {{ section.settings.columns_mobile | default: 1 }};
+    var gapPx      = {{ gap_desktop }};
+    var speed      = 450; /* ms */
+    var autoplayEnabled = {{ section.settings.autoplay | json }};
+    var autoplayMs = {{ section.settings.autoplay_speed | default: 3000 }};
+
+    /* ---- State ---- */
+    var currentIndex = 0; /* Index into cloned track (0 = first clone group) */
+    var isTransitioning = false;
+    var autoplayTimer = null;
+
+    /* ---- Helpers ---- */
+    function spv() {
+      if (window.innerWidth <= 768) return slidesPerViewMobile;
+      if (window.innerWidth <= 1024) return slidesPerViewTablet;
+      return slidesPerViewDesktop;
+    }
+
+    /* ---- Clone slides for true infinite loop (Slick technique) ---- */
+    function cloneSlides() {
+      /* Remove any previously added clones */
+      track.querySelectorAll('.bs-clone').forEach(function(el){ el.parentNode.removeChild(el); });
+
+      var origSlides = Array.prototype.slice.call(track.querySelectorAll('.brands-slide-' + sectionId));
+      var count = spv();
+
+      /* Prepend last `count` slides as clones */
+      for (var i = origSlides.length - count; i < origSlides.length; i++) {
+        var clone = origSlides[i].cloneNode(true);
+        clone.classList.add('bs-clone');
+        track.insertBefore(clone, track.firstChild);
+      }
+
+      /* Append first `count` slides as clones */
+      for (var j = 0; j < count; j++) {
+        var clone2 = origSlides[j].cloneNode(true);
+        clone2.classList.add('bs-clone');
+        track.appendChild(clone2);
+      }
+    }
+
+    /* ---- Setup slide widths ---- */
+    function setup() {
+      cloneSlides();
+      var count = spv();
+      var containerW = wrapper.offsetWidth;
+      var slideW = (containerW - gapPx * (count - 1)) / count;
+
+      var allSlides = track.querySelectorAll('.brands-slide-' + sectionId + ', .bs-clone');
+      allSlides.forEach(function(s) {
+        s.style.width     = slideW + 'px';
+        s.style.marginRight = gapPx + 'px';
+        s.style.flexShrink = '0';
+        s.style.boxSizing = 'border-box';
+      });
+
+      /* Start at the first real slide (after prepended clones) */
+      currentIndex = count; /* skip the cloned group at front */
+      setPos(currentIndex, false);
+    }
+
+    /* ---- Position track without/with animation ---- */
+    function setPos(index, animate) {
+      var count = spv();
+      var containerW = wrapper.offsetWidth;
+      var slideW = (containerW - gapPx * (count - 1)) / count;
+      var offset = index * (slideW + gapPx);
+      track.style.transition = animate ? ('transform ' + speed + 'ms cubic-bezier(0.25,0.46,0.45,0.94)') : 'none';
+      track.style.transform  = 'translateX(-' + offset + 'px)';
+    }
+
+    /* ---- Go to logical index (within cloned track) ---- */
+    function goTo(index) {
+      currentIndex = index;
+      setPos(index, true);
+    }
+
+    /* ---- After transition: check if we're on a clone and snap back ---- */
+    function onTransitionEnd() {
+      var count = spv();
+      var origTotal = {{ section.blocks.size }};
+      var totalWithClones = origTotal + count * 2;
+
+      isTransitioning = false;
+
+      if (currentIndex <= count - 1) {
+        /* Went past front — snap to real last slides */
+        currentIndex = origTotal + count - (count - currentIndex);
+        setPos(currentIndex, false);
+      } else if (currentIndex >= origTotal + count) {
+        /* Went past end — snap to real first slides */
+        currentIndex = count + (currentIndex - (origTotal + count));
+        setPos(currentIndex, false);
+      }
+    }
+
+    track.addEventListener('transitionend', onTransitionEnd);
+
+    /* ---- Navigate ---- */
+    function next() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      goTo(currentIndex + 1);
+    }
+
+    function prev() {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      goTo(currentIndex - 1);
+    }
+
+    /* ---- Buttons ---- */
+    var prevBtn = document.getElementById('brands-prev-' + sectionId);
+    var nextBtn = document.getElementById('brands-next-' + sectionId);
+    if (prevBtn) prevBtn.addEventListener('click', function() { prev(); resetAutoplay(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { next(); resetAutoplay(); });
+
+    /* ---- Autoplay ---- */
+    function startAutoplay() {
+      if (!autoplayEnabled) return;
+      autoplayTimer = setInterval(next, autoplayMs);
+    }
+    function stopAutoplay() {
+      clearInterval(autoplayTimer);
+    }
+    function resetAutoplay() {
+      stopAutoplay();
+      startAutoplay();
+    }
+
+    /* Pause on hover */
+    wrapper.addEventListener('mouseenter', stopAutoplay);
+    wrapper.addEventListener('mouseleave', startAutoplay);
+
+    /* ---- Resize ---- */
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        stopAutoplay();
+        setup();
+        startAutoplay();
+      }, 150);
+    });
+
+    /* ---- Init ---- */
+    setup();
+    startAutoplay();
+  }
+
+  /* Use window.load so all layout is rendered & widths are accurate */
+  if (document.readyState === 'complete') {
+    initBrandsSlider();
+  } else {
+    window.addEventListener('load', initBrandsSlider);
+  }
+})();
+</script>
+{% schema %}
+{
+  "name": "Brands Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+       "type": "range",
+       "id": "columns_desktop",
+       "min": 1,
+       "max": 6,
+       "step": 1,
+       "label": "Slides to show on Desktop",
+       "default": 3
+    },
+    {
+       "type": "range",
+       "id": "columns_tablet",
+       "min": 1,
+       "max": 4,
+       "step": 1,
+       "label": "Slides to show on Tablet",
+       "default": 2
+    },
+    {
+       "type": "range",
+       "id": "columns_mobile",
+       "min": 1,
+       "max": 3,
+       "step": 1,
+       "label": "Slides to show on Mobile",
+       "default": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 2000,
+      "max": 9000,
+      "step": 1000,
+      "unit": "ms",
+      "label": "Autoplay Speed",
+      "default": 3000
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Header Text"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "THE ROSHAS CURATION"
+    },
+    {
+      "type": "color",
+      "id": "header_subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#5e5e5e"
+    },
+    {
+      "type": "color",
+      "id": "header_line_color",
+      "label": "Line Color",
+      "default": "#b59b61"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "The Ateliers"
+    },
+    {
+      "type": "color",
+      "id": "header_title_color",
+      "label": "Title Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We partner exclusively with authorized maisons to bring you the global icons of olfactory art."
+    },
+    {
+      "type": "color",
+      "id": "header_desc_color",
+      "label": "Description Color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Card Container Styles"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Max Width",
+      "default": 120
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "Hover Border Color",
+      "default": "#b59b61"
+    },
+    {
+      "type": "color",
+      "id": "hover_content_color",
+      "label": "Hover Content Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Location Style"
+    },
+    {
+      "type": "range",
+      "id": "loc_size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "label": "Font Size",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "loc_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "loc_color",
+      "label": "Font Color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "header",
+      "content": "Brand Name Style"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "label": "Font Size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "name_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Font Color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "header",
+      "content": "Description Style"
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "label": "Font Size",
+      "default": 9
+    },
+    {
+      "type": "select",
+      "id": "desc_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Font Color",
+      "default": "#f0f0f0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Brand Logo"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "PARIS"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name",
+          "default": "Chanel"
+        },
+        {
+          "type": "text",
+          "id": "brand_desc",
+          "label": "Description",
+          "default": "THE ULTIMATE LUXURY STATEMENT"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Brand Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands Slider",
+      "blocks": [
+        { "type": "brand", "settings": { "brand_name": "Dior", "location": "PARIS", "brand_desc": "TIMELESS FRENCH ELEGANCE" } },
+        { "type": "brand", "settings": { "brand_name": "Chanel", "location": "PARIS", "brand_desc": "THE ULTIMATE LUXURY STATEMENT" } },
+        { "type": "brand", "settings": { "brand_name": "Tom Ford", "location": "NEW YORK", "brand_desc": "MODERN SOPHISTICATION" } },
+        { "type": "brand", "settings": { "brand_name": "Gucci", "location": "FLORENCE", "brand_desc": "ITALIAN CRAFTSMANSHIP" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

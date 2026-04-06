@@ -7,12 +7,12 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   data-testid="product-list"
+<div
+  data-testid="product-list"
   class="
-    section
-    section--{{ section.settings.section_width }}
-    color-{{ section.settings.color_scheme }}
     section-resource-list
     product-list-{{ section.id }}
+    color-{{ section.settings.color_scheme }}
   "
 >
   {% style %}
@@ -182,12 +182,69 @@
       background-color: {{ section.settings.background_color }} !important;
       color: {{ section.settings.text_color }} !important;
     }
+    .product-list-{{ section.id }} .product-list-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
 
     .section-background {
       display: none !important;
     }
-    slideshow-slides[gutters*='start'] {
-      padding-inline-start: 0 !important;
+    .product-list-{{ section.id }} .product-list-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    @media (max-width: 768px) {
+      .product-list-{{ section.id }} .product-list-container {
+        padding: 0 20px;
+      }
+    }
+    .product-list-{{ section.id }} .resource-list__slide {
+      flex-shrink: 0;
+    }
+    /* Custom Slick-like Slider */
+    .pl-custom-slider-{{ section.id }} {
+      overflow: hidden;
+      position: relative;
+    }
+    .pl-custom-track-{{ section.id }} {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+    .pl-custom-slide-{{ section.id }} {
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+    .pl-custom-nav-{{ section.id }} {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pl-btn-{{ section.id }} {
+      width: 42px;
+      height: 42px;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      color: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .pl-btn-{{ section.id }}:hover {
+      background: #1a1a1a;
+      color: #ffffff;
+      border-color: #1a1a1a;
+    }
+    .pl-btn-{{ section.id }} svg {
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
     }
   {% endstyle %}
   {% liquid
@@ -216,8 +273,13 @@
           {% endif %}
 
           {% if is_carousel %}
-            <div class="trending-nav-wrap">
-              {% render 'slideshow-arrows', icon_style: section.settings.icons_style, icon_shape: section.settings.icons_shape %}
+            <div class="pl-custom-nav-{{ section.id }}">
+              <button class="pl-btn-{{ section.id }} pl-prev-{{ section.id }}" aria-label="Previous">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <button class="pl-btn-{{ section.id }} pl-next-{{ section.id }}" aria-label="Next">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
             </div>
           {% endif %}
         </div>
@@ -266,59 +328,140 @@
     endif
   %}
 
-  {% if is_carousel %}
-    <slideshow-component
-      initial-slide="0"
-      infinite
-      style="--slideshow-timeline: {% render 'timeline-scope', count: list_items_array.size, prefix: 'slide' %};"
-    >
+  <div class="product-list-container">
+    {% if is_carousel %}
       {{ header_content }}
-      
-      <div class="resource-list resource-list__carousel force-full-width" 
-        style="
-          --resource-list-column-gap-desktop: {{ section.settings.columns_gap | default: 16 }}px;
-          --column-count: {{ section.settings.columns | default: 4 }};
-          --column-count-mobile: 1;
-          --mobile-card-size: 60cqw;
-          --gutter-slide-width: var(--util-page-margin-offset);
-        ">
-        <slideshow-container ref="slideshowContainer">
-          <slideshow-slides
-            tabindex="-1"
-            ref="scroller"
-            {% if slideshow_gutters %}gutters="{{ slideshow_gutters }}"{% endif %}
-          >
-            {% for item in list_items_array %}
-              {% render 'slideshow-slide',
-                index: forloop.index,
-                children: item,
-                class: 'resource-list__slide'
-              %}
-            {% endfor %}
-          </slideshow-slides>
-        </slideshow-container>
+      <div class="pl-custom-slider-{{ section.id }}" id="pl-slider-{{ section.id }}">
+        <div class="pl-custom-track-{{ section.id }}" id="pl-track-{{ section.id }}">
+          {%- for item in list_items_array -%}
+            <div class="pl-custom-slide-{{ section.id }}">
+              {{ item }}
+            </div>
+          {%- endfor -%}
+        </div>
       </div>
-    </slideshow-component>
-  {% else %}
-    {{ header_content }}
-    {% render 'resource-list',
-      list_items: list_items,
-      list_items_array: list_items_array,
-      settings: section.settings,
-      slide_count: max_items,
-      content_type: 'products',
-      test_id: 'resource-list-grid'
-    %}
-  {% endif %}
+    {% else %}
+      {{ header_content }}
+      {% render 'resource-list',
+        list_items: list_items,
+        list_items_array: list_items_array,
+        settings: section.settings,
+        slide_count: max_items,
+        content_type: 'products',
+        test_id: 'resource-list-grid'
+      %}
+    {% endif %}
 
-  {% if section.settings.show_view_all %}
-    <div class="section-resource-list__footer">
-      <a href="{{ section.settings.collection.url }}" class="trending-view-all">
-        {{ section.settings.view_all_text | default: 'Explore Global Trending' }}
-      </a>
-    </div>
-  {% endif %}
+    {% if section.settings.show_view_all %}
+      <div class="section-resource-list__footer">
+        <a href="{{ section.settings.collection.url }}" class="trending-view-all">
+          {{ section.settings.view_all_text | default: 'Explore Global Trending' }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
 </div>
+
+{% if section.settings.layout_type == 'carousel' %}
+<script>
+(function() {
+  function initPlSlider_{{ section.id | replace: '-', '_' }}() {
+    var sliderId = 'pl-slider-{{ section.id }}';
+    var trackId  = 'pl-track-{{ section.id }}';
+    var sectionEl = document.querySelector('.product-list-{{ section.id }}');
+    if (!sectionEl) return;
+    var slider = sectionEl.querySelector('#' + sliderId);
+    var track  = sectionEl.querySelector('#' + trackId);
+    if (!slider || !track) return;
+
+    var spvDefault   = parseInt('{{ section.settings.columns | default: 4 }}');
+    var spvTablet    = parseInt('{{ section.settings.columns_tablet | default: 2 }}');
+    var spvMobile    = parseInt('{{ section.settings.columns_mobile | default: 1 }}');
+    var gapPx          = parseInt('{{ section.settings.columns_gap | default: 16 }}');
+    var totalSlides    = {{ list_items_array.size }};
+    var currentIndex   = 0;
+    var isTransitioning = false;
+
+    function getSpv() {
+      if (window.innerWidth <= 768) return spvMobile;
+      if (window.innerWidth <= 1024) return spvTablet;
+      return spvDefault;
+    }
+
+
+    function setSlideWidths() {
+      var slidesPerView = getSpv();
+      var containerW = slider.offsetWidth;
+      var slideW = (containerW - gapPx * (slidesPerView - 1)) / slidesPerView;
+      var slides = track.querySelectorAll('.pl-custom-slide-{{ section.id }}');
+      slides.forEach(function(s) {
+        s.style.width = slideW + 'px';
+        s.style.marginRight = gapPx + 'px';
+      });
+      goTo(currentIndex, false);
+    }
+
+    function goTo(index, animate) {
+      if (animate === undefined) animate = true;
+      var slidesPerView = getSpv();
+      var containerW = slider.offsetWidth;
+      var slideW = (containerW - gapPx * (slidesPerView - 1)) / slidesPerView;
+      var offset = index * (slideW + gapPx);
+      track.style.transition = animate ? 'transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+      track.style.transform = 'translateX(-' + offset + 'px)';
+      currentIndex = index;
+    }
+
+    function next() {
+      if (isTransitioning) return;
+      var slidesPerView = getSpv();
+      var lastPossible = totalSlides - slidesPerView;
+      if (currentIndex >= lastPossible) {
+        /* Loop back to start */
+        isTransitioning = true;
+        goTo(currentIndex + 1, true);
+        setTimeout(function() {
+          goTo(0, false);
+          isTransitioning = false;
+        }, 460);
+      } else {
+        goTo(currentIndex + 1);
+      }
+    }
+
+    function prev() {
+      if (isTransitioning) return;
+      var slidesPerView = getSpv();
+      if (currentIndex <= 0) {
+        /* Loop to end */
+        isTransitioning = true;
+        goTo(-1, true);
+        setTimeout(function() {
+          goTo(totalSlides - slidesPerView, false);
+          isTransitioning = false;
+        }, 460);
+      } else {
+        goTo(currentIndex - 1);
+      }
+    }
+
+    var prevBtn = sectionEl.querySelector('.pl-prev-{{ section.id }}');
+    var nextBtn = sectionEl.querySelector('.pl-next-{{ section.id }}');
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
+
+    setSlideWidths();
+    window.addEventListener('resize', setSlideWidths);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPlSlider_{{ section.id | replace: '-', '_' }});
+  } else {
+    initPlSlider_{{ section.id | replace: '-', '_' }}();
+  }
+})();
+</script>
+{% endif %}
 
 {% schema %}
 {
@@ -421,38 +564,22 @@
       "visible_if": "{{ section.settings.layout_type != 'editorial' }}"
     },
     {
-      "type": "select",
-      "id": "mobile_columns",
-      "label": "t:settings.mobile_columns",
-      "options": [
-        {
-          "value": "1",
-          "label": "t:options.one_number"
-        },
-        {
-          "value": "2",
-          "label": "t:options.two_number"
-        }
-      ],
-      "default": "2",
-      "visible_if": "{{ section.settings.layout_type == 'grid' and section.settings.carousel_on_mobile == false }}"
+       "type": "range",
+       "id": "columns_tablet",
+       "min": 1,
+       "max": 4,
+       "step": 1,
+       "label": "Slides to show on Tablet",
+       "default": 2
     },
     {
-      "type": "select",
-      "id": "mobile_card_size",
-      "label": "t:settings.mobile_columns",
-      "options": [
-        {
-          "value": "60cqw",
-          "label": "t:options.one_number"
-        },
-        {
-          "value": "44cqw",
-          "label": "t:options.two_number"
-        }
-      ],
-      "default": "60cqw",
-      "visible_if": "{{ section.settings.layout_type == 'carousel' or section.settings.carousel_on_mobile == true }}"
+       "type": "range",
+       "id": "columns_mobile",
+       "min": 1,
+       "max": 3,
+       "step": 1,
+       "label": "Slides to show on Mobile",
+       "default": 1
     },
     {
       "type": "range",
@@ -597,7 +724,7 @@
       "type": "color",
       "id": "line_color",
       "label": "Line Color",
-      "default": "#e0e0e0"
+      "default": "#5e5e5e"
     },
     {
       "type": "color_scheme",
@@ -640,7 +767,8 @@
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "columns": 4,
-        "mobile_columns": "2",
+        "columns_tablet": 2,
+        "columns_mobile": 1,
         "columns_gap": 8,
         "icons_style": "chevron",
         "icons_shape": "square",
@@ -745,7 +873,8 @@
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "columns": 4,
-        "mobile_columns": "2",
+        "columns_tablet": 2,
+        "columns_mobile": 1,
         "columns_gap": 8,
         "rows_gap": 24,
         "icons_style": "chevron",
@@ -851,7 +980,8 @@
         "carousel_on_mobile": false,
         "max_products": 4,
         "columns": 4,
-        "mobile_columns": "2",
+        "columns_tablet": 2,
+        "columns_mobile": 1,
         "columns_gap": 8,
         "rows_gap": 24,
         "icons_style": "arrow",

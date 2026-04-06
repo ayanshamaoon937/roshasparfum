@@ -1,0 +1,491 @@
+{%- liquid
+  assign columns_desktop = section.settings.columns_desktop | default: 3
+  assign columns_mobile = section.settings.columns_mobile | default: 1
+  assign gap_desktop = section.settings.gap_desktop | default: 24
+  assign items_per_page = 12
+-%}
+
+{%- style -%}
+  .brands-grid-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    background: {{ section.settings.bg_color | default: '#ffffff' }};
+  }
+
+  .brands-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .brands-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: {{ gap_desktop }}px;
+  }
+
+  .brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    border: 1px solid {{ section.settings.border_color | default: '#f0f0f0' }};
+    background: #fff;
+    text-decoration: none !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .brand-item.is-hidden {
+    display: none !important;
+  }
+
+  .brand-logo-wrap {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    width: 100%;
+  }
+
+  .brand-logo-wrap img {
+    max-width: {{ section.settings.logo_max_width | default: 120 }}px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+  }
+
+  .brand-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .brand-location {
+    font-size: {{ section.settings.loc_size }}px;
+    font-weight: {{ section.settings.loc_weight }};
+    color: {{ section.settings.loc_color | default: '#f0f0f0' }};
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1;
+    transition: color 0.4s ease;
+  }
+
+  .brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: {{ section.settings.name_size }}px;
+    font-weight: {{ section.settings.name_weight }};
+    color: {{ section.settings.name_color | default: '#f0f0f0' }};
+    margin: 0;
+    line-height: 1.2;
+    transition: color 0.4s ease;
+  }
+
+  .brand-description {
+    font-size: {{ section.settings.desc_size }}px;
+    font-weight: {{ section.settings.desc_weight }};
+    color: {{ section.settings.desc_color | default: '#f0f0f0' }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    max-width: 180px;
+    transition: color 0.4s ease;
+  }
+
+  /* Hover Effects matching Slider */
+  .brand-card:hover {
+    border-color: {{ section.settings.hover_border_color | default: '#000000' }};
+    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+    transform: translateY(-5px);
+    z-index: 10;
+  }
+
+  .brand-card:hover .brand-logo-wrap img {
+    transform: scale(1.05);
+  }
+
+  .brand-card:hover .brand-location,
+  .brand-card:hover .brand-name,
+  .brand-card:hover .brand-description { 
+    color: {{ section.settings.hover_content_color | default: '#000000' }}; 
+  }
+
+  /* Pagination Styling */
+  .brands-pagination {
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .load-more-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 15px 45px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body--family), sans-serif;
+  }
+
+  .load-more-btn:hover {
+    background: #333;
+  }
+
+  .load-more-btn.is-hidden {
+    display: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .brands-grid {
+      grid-template-columns: repeat({{ section.settings.columns_tablet | default: 3 }}, 1fr);
+    }
+    .brands-container {
+      padding: 0 20px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .brands-grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, 1fr);
+    }
+    .brands-grid-section-{{ section.id }} {
+       padding-top: {{ section.settings.padding_top_mobile }}px;
+       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .brand-logo-wrap {
+       height: 100px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="brands-grid-section-{{ section.id }}">
+  <div class="brands-container">
+    <div class="brands-grid" id="brands-grid-{{ section.id }}">
+      {%- liquid
+        assign total_brands = 0
+      -%}
+
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- assign total_brands = total_brands | plus: 1 -%}
+          <div class="brand-item {% if total_brands > items_per_page %}is-hidden{% endif %}" {{ block.shopify_attributes }}>
+            {%- render 'brand-card-item', block: block, section: section -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for vendor in shop.vendors -%}
+          {%- assign total_brands = total_brands | plus: 1 -%}
+          <div class="brand-item {% if total_brands > items_per_page %}is-hidden{% endif %}">
+            <a href="{{ vendor | url_for_vendor }}" class="brand-card">
+              <div class="brand-logo-wrap">
+                <div class="brand-name" style="font-size: 32px;">{{ vendor | slice: 0 | upcase }}</div>
+              </div>
+              <div class="brand-info">
+                 <h3 class="brand-name">{{ vendor }}</h3>
+                 <p class="brand-description">OUR PARTNER ATELIER</p>
+              </div>
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if total_brands > items_per_page -%}
+      <div class="brands-pagination">
+        <button class="load-more-btn" id="load-more-{{ section.id }}">
+          Load More Brands
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    const sectionId = '{{ section.id }}';
+    const grid = document.getElementById('brands-grid-' + sectionId);
+    const btn = document.getElementById('load-more-' + sectionId);
+    const itemsPerPage = {{ items_per_page }};
+    
+    if (!grid || !btn) return;
+
+    btn.addEventListener('click', function() {
+      const hiddenItems = grid.querySelectorAll('.brand-item.is-hidden');
+      const toShow = Array.from(hiddenItems).slice(0, itemsPerPage);
+      
+      toShow.forEach(item => {
+        item.classList.remove('is-hidden');
+        item.style.opacity = '0';
+        setTimeout(() => {
+          item.style.transition = 'opacity 0.5s ease-in-out';
+          item.style.opacity = '1';
+        }, 10);
+      });
+
+      if (hiddenItems.length <= itemsPerPage) {
+        btn.classList.add('is-hidden');
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brands Grid",
+  "settings": [
+    {
+       "type": "range",
+       "id": "columns_desktop",
+       "min": 1,
+       "max": 6,
+       "step": 1,
+       "label": "Columns on Desktop",
+       "default": 4
+    },
+    {
+       "type": "range",
+       "id": "columns_tablet",
+       "min": 1,
+       "max": 4,
+       "step": 1,
+       "label": "Columns on Tablet",
+       "default": 3
+    },
+    {
+       "type": "range",
+       "id": "columns_mobile",
+       "min": 1,
+       "max": 3,
+       "step": 1,
+       "label": "Columns on Mobile",
+       "default": 1
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "label": "Gap between cards",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Card Styling (Matching Slider)"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo Max Width",
+      "default": 120
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#d7d7d7"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "Hover Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "hover_content_color",
+      "label": "Hover Content Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography Styles"
+    },
+    {
+      "type": "range",
+      "id": "loc_size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "label": "Location Size",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "loc_weight",
+      "label": "Location Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "loc_color",
+      "label": "Location Color",
+      "default": "#999999"
+    },
+    {
+      "type": "range",
+      "id": "name_size",
+      "min": 14,
+      "max": 40,
+      "step": 2,
+      "label": "Name Size",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "name_weight",
+      "label": "Name Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "color",
+      "id": "name_color",
+      "label": "Name Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "min": 8,
+      "max": 16,
+      "step": 1,
+      "label": "Description Size",
+      "default": 9
+    },
+    {
+      "type": "select",
+      "id": "desc_weight",
+      "label": "Description Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#999999"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Brand Logo"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "PARIS"
+        },
+        {
+          "type": "text",
+          "id": "brand_name",
+          "label": "Brand Name",
+          "default": "Chanel"
+        },
+        {
+          "type": "text",
+          "id": "brand_desc",
+          "label": "Description",
+          "default": "THE ULTIMATE LUXURY STATEMENT"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Brand Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands Grid"
+    }
+  ]
+}
+{% endschema %}

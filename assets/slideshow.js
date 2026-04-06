@@ -172,7 +172,7 @@ export class Slideshow extends Component {
     const instant = prefersReducedMotion() || !animate;
 
     // If jump is more than 1 or we looped, do the placeholder + reorder trick
-    if (!instant && !isAdjacentSlide && visibleSlides.length === 1) {
+    if (!instant && !isAdjacentSlide && this.infinite) {
       this.#disabled = true;
       await this.#scroll.finished; // ensure we're not mid-scroll
 
@@ -265,7 +265,8 @@ export class Slideshow extends Component {
     this.paused = false;
 
     this.#interval = setInterval(() => {
-      if (this.matches(':hover') || document.hidden) return;
+      const pauseOnHover = this.getAttribute('pause-on-hover') !== 'false';
+      if ((pauseOnHover && this.matches(':hover')) || document.hidden) return;
 
       this.next();
     }, interval);

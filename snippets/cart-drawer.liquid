@@ -61,13 +61,6 @@
             class="cart-drawer__content motion-reduce"
             aria-label="{{ 'accessibility.cart' | t }}"
           >
-            <h2
-              class="cart-drawer__heading h3 cart-drawer__heading--empty"
-              id="cart-drawer-heading-empty"
-            >
-              {{ 'content.your_cart_is_empty' | t }}
-            </h2>
-
             <div class="cart-drawer__items">
               {% render 'cart-products' %}
             </div>
@@ -78,11 +71,10 @@
             id="cart-drawer-header"
           >
             <h2
-              class="cart-drawer__heading h3"
+              class="cart-drawer__heading"
               id="cart-drawer-heading"
             >
-              {{ 'content.cart_title' | t }}
-              {% render 'cart-bubble' %}
+              Cart <span class="cart-drawer__count">{{ cart.item_count }}</span>
             </h2>
 
             <button
@@ -92,7 +84,7 @@
               aria-label="{{ 'actions.close_dialog' | t }}"
             >
               <span class="svg-wrapper">
-                {{- 'icon-close.svg' | inline_asset_content -}}
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"></path></svg>
               </span>
             </button>
           </div>
@@ -121,23 +113,37 @@
 </cart-drawer-component>
 
 {% stylesheet %}
+  .cart-drawer__dialog {
+    border-radius: 0 !important;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-drawer__dialog {
+      --dialog-drawer-width: 100%;
+    }
+  }
+
   .cart-items-component {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    border-radius: 0 !important;
   }
 
-  .cart-drawer__heading .cart-bubble {
-    width: fit-content;
-    border-radius: var(--style-border-radius-buttons-primary);
-    aspect-ratio: auto;
-    padding: var(--cart-padding);
+  .cart-drawer__heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-h2--family);
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
   }
 
-  .cart-drawer__heading .cart-bubble[data-maintain-ratio] {
-    aspect-ratio: 1;
-    min-width: 26px;
+  .cart-drawer__count {
+    color: #999;
+    font-weight: 400;
   }
 
   .cart-drawer__header {
@@ -146,14 +152,16 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: var(--cart-drawer-padding);
-    border-bottom: var(--style-border-width) solid none;
+    padding: 30px 40px;
+    border-bottom: none;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 10;
+  }
 
-    @media screen and (min-width: 750px) {
-      padding: var(--cart-drawer-padding-desktop);
+  @media screen and (max-width: 749px) {
+    .cart-drawer__header {
+      padding: 20px;
     }
   }
 
@@ -164,18 +172,27 @@
   .cart-drawer__inner {
     height: 100%;
     overflow: hidden;
+    border-radius: 0 !important;
   }
 
   .cart-drawer__content {
-    height: calc(100% - var(--header-height));
+    height: calc(100% - 84px);
     display: flex;
     flex-direction: column;
+    padding: 0 40px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .cart-drawer__content {
+      padding: 0 20px;
+    }
   }
 
   .cart-drawer__summary {
     background-color: var(--color-background);
     position: sticky;
     bottom: 0;
-    z-index: 1;
+    z-index: 10;
+    padding-bottom: 40px;
   }
 {% endstylesheet %}

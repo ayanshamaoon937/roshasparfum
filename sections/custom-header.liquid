@@ -15,6 +15,21 @@
     transition: all 0.3s ease;
   }
 
+  .mobile-nav-trigger {
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #000;
+  }
+
+  .mobile-nav-trigger svg {
+    width: 24px;
+    height: 24px;
+  }
+
+
   .header-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -407,10 +422,203 @@
     flex: 1;
   }
 
+  /* Search Bar Overlay */
+  .search-bar-overlay {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    padding: 30px 40px;
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    visibility: hidden;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .search-bar-overlay.is-active {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .search-bar-form {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .search-bar-input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 10px 0;
+    font-size: 32px;
+    font-family: 'Playfair Display', serif;
+    color: #000;
+    background: transparent;
+    outline: none;
+  }
+
+  .search-bar-input::placeholder {
+    color: #ccc;
+  }
+
+  .search-close-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #000;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #000;
+    font-family: 'Jost', sans-serif;
+  }
+
+  .search-close-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Mobile Responsive */
+  @media screen and (max-width: 990px) {
+    .header-nav {
+      display: none;
+    }
+    .mobile-nav-trigger {
+      display: block;
+      flex: 0 0 40px;
+    }
+    .header-logo {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .header-icons {
+      flex: 0 0 auto;
+      gap: 15px;
+    }
+    .header-icons a[href="/account"],
+    .header-icons a[href="/apps/wishlist"] {
+      display: none;
+    }
+    .logo-link {
+      font-size: 24px;
+      letter-spacing: 2px;
+    }
+    .header-container {
+      padding: 0 20px;
+    }
+    .header-icon-link svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  /* Mobile Drawer */
+  .mobile-menu-drawer {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    max-width: 400px;
+    height: 100%;
+    background: #fff;
+    z-index: 2000;
+    transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 20px;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+  }
+
+  .mobile-menu-drawer.active {
+    left: 0;
+  }
+
+  .mobile-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .mobile-drawer-close {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .mobile-nav-link {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+    text-decoration: none;
+    display: block;
+  }
+
+  .mobile-menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+  }
 {% endstyle %}
 
 <header class="custom-header">
+  <div class="search-bar-overlay">
+    <form action="/search" method="get" class="search-bar-form">
+      <input type="text" name="q" placeholder="Type something" class="search-bar-input" autocomplete="off">
+      <button type="button" class="search-close-btn">
+        <span>Close</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </form>
+  </div>
   <div class="header-container">
+    <!-- Mobile Trigger -->
+    <button type="button" class="mobile-nav-trigger" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+
     <!-- Logo -->
     <div class="header-logo">
       <a href="/" class="logo-link">
@@ -678,22 +886,41 @@
 
     <!-- Icons -->
     <div class="header-icons">
-      <a href="/search" class="header-icon-link">
+      <button type="button" class="header-icon-link search-trigger-btn" style="background:none; border:none; padding:0; cursor:pointer; color:inherit;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-      </a>
+      </button>
       <a href="/apps/wishlist" class="header-icon-link">
         <svg viewBox="0 0 50 50" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M15,7c-7.16797,0 -13,5.83203 -13,13c0,14.76172 16.69531,22.04688 22.375,26.78125l0.625,0.53125l0.625,-0.53125c5.67969,-4.73437 22.375,-12.01953 22.375,-26.78125c0,-7.16797 -5.83203,-13 -13,-13c-4.05469,0 -7.61719,1.92578 -10,4.84375c-2.38281,-2.91797 -5.94531,-4.84375 -10,-4.84375zM15,9c3.83594,0 7.1875,1.96875 9.15625,4.9375l0.84375,1.25l0.84375,-1.25c1.96875,-2.96875 5.32031,-4.9375 9.15625,-4.9375c6.08594,0 11,4.91406 11,11c0,12.89844 -14.40625,19.57422 -21,24.78125c-6.59375,-5.20703 -21,-11.88281 -21,-24.78125c0,-6.08594 4.91406,-11 11,-11z"></path></svg>
       </a>
       <a href="/account" class="header-icon-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
       </a>
-      <a href="/cart" class="header-icon-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag w-5 h-5 stroke-[1.5]"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-        <span class="cart-count-badge">{{ cart.item_count }}</span>
-      </a>
+      <div class="header-cart-drawer">
+         {% render 'cart-drawer' %}
+      </div>
     </div>
   </div>
 </header>
+
+<!-- Mobile Drawer -->
+<div class="mobile-menu-backdrop"></div>
+<div class="mobile-menu-drawer">
+  <div class="mobile-drawer-header">
+    <span class="logo-link">{{ logo_text }}</span>
+    <button class="mobile-drawer-close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+  <nav>
+    <ul class="mobile-nav-list">
+      {% for link in main_menu.links %}
+        <li>
+          <a href="{{ link.url }}" class="mobile-nav-link">{{ link.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
 
 <script>
   function updateHeaderHeight() {
@@ -715,6 +942,51 @@
   window.addEventListener('resize', updateHeaderHeight);
   document.addEventListener('shopify:section:load', updateHeaderHeight);
   updateHeaderHeight();
+
+  // Search Toggle Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchTrigger = document.querySelector('.search-trigger-btn');
+    const searchClose = document.querySelector('.search-close-btn');
+    const searchOverlay = document.querySelector('.search-bar-overlay');
+    const searchInput = document.querySelector('.search-bar-input');
+
+    if (searchTrigger && searchOverlay) {
+      searchTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        searchOverlay.classList.add('is-active');
+        setTimeout(() => searchInput.focus(), 100);
+      });
+    }
+
+    if (searchClose && searchOverlay) {
+      searchClose.addEventListener('click', () => {
+        searchOverlay.classList.remove('is-active');
+      });
+    }
+    
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && searchOverlay.classList.contains('is-active')) {
+        searchOverlay.classList.remove('is-active');
+      }
+    });
+
+    // Mobile Menu Logic
+    const mobileTrigger = document.querySelector('.mobile-nav-trigger');
+    const mobileDrawer = document.querySelector('.mobile-menu-drawer');
+    const mobileBackdrop = document.querySelector('.mobile-menu-backdrop');
+    const mobileClose = document.querySelector('.mobile-drawer-close');
+
+    function toggleMobileMenu() {
+      mobileDrawer.classList.toggle('active');
+      mobileBackdrop.classList.toggle('active');
+      document.body.style.overflow = mobileDrawer.classList.contains('active') ? 'hidden' : '';
+    }
+
+    if (mobileTrigger) mobileTrigger.addEventListener('click', toggleMobileMenu);
+    if (mobileClose) mobileClose.addEventListener('click', toggleMobileMenu);
+    if (mobileBackdrop) mobileBackdrop.addEventListener('click', toggleMobileMenu);
+  });
 </script>
 
 {% schema %}

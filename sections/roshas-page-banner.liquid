@@ -1,0 +1,405 @@
+{%- style -%}
+  .page-banner-{{ section.id }} {
+    position: relative;
+    width: 100%;
+    min-height: {{ section.settings.min_height_mobile }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #f4f4f4;
+    overflow: hidden;
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+
+  {% if section.settings.background_image != blank %}
+    .page-banner-{{ section.id }} {
+      background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .page-banner-{{ section.id }}::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});
+      z-index: 1;
+    }
+  {% endif %}
+
+  .page-banner-{{ section.id }} .banner-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .page-banner-{{ section.id }} .banner-title {
+    font-family: 'Playfair Display', serif !important;
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_font_size_mobile }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    margin: 0 0 {{ section.settings.title_margin_bottom }}px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+  }
+
+  .page-banner-{{ section.id }} .breadcrumb {
+    font-family: 'Jost', sans-serif !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: {{ section.settings.breadcrumb_color }};
+    font-size: {{ section.settings.breadcrumb_font_size }}px;
+    font-weight: {{ section.settings.breadcrumb_font_weight }};
+    margin-bottom: {{ section.settings.breadcrumb_margin_bottom }}px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .page-banner-{{ section.id }} .breadcrumb a {
+    color: {{ section.settings.home_link_color }};
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .page-banner-{{ section.id }} .breadcrumb a:hover {
+    opacity: 0.7;
+  }
+
+  .page-banner-{{ section.id }} .breadcrumb .current-page {
+    color: {{ section.settings.current_page_color }};
+  }
+
+  .page-banner-{{ section.id }} .breadcrumb-separator {
+    display: flex;
+    align-items: center;
+    opacity: 0.5;
+  }
+
+  @media screen and (min-width: 768px) {
+    .page-banner-{{ section.id }} {
+      min-height: {{ section.settings.min_height_tablet }}px;
+      padding-top: {{ section.settings.padding_top_tablet }}px;
+      padding-bottom: {{ section.settings.padding_bottom_tablet }}px;
+    }
+    .page-banner-{{ section.id }} .banner-title {
+      font-size: {{ section.settings.title_font_size_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .page-banner-{{ section.id }} {
+      min-height: {{ section.settings.min_height_desktop }}px;
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+    .page-banner-{{ section.id }} .banner-title {
+      font-size: {{ section.settings.title_font_size_desktop }}px;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .page-banner-{{ section.id }} .banner-container {
+      padding: 0 20px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="page-banner-{{ section.id }}">
+  <div class="banner-container">
+    <div class="banner-content">
+      <h1 class="banner-title">
+        {%- if section.settings.custom_title != blank -%}
+          {{ section.settings.custom_title }}
+        {%- else -%}
+          {{ page_title }}
+        {%- endif -%}
+      </h1>
+
+      <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+        <a href="{{ routes.root_url }}" title="Home">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        {%- if template contains 'page' -%}
+          <span class="current-page">{{ page.title }}</span>
+        {%- elsif template contains 'product' -%}
+          {%- if collection.url -%}
+            <a href="{{ collection.url }}">{{ collection.title }}</a>
+            <span class="breadcrumb-separator">/</span>
+          {%- endif -%}
+          <span class="current-page">{{ product.title }}</span>
+        {%- elsif template contains 'collection' and collection.handle -%}
+          {%- if current_tags -%}
+            {%- capture url -%}/collections/{{ collection.handle }}{%- endcapture -%}
+            {{ collection.title | link_to: url }}
+            <span class="breadcrumb-separator">/</span>
+            <span class="current-page">{{ current_tags | join: " + " }}</span>
+          {%- else -%}
+            <span class="current-page">{{ collection.title }}</span>
+          {%- endif -%}
+        {%- elsif template == 'blog' -%}
+          {%- if current_tags -%}
+            {{ blog.title | link_to: blog.url }}
+            <span class="breadcrumb-separator">/</span>
+            <span class="current-page">{{ current_tags | join: " + " }}</span>
+          {%- else -%}
+            <span class="current-page">{{ blog.title }}</span>
+          {%- endif -%}
+        {%- elsif template == 'article' -%}
+          {{ blog.title | link_to: blog.url }}
+          <span class="breadcrumb-separator">/</span>
+          <span class="current-page">{{ article.title }}</span>
+        {%- else -%}
+          <span class="current-page">{{ page_title }}</span>
+        {%- endif -%}
+      </nav>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 40
+    },
+    {
+      "type": "number",
+      "id": "min_height_desktop",
+      "label": "Min Height (Desktop) px",
+      "default": 400
+    },
+    {
+      "type": "number",
+      "id": "min_height_tablet",
+      "label": "Min Height (Tablet) px",
+      "default": 300
+    },
+    {
+      "type": "number",
+      "id": "min_height_mobile",
+      "label": "Min Height (Mobile) px",
+      "default": 250
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Tablet)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Tablet)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Page Title Settings"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom Title Override",
+      "info": "Leave blank to use the default page/collection title."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size (Desktop)",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_tablet",
+      "min": 18,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size (Tablet)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size (Mobile)",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Margin Bottom",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb Settings"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_color",
+      "label": "Breadcrumb Separator Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "home_link_color",
+      "label": "Home Link Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "current_page_color",
+      "label": "Current Page Color",
+      "default": "#cccccc"
+    },
+    {
+      "type": "range",
+      "id": "breadcrumb_font_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Breadcrumb Font Size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "breadcrumb_font_weight",
+      "label": "Breadcrumb Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "breadcrumb_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Breadcrumb Margin Bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -23,7 +23,7 @@
         "padding_bottom_tablet": 40,
         "padding_top_mobile": 30,
         "padding_bottom_mobile": 30,
-        "custom_title": "Contact Us",
+        "custom_title": "My Wishlist",
         "title_color": "#ffffff",
         "title_font_size_desktop": 56,
         "title_font_size_tablet": 40,
@@ -38,18 +38,16 @@
         "breadcrumb_margin_bottom": 0
       }
     },
-    "contact": {
-      "type": "contact",
+    "wishlist": {
+      "type": "wishlist",
       "settings": {
-        "title": "Send Us Your Questions!",
-        "description": "<p>We'll get back to you within two days.</p>",
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80
+        "padding_top_desktop": 60,
+        "padding_bottom_desktop": 100
       }
     }
   },
   "order": [
     "banner",
-    "contact"
+    "wishlist"
   ]
 }

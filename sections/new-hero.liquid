@@ -69,13 +69,26 @@
     opacity: 1;
   }
 
-  .new-hero-content-slider {
+  .new-hero-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
     position: relative;
     z-index: 4;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    .new-hero-container {
+      padding: 0 20px;
+    }
+  }
+
+  .new-hero-content-slider {
     width: 100%;
     max-width: 700px;
-    padding: 0 20px;
-    margin-left: 5%;
   }
 
   .new-hero-slide-content {
@@ -153,7 +166,7 @@
 
   @media screen and (min-width: 750px) {
     .new-hero-content-slider {
-      margin-left: 8%;
+      margin-left: 0;
     }
     .new-hero-heading {
       font-size: {{ section.settings.heading_font_size_tablet }}px;
@@ -267,32 +280,34 @@
     {%- endfor -%}
   </div>
 
-  <div class="new-hero-content-slider">
-    {%- for block in section.blocks -%}
-      <div 
-        class="new-hero-slide-content {% if forloop.first %}active{% endif %}" 
-        data-index="{{ forloop.index0 }}"
-        {{ block.shopify_attributes }}
-      >
-        {%- if block.settings.subtitle != blank -%}
-          <span class="new-hero-subtitle">{{ block.settings.subtitle }}</span>
-        {%- endif -%}
-        
-        {%- if block.settings.heading != blank -%}
-          <h2 class="new-hero-heading">{{ block.settings.heading }}</h2>
-        {%- endif -%}
+  <div class="new-hero-container">
+    <div class="new-hero-content-slider">
+      {%- for block in section.blocks -%}
+        <div 
+          class="new-hero-slide-content {% if forloop.first %}active{% endif %}" 
+          data-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.subtitle != blank -%}
+            <span class="new-hero-subtitle">{{ block.settings.subtitle }}</span>
+          {%- endif -%}
+          
+          {%- if block.settings.heading != blank -%}
+            <h2 class="new-hero-heading">{{ block.settings.heading }}</h2>
+          {%- endif -%}
 
-        {%- if block.settings.description != blank -%}
-          <p class="new-hero-description">{{ block.settings.description }}</p>
-        {%- endif -%}
+          {%- if block.settings.description != blank -%}
+            <p class="new-hero-description">{{ block.settings.description }}</p>
+          {%- endif -%}
 
-        {%- if block.settings.button_label != blank -%}
-          <a href="{{ block.settings.button_link }}" class="new-hero-button">
-            {{ block.settings.button_label }}
-          </a>
-        {%- endif -%}
-      </div>
-    {%- endfor -%}
+          {%- if block.settings.button_label != blank -%}
+            <a href="{{ block.settings.button_link }}" class="new-hero-button">
+              {{ block.settings.button_label }}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
   </div>
 
   <div class="new-hero-slider-thumbs">

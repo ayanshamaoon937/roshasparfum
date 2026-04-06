@@ -1,0 +1,111 @@
+<script>
+  window.wishlist = {
+    storageKey: 'roshas_wishlist',
+    
+    get: function() {
+      try {
+        const items = localStorage.getItem(this.storageKey);
+        return items ? JSON.parse(items) : [];
+      } catch(e) {
+        return [];
+      }
+    },
+    
+    add: function(handle) {
+      let items = this.get();
+      if (!items.includes(handle)) {
+        items.push(handle);
+        localStorage.setItem(this.storageKey, JSON.stringify(items));
+        this.updateButtons(handle, true);
+        document.dispatchEvent(new CustomEvent('wishlist:updated', { detail: { handle, action: 'add', items } }));
+      }
+    },
+    
+    remove: function(handle, shouldRemoveElement = false) {
+      let items = this.get();
+      items = items.filter(item => item !== handle);
+      localStorage.setItem(this.storageKey, JSON.stringify(items));
+      this.updateButtons(handle, false);
+      
+      if (shouldRemoveElement) {
+        const elements = document.querySelectorAll(`[data-wishlist-item="${handle}"], [data-product-handle="${handle}"].wishlist-item`);
+        elements.forEach(el => {
+          el.style.opacity = '0';
+          setTimeout(() => {
+            el.remove();
+            if (this.get().length === 0) {
+              const container = document.getElementById('wishlist-grid');
+              if (container) container.innerHTML = '<div class="wishlist-empty-container"><p class="wishlist-empty-text">Your wishlist is currently empty.</p><a href="/collections/all" class="wishlist-continue-btn">Continue Shopping</a></div>';
+            }
+          }, 300);
+        });
+      }
+      document.dispatchEvent(new CustomEvent('wishlist:updated', { detail: { handle, action: 'remove', items } }));
+    },
+    
+    toggle: function(handle) {
+      const items = this.get();
+      if (items.includes(handle)) {
+        this.remove(handle);
+      } else {
+        this.add(handle);
+      }
+    },
+    
+    updateButtons: function(handle, isActive) {
+      document.querySelectorAll(`.wishlist-toggle[data-product-handle="${handle}"], .wishlist[data-product-handle="${handle}"]`).forEach(btn => {
+        btn.classList.toggle('is-active', isActive);
+      });
+    },
+    
+    updateAllButtons: function() {
+      const items = this.get();
+      // Reset all buttons first
+      document.querySelectorAll('.wishlist-toggle, .wishlist').forEach(btn => btn.classList.remove('is-active'));
+      // Activate relevant ones
+      items.forEach(handle => {
+        this.updateButtons(handle, true);
+      });
+    },
+    
+    init: function() {
+      this.updateAllButtons();
+      
+      // Use event delegation for clicks
+      document.addEventListener('click', (e) => {
+        const toggle = e.target.closest('.wishlist-toggle') || e.target.closest('.wishlist');
+        if (toggle) {
+          e.preventDefault();
+          const handle = toggle.dataset.productHandle;
+          if (handle) {
+             console.log('Wishlist toggle for:', handle);
+             this.toggle(handle);
+          }
+        }
+      });
+
+      // Handle dynamically added products (Collection AJAX, Search, etc)
+      const observer = new MutationObserver((mutations) => {
+        let shouldUpdate = false;
+        mutations.forEach(mutation => {
+          if (mutation.addedNodes.length) {
+            mutation.addedNodes.forEach(node => {
+              if (node.nodeType === 1 && (node.querySelector('.wishlist-toggle') || node.classList.contains('wishlist-toggle'))) {
+                shouldUpdate = true;
+              }
+            });
+          }
+        });
+        if (shouldUpdate) this.updateAllButtons();
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => window.wishlist.init());
+  } else {
+    window.wishlist.init();
+  }
+</script>

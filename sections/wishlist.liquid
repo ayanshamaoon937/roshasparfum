@@ -1,0 +1,485 @@
+{%- style -%}
+  .wishlist-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.bg_image != blank %}
+      background-image: url('{{ section.settings.bg_image | image_url }}');
+      background-size: cover;
+      background-position: center;
+    {% endif %}
+  }
+
+  .wishlist-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .wishlist-container {
+      padding: 0 20px;
+    }
+  }
+
+  /* Wishlist Table/List Layout */
+  .wishlist-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #ebebeb;
+    background: #fff;
+  }
+
+  .wishlist-item {
+    display: grid;
+    grid-template-columns: 50px 120px 1fr 120px 150px 200px;
+    align-items: center;
+    padding: 25px;
+    border-bottom: 1px solid #ebebeb;
+    transition: opacity 0.3s ease;
+    background: #fff;
+  }
+
+  .wishlist-item:last-child {
+    border-bottom: none;
+  }
+
+  .wishlist-remove {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+  }
+
+  .wishlist-remove:hover {
+    color: #000;
+  }
+
+  .wishlist-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .wishlist-info {
+    padding-right: 20px;
+  }
+
+  .wishlist-title {
+    font-family: var(--font-heading--family), serif;
+    font-size: 18px;
+    color: #000;
+    margin: 0 0 5px 0;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+  }
+
+  .wishlist-variant {
+    font-size: 13px;
+    color: #777;
+    font-family: var(--font-body--family), sans-serif;
+    margin-bottom: 5px;
+  }
+
+  .wishlist-price {
+    font-weight: 500;
+    color: #000;
+    font-family: var(--font-body--family), sans-serif;
+    font-size: 15px;
+  }
+
+  .wishlist-stock {
+    font-size: 13px;
+    color: #777;
+    font-family: var(--font-body--family), sans-serif;
+  }
+
+  .wishlist-stock.in-stock {
+    color: #777;
+  }
+
+  .wishlist-atc-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+    max-width: 180px;
+    font-family: var(--font-body--family), sans-serif;
+  }
+
+  .wishlist-atc-btn:hover {
+    background: #333;
+  }
+
+  .wishlist-item__bottom {
+     display: none;
+  }
+
+  /* Empty State Styling */
+  .wishlist-empty-container {
+    padding: 120px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .wishlist-empty-text {
+    font-family: var(--font-body--family), sans-serif;
+    font-size: 15px;
+    color: #666;
+    margin: 0;
+  }
+
+  .wishlist-continue-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 15px 40px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    display: inline-block;
+  }
+
+  .wishlist-loader {
+    text-align: center;
+    padding: 100px 0;
+    font-family: var(--font-body--family);
+    color: #999;
+  }
+
+  @media screen and (min-width: 750px) {
+    .wishlist-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_tablet }}px;
+      padding-bottom: {{ section.settings.padding_bottom_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .wishlist-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .wishlist-grid {
+      border: none !important;
+      background: transparent !important;
+      gap: 20px !important;
+    }
+    .wishlist-item {
+      display: block !important;
+      padding: 0 !important;
+      background: #fff;
+      border: 1px solid #ebebeb !important;
+      margin-bottom: 0px;
+    }
+    .wishlist-item__top {
+      display: flex;
+      padding: 20px;
+      gap: 15px;
+      align-items: flex-start;
+    }
+    .wishlist-remove {
+       width: 25px;
+       padding: 0;
+       margin-top: 5px;
+    }
+    .wishlist-image {
+       width: 80px;
+    }
+    .wishlist-image img {
+       width: 80px;
+       height: 80px;
+    }
+    .wishlist-info {
+       flex: 1;
+       padding: 0;
+    }
+    /* Hide desktop version of these fields */
+    .wishlist-item > .wishlist-stock,
+    .wishlist-item > .wishlist-add,
+    .wishlist-item > .wishlist-price-desktop {
+       display: none !important;
+    }
+    .wishlist-item__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-top: 1px dashed #ebebeb;
+    }
+    .wishlist-item__bottom .wishlist-stock {
+       display: block;
+       margin: 0;
+    }
+    .wishlist-item__bottom .wishlist-add {
+       display: block;
+       text-align: right;
+    }
+    .wishlist-atc-btn {
+      max-width: 140px;
+      padding: 10px 15px;
+      font-size: 11px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="wishlist-section-{{ section.id }}">
+  <div class="wishlist-container">
+    <div id="wishlist-grid" class="wishlist-grid">
+      <div class="wishlist-loader">Loading...</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    // Manual money formatter since Shopify.formatMoney is not always available
+    function formatMoney(cents, format) {
+      if (typeof cents === 'string') cents = cents.replace('.', '');
+      let value = '';
+      const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+      const formatString = format || "${{amount}}";
+
+      function formatWithDelimiters(number, precision, thousands, decimal) {
+        precision = precision || 2;
+        thousands = thousands || ',';
+        decimal = decimal || '.';
+        if (isNaN(number) || number == null) return 0;
+        number = (number / 100.0).toFixed(precision);
+        let parts = number.split('.'),
+            dollars = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands),
+            cents = parts[1] ? decimal + parts[1] : '';
+        return dollars + cents;
+      }
+
+      switch (formatString.match(placeholderRegex)[1]) {
+        case 'amount': value = formatWithDelimiters(cents, 2); break;
+        case 'amount_no_decimals': value = formatWithDelimiters(cents, 0); break;
+        case 'amount_with_comma_separator': value = formatWithDelimiters(cents, 2, '.', ','); break;
+        case 'amount_no_decimals_with_comma_separator': value = formatWithDelimiters(cents, 0, '.', ','); break;
+      }
+      return formatString.replace(placeholderRegex, value);
+    }
+
+    async function loadWishlist() {
+      const container = document.getElementById('wishlist-grid');
+      if (!container) return;
+      
+      const items = window.wishlist ? window.wishlist.get() : [];
+      
+      const emptyHtml = `
+        <div class="wishlist-empty-container">
+          <p class="wishlist-empty-text">Your wishlist is currently empty.</p>
+          <a href="{{ section.settings.continue_shopping_link | default: routes.all_products_collection_url }}" class="wishlist-continue-btn">
+            Continue Shopping
+          </a>
+        </div>
+      `;
+
+      if (items.length === 0) {
+        container.style.border = 'none';
+        container.innerHTML = emptyHtml;
+        return;
+      }
+      
+      container.style.border = '1px solid #ebebeb';
+      container.innerHTML = '<div class="wishlist-loader">Loading...</div>';
+      
+      let html = '';
+      const moneyFormat = "{{ shop.money_format }}";
+      
+      for (const handle of items) {
+        try {
+          const response = await fetch(`${window.Shopify.routes.root}products/${handle}.js`);
+          if (!response.ok) {
+             console.warn(`Product ${handle} could not be loaded.`);
+             continue;
+          }
+          const product = await response.json();
+          
+          const title = product.title;
+          const image = product.featured_image;
+          const price = formatMoney(product.price, moneyFormat);
+          const url = product.url;
+          const available = product.available ? 'In stock' : 'Out of stock';
+          const variantId = product.variants[0].id;
+          
+          // Get option details for the card
+          let details = '';
+          if (product.options && product.options[0]) {
+             details = `Color: ${product.options[0].values[0]}`;
+             if (product.options[1]) {
+                details += ` / Size: ${product.options[1].values[0]}`;
+             }
+          }
+
+          html += `
+            <div class="wishlist-item" data-wishlist-item="${handle}">
+              <div class="wishlist-item__top">
+                <button class="wishlist-remove" title="Remove Item" onclick="window.wishlist.remove('${handle}', true)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="wishlist-image">
+                  <a href="${url}"><img src="${image}" alt="${title}"></a>
+                </div>
+                <div class="wishlist-info">
+                  <a href="${url}" class="wishlist-title">${title}</a>
+                  <div class="wishlist-variant">${details}</div>
+                  <div class="wishlist-price">${price}</div>
+                </div>
+              </div>
+              
+              <div class="wishlist-price-desktop wishlist-price" style="display:none"></div>
+              <div class="wishlist-stock ${product.available ? 'in-stock' : ''}">${available}</div>
+              <div class="wishlist-add">
+                <form method="post" action="/cart/add">
+                  <input type="hidden" name="id" value="${variantId}">
+                  <button type="submit" class="wishlist-atc-btn">Add To Cart</button>
+                </form>
+              </div>
+
+              <!-- Mobile Bottom Row -->
+              <div class="wishlist-item__bottom">
+                <div class="wishlist-stock ${product.available ? 'in-stock' : ''}">${available}</div>
+                <div class="wishlist-add">
+                  <form method="post" action="/cart/add">
+                    <input type="hidden" name="id" value="${variantId}">
+                    <button type="submit" class="wishlist-atc-btn">Add To Cart</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          `;
+        } catch (error) {
+          console.error(`Error loading wishlist product ${handle}:`, error);
+        }
+      }
+      
+      container.innerHTML = (html === '') ? emptyHtml : html;
+      if (html === '') container.style.border = 'none';
+    }
+
+    // Re-check for wishlist initialization if it's not ready yet
+    if (window.wishlist) {
+      loadWishlist();
+    } else {
+      setTimeout(loadWishlist, 500);
+    }
+    
+    document.addEventListener('wishlist:updated', (e) => {
+      if (e.detail.action === 'add') {
+         loadWishlist();
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "settings": [
+    {
+      "type": "url",
+      "id": "continue_shopping_link",
+      "label": "Continue Shopping Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#fcfcfc"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Tablet)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Tablet)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wishlist Page"
+    }
+  ]
+}
+{% endschema %}

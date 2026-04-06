@@ -1,0 +1,552 @@
+{%- style -%}
+  .faq-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  .faq-container-{{ section.id }} {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px 80px;
+    align-items: flex-start;
+  }
+
+  .faq-category-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: #000;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 0px;
+  }
+
+  .faq-question-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 18px 0;
+    cursor: pointer;
+    text-align: left;
+    color: {{ section.settings.question_color }};
+    font-weight: {{ section.settings.question_font_weight }};
+    margin-bottom: {{ section.settings.question_margin_bottom }}px;
+    font-family: 'Jost', sans-serif !important;
+    transition: color 0.3s ease;
+    font-size: {{ section.settings.question_font_size_mobile }}px;
+  }
+
+  .faq-icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+
+  .faq-icon::before, .faq-icon::after {
+    content: '';
+    position: absolute;
+    background-color: currentColor;
+    transition: transform 0.3s ease;
+  }
+
+  /* Horizontal bar */
+  .faq-icon::before {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  /* Vertical bar */
+  .faq-icon::after {
+    width: 1px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .faq-item.is-open .faq-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .faq-answer-wrap {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq-answer {
+    padding-bottom: 20px;
+    color: {{ section.settings.answer_color }};
+    font-weight: {{ section.settings.answer_font_weight }};
+    margin-bottom: {{ section.settings.answer_margin_bottom }}px;
+    font-family: 'Jost', sans-serif !important;
+    line-height: 1.6;
+    font-size: {{ section.settings.answer_font_size_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .faq-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_tablet }}px;
+      padding-bottom: {{ section.settings.padding_bottom_tablet }}px;
+    }
+    .faq-question-btn {
+      font-size: {{ section.settings.question_font_size_tablet }}px;
+    }
+    .faq-answer {
+      font-size: {{ section.settings.answer_font_size_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .faq-section-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_desktop }}px;
+      padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+    }
+    .faq-question-btn {
+      font-size: {{ section.settings.question_font_size_desktop }}px;
+    }
+    .faq-answer {
+      font-size: {{ section.settings.answer_font_size_desktop }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .faq-container-{{ section.id }} {
+      padding: 0 20px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="faq-section-{{ section.id }}">
+  <div class="faq-container-{{ section.id }}">
+    <div class="faq-grid">
+      
+      {%- liquid
+         assign left_column_blocks = ""
+         assign right_column_blocks = ""
+         
+         assign block_count = 0
+         for block in section.blocks
+            if block.type == 'category'
+               assign block_count = block_count | plus: 1
+            endif
+         endfor
+         
+         assign category_index = 0
+      -%}
+
+      {%- comment -%}
+        In order to support a two-column layout where each category contains its questions,
+        we group them. Since blocks are flat, we just iterate and track which category we're in.
+      {%- endcomment -%}
+      
+      <div class="faq-column-left">
+        {%- assign current_cat_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            {%- assign current_cat_index = current_cat_index | plus: 1 -%}
+          {%- endif -%}
+          
+          {%- assign column_side = current_cat_index | modulo: 2 -%}
+          {%- if column_side == 1 -%}
+             {%- if block.type == 'category' -%}
+                <h3 class="faq-category-title">{{ block.settings.title }}</h3>
+             {%- elsif block.type == 'faq_item' -%}
+                <div class="faq-item" {{ block.shopify_attributes }}>
+                  <button class="faq-question-btn" aria-expanded="false">
+                    <span>{{ block.settings.question }}</span>
+                    <span class="faq-icon"></span>
+                  </button>
+                  <div class="faq-answer-wrap">
+                    <div class="faq-answer">
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                </div>
+             {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="faq-column-right">
+        {%- assign current_cat_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category' -%}
+            {%- assign current_cat_index = current_cat_index | plus: 1 -%}
+          {%- endif -%}
+          
+          {%- assign column_side = current_cat_index | modulo: 2 -%}
+          {%- if column_side == 0 and current_cat_index > 0 -%}
+             {%- if block.type == 'category' -%}
+                <h3 class="faq-category-title">{{ block.settings.title }}</h3>
+             {%- elsif block.type == 'faq_item' -%}
+                <div class="faq-item" {{ block.shopify_attributes }}>
+                  <button class="faq-question-btn" aria-expanded="false">
+                    <span>{{ block.settings.question }}</span>
+                    <span class="faq-icon"></span>
+                  </button>
+                  <div class="faq-answer-wrap">
+                    <div class="faq-answer">
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                </div>
+             {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  function initFaqAccordion() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+      const btn = item.querySelector('.faq-question-btn');
+      const wrap = item.querySelector('.faq-answer-wrap');
+      const answer = item.querySelector('.faq-answer');
+
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+        
+        // Close other items if needed (optional)
+        // faqItems.forEach(otherItem => {
+        //   if (otherItem !== item) {
+        //     otherItem.classList.remove('is-open');
+        //     otherItem.querySelector('.faq-answer-wrap').style.maxHeight = null;
+        //     otherItem.querySelector('.faq-question-btn').setAttribute('aria-expanded', 'false');
+        //   }
+        // });
+
+        if (isOpen) {
+          item.classList.remove('is-open');
+          wrap.style.maxHeight = null;
+          btn.setAttribute('aria-expanded', 'false');
+        } else {
+          item.classList.add('is-open');
+          wrap.style.maxHeight = answer.scrollHeight + 20 + 'px';
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initFaqAccordion);
+  document.addEventListener('shopify:section:load', initFaqAccordion);
+</script>
+
+{% schema %}
+{
+  "name": "FAQ Accordion",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Desktop)",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Tablet)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Tablet)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Question Settings"
+    },
+    {
+      "type": "color",
+      "id": "question_color",
+      "label": "Question Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "question_font_size_desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Question Font Size (Desktop)",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "question_font_size_tablet",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Question Font Size (Tablet)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "question_font_size_mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Question Font Size (Mobile)",
+      "default": 15
+    },
+    {
+      "type": "select",
+      "id": "question_font_weight",
+      "label": "Question Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "question_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Question Margin Bottom",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Answer Settings"
+    },
+    {
+      "type": "color",
+      "id": "answer_color",
+      "label": "Answer Color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size_desktop",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Answer Font Size (Desktop)",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size_tablet",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Answer Font Size (Tablet)",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "answer_font_size_mobile",
+      "min": 12,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Answer Font Size (Mobile)",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "answer_font_weight",
+      "label": "Answer Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "answer_margin_bottom",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Answer Margin Bottom",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category Title",
+          "default": "01. The Order"
+        }
+      ]
+    },
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "When do I receive my order?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Once your order has shipped, you will receive a confirmation email with a tracking number so you can follow its journey."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordion",
+      "blocks": [
+        { 
+          "type": "category", 
+          "settings": { "title": "01. Authenticity & Quality" } 
+        },
+        { 
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your perfumes 100% original?",
+            "answer": "Yes, all our perfumes are guaranteed to be 100% authentic. We source them directly from trusted and verified suppliers."
+          }
+        },
+        { 
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I tell if a perfume is original or fake?",
+            "answer": "Original perfumes usually have high-quality packaging, strong lasting scent, batch codes, and clean branding. At ROSHAS, we guarantee authenticity by sourcing only from official distributors."
+          }
+        },
+        { 
+          "type": "faq_item",
+          "settings": {
+            "question": "Why do original perfumes cost less on ROSHAS?",
+            "answer": "We work directly with suppliers and cut unnecessary costs to offer the best value. Lower price doesn’t mean fake — it means smart sourcing and fair pricing."
+          }
+        },
+        { 
+          "type": "category", 
+          "settings": { "title": "02. Orders & Returns" } 
+        },
+        { 
+          "type": "faq_item",
+          "settings": {
+            "question": "When will I get my order?",
+            "answer": "We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location."
+          }
+        },
+        { 
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you accept returns or exchanges?",
+            "answer": "Returns and exchanges are accepted only if the item is broken or incorrect, and within 48 hours of receiving the order. The perfume must be unopened and in its original condition."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

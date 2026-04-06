@@ -47,14 +47,19 @@
   .newsletter-container-{{ section.id }} {
     position: relative;
     z-index: 3;
-    max-width: 1300px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 40px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+  }
+  @media (max-width: 768px) {
+    .newsletter-container-{{ section.id }} {
+      padding: 0 20px;
+    }
   }
 
   .newsletter-content-left-{{ section.id }} {

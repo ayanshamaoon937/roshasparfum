@@ -59,9 +59,14 @@
     position: relative;
     z-index: 5;
     width: 100%;
-    max-width: var(--page-width);
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 5%;
+    padding: 0 40px;
+  }
+  @media (max-width: 768px) {
+    .col-slider-content-slider {
+      padding: 0 20px;
+    }
   }
 
   .col-slider-slide-content {
