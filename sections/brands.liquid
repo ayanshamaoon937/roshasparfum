@@ -2,7 +2,7 @@
   assign columns_desktop = section.settings.columns_desktop | default: 3
   assign columns_mobile = section.settings.columns_mobile | default: 1
   assign gap_desktop = section.settings.gap_desktop | default: 24
-  assign items_per_page = 12
+  assign items_per_page = 9
 -%}
 
 {%- style -%}
@@ -20,7 +20,7 @@
 
   .brands-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat({{ columns_desktop }}, 1fr);
     gap: {{ gap_desktop }}px;
   }
 
@@ -38,10 +38,11 @@
     position: relative;
     text-align: center;
     box-sizing: border-box;
+    opacity: 1;
   }
 
-  .brand-item.is-hidden {
-    display: none !important;
+  .brand-card.is-hidden {
+    display: none;
   }
 
   .brand-logo-wrap {
@@ -68,52 +69,41 @@
   }
 
   .brand-location {
-    font-size: {{ section.settings.loc_size }}px;
-    font-weight: {{ section.settings.loc_weight }};
-    color: {{ section.settings.loc_color | default: '#f0f0f0' }};
+    font-size: 10px;
+    font-weight: 600;
+    color: #999;
     text-transform: uppercase;
     letter-spacing: 2px;
     line-height: 1;
-    transition: color 0.4s ease;
   }
 
   .brand-name {
     font-family: 'Playfair Display', serif;
-    font-size: {{ section.settings.name_size }}px;
-    font-weight: {{ section.settings.name_weight }};
-    color: {{ section.settings.name_color | default: '#f0f0f0' }};
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a1a;
     margin: 0;
     line-height: 1.2;
-    transition: color 0.4s ease;
   }
 
   .brand-description {
-    font-size: {{ section.settings.desc_size }}px;
-    font-weight: {{ section.settings.desc_weight }};
-    color: {{ section.settings.desc_color | default: '#f0f0f0' }};
+    font-size: 9px;
+    font-weight: 400;
+    color: #999;
     text-transform: uppercase;
     letter-spacing: 1px;
     line-height: 1.4;
     max-width: 180px;
-    transition: color 0.4s ease;
   }
 
-  /* Hover Effects matching Slider */
   .brand-card:hover {
-    border-color: {{ section.settings.hover_border_color | default: '#000000' }};
-    box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-    transform: translateY(-5px);
+    border-color: #b59b61;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
     z-index: 10;
   }
 
   .brand-card:hover .brand-logo-wrap img {
     transform: scale(1.05);
-  }
-
-  .brand-card:hover .brand-location,
-  .brand-card:hover .brand-name,
-  .brand-card:hover .brand-description { 
-    color: {{ section.settings.hover_content_color | default: '#000000' }}; 
   }
 
   /* Pagination Styling */
@@ -145,7 +135,7 @@
 
   @media screen and (max-width: 989px) {
     .brands-grid {
-      grid-template-columns: repeat({{ section.settings.columns_tablet | default: 3 }}, 1fr);
+      grid-template-columns: repeat({{ section.settings.columns_tablet | default: 2 }}, 1fr);
     }
     .brands-container {
       padding: 0 20px;
@@ -154,14 +144,11 @@
 
   @media screen and (max-width: 749px) {
     .brands-grid {
-      grid-template-columns: repeat({{ section.settings.columns_mobile | default: 1 }}, 1fr);
+      grid-template-columns: repeat({{ columns_mobile }}, 1fr);
     }
     .brands-grid-section-{{ section.id }} {
        padding-top: {{ section.settings.padding_top_mobile }}px;
        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-    }
-    .brand-logo-wrap {
-       height: 100px;
     }
   }
 {%- endstyle -%}
@@ -170,6 +157,7 @@
   <div class="brands-container">
     <div class="brands-grid" id="brands-grid-{{ section.id }}">
       {%- liquid
+        # Priority: Blocks (Manual) then Vendors (Automatic)
         assign total_brands = 0
       -%}
 
@@ -242,31 +230,31 @@
   "name": "Brands Grid",
   "settings": [
     {
-       "type": "range",
-       "id": "columns_desktop",
-       "min": 1,
-       "max": 6,
-       "step": 1,
-       "label": "Columns on Desktop",
-       "default": 4
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Columns on Desktop",
+      "default": 3
     },
     {
-       "type": "range",
-       "id": "columns_tablet",
-       "min": 1,
-       "max": 4,
-       "step": 1,
-       "label": "Columns on Tablet",
-       "default": 3
+      "type": "range",
+      "id": "columns_tablet",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on Tablet",
+      "default": 2
     },
     {
-       "type": "range",
-       "id": "columns_mobile",
-       "min": 1,
-       "max": 3,
-       "step": 1,
-       "label": "Columns on Mobile",
-       "default": 1
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "label": "Columns on Mobile",
+      "default": 1
     },
     {
       "type": "range",
@@ -285,8 +273,10 @@
       "default": "#ffffff"
     },
     {
-      "type": "header",
-      "content": "Card Styling (Matching Slider)"
+      "type": "color",
+      "id": "border_color",
+      "label": "Card Border Color",
+      "default": "#f0f0f0"
     },
     {
       "type": "range",
@@ -297,109 +287,6 @@
       "unit": "px",
       "label": "Logo Max Width",
       "default": 120
-    },
-    {
-      "type": "color",
-      "id": "border_color",
-      "label": "Border Color",
-      "default": "#d7d7d7"
-    },
-    {
-      "type": "color",
-      "id": "hover_border_color",
-      "label": "Hover Border Color",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "hover_content_color",
-      "label": "Hover Content Color",
-      "default": "#000000"
-    },
-    {
-      "type": "header",
-      "content": "Typography Styles"
-    },
-    {
-      "type": "range",
-      "id": "loc_size",
-      "min": 8,
-      "max": 16,
-      "step": 1,
-      "label": "Location Size",
-      "default": 10
-    },
-    {
-      "type": "select",
-      "id": "loc_weight",
-      "label": "Location Weight",
-      "options": [
-        { "value": "300", "label": "Light" },
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Bold" }
-      ],
-      "default": "600"
-    },
-    {
-      "type": "color",
-      "id": "loc_color",
-      "label": "Location Color",
-      "default": "#999999"
-    },
-    {
-      "type": "range",
-      "id": "name_size",
-      "min": 14,
-      "max": 40,
-      "step": 2,
-      "label": "Name Size",
-      "default": 24
-    },
-    {
-      "type": "select",
-      "id": "name_weight",
-      "label": "Name Weight",
-      "options": [
-        { "value": "300", "label": "Light" },
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Bold" }
-      ],
-      "default": "500"
-    },
-    {
-      "type": "color",
-      "id": "name_color",
-      "label": "Name Color",
-      "default": "#1a1a1a"
-    },
-    {
-      "type": "range",
-      "id": "desc_size",
-      "min": 8,
-      "max": 16,
-      "step": 1,
-      "label": "Description Size",
-      "default": 9
-    },
-    {
-      "type": "select",
-      "id": "desc_weight",
-      "label": "Description Weight",
-      "options": [
-        { "value": "300", "label": "Light" },
-        { "value": "400", "label": "Regular" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Bold" }
-      ],
-      "default": "400"
-    },
-    {
-      "type": "color",
-      "id": "desc_color",
-      "label": "Description Color",
-      "default": "#999999"
     },
     {
       "type": "header",

@@ -8,11 +8,43 @@
   .custom-header {
     background: #ffffff;
     border-bottom: 1px solid #f0f0f0;
-    position: sticky;
+    position: relative;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
     padding: 15px 0;
-    transition: all 0.3s ease;
+    transition: padding 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .custom-header.is-sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  .custom-header.is-sticky.scrolled {
+    padding: 10px 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .custom-header-placeholder {
+    display: none;
+  }
+
+  .custom-header-placeholder.is-active {
+    display: block;
+  }
+
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+
+  body {
+    padding-top: 0;
   }
 
   .mobile-nav-trigger {
@@ -160,7 +192,7 @@
     position: absolute;
     top: -8px;
     right: -10px;
-    background: #808080;
+    background: #000000;
     color: #fff;
     font-size: 10px;
     font-weight: 600;
@@ -887,17 +919,27 @@
     <!-- Icons -->
     <div class="header-icons">
       <button type="button" class="header-icon-link search-trigger-btn" style="background:none; border:none; padding:0; cursor:pointer; color:inherit;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.4625 11.6016L8.40469 7.54375C9.03438 6.72969 9.375 5.73438 9.375 4.6875C9.375 3.43438 8.88594 2.25937 8.00156 1.37344C7.11719 0.4875 5.93906 0 4.6875 0C3.43594 0 2.25781 0.489062 1.37344 1.37344C0.4875 2.25781 0 3.43438 0 4.6875C0 5.93906 0.489062 7.11719 1.37344 8.00156C2.25781 8.8875 3.43438 9.375 4.6875 9.375C5.73438 9.375 6.72813 9.03438 7.54219 8.40625L11.6 12.4625C11.6119 12.4744 11.626 12.4838 11.6416 12.4903C11.6571 12.4967 11.6738 12.5001 11.6906 12.5001C11.7075 12.5001 11.7241 12.4967 11.7397 12.4903C11.7552 12.4838 11.7694 12.4744 11.7812 12.4625L12.4625 11.7828C12.4744 11.7709 12.4838 11.7568 12.4903 11.7412C12.4967 11.7257 12.5001 11.709 12.5001 11.6922C12.5001 11.6754 12.4967 11.6587 12.4903 11.6431C12.4838 11.6276 12.4744 11.6135 12.4625 11.6016ZM7.1625 7.1625C6.5 7.82344 5.62187 8.1875 4.6875 8.1875C3.75313 8.1875 2.875 7.82344 2.2125 7.1625C1.55156 6.5 1.1875 5.62187 1.1875 4.6875C1.1875 3.75313 1.55156 2.87344 2.2125 2.2125C2.875 1.55156 3.75313 1.1875 4.6875 1.1875C5.62187 1.1875 6.50156 1.55 7.1625 2.2125C7.82344 2.875 8.1875 3.75313 8.1875 4.6875C8.1875 5.62187 7.82344 6.50156 7.1625 7.1625Z" fill="currentColor"/>
+        </svg>
       </button>
       <a href="/apps/wishlist" class="header-icon-link">
-        <svg viewBox="0 0 50 50" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M15,7c-7.16797,0 -13,5.83203 -13,13c0,14.76172 16.69531,22.04688 22.375,26.78125l0.625,0.53125l0.625,-0.53125c5.67969,-4.73437 22.375,-12.01953 22.375,-26.78125c0,-7.16797 -5.83203,-13 -13,-13c-4.05469,0 -7.61719,1.92578 -10,4.84375c-2.38281,-2.91797 -5.94531,-4.84375 -10,-4.84375zM15,9c3.83594,0 7.1875,1.96875 9.15625,4.9375l0.84375,1.25l0.84375,-1.25c1.96875,-2.96875 5.32031,-4.9375 9.15625,-4.9375c6.08594,0 11,4.91406 11,11c0,12.89844 -14.40625,19.57422 -21,24.78125c-6.59375,-5.20703 -21,-11.88281 -21,-24.78125c0,-6.08594 4.91406,-11 11,-11z"></path></svg>
+        <svg viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.75 0.75C11.55 0.75 9.75 3.417 9.75 4.75C9.75 3.417 7.95 0.75 4.75 0.75C1.55 0.75 0.75 3.417 0.75 4.75C0.75 11.75 9.75 16.75 9.75 16.75C9.75 16.75 18.75 11.75 18.75 4.75C18.75 3.417 17.95 0.75 14.75 0.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
       </a>
       <a href="/account" class="header-icon-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <svg viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.204 17.197C15.749 15.921 14.744 14.794 13.347 13.99C11.95 13.186 10.238 12.75 8.477 12.75C6.716 12.75 5.004 13.186 3.607 13.99C2.21 14.794 1.205 15.921 0.75 17.197" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M8.47656 8.75C10.6857 8.75 12.4766 6.95914 12.4766 4.75C12.4766 2.54086 10.6857 0.75 8.47656 0.75C6.26742 0.75 4.47656 2.54086 4.47656 4.75C4.47656 6.95914 6.26742 8.75 8.47656 8.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
       </a>
-      <div class="header-cart-drawer">
-         {% render 'cart-drawer' %}
-      </div>
+      <a href="/cart" class="header-icon-link">
+        <svg viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 0.75H3.75L6.75 11.75M6.75 11.75L5.75 15.75H20.75M6.75 11.75H18.75L21.75 2.75H4.295L6.75 11.75ZM6.75 19.75C6.75 20.0152 6.64464 20.2696 6.45711 20.4571C6.26957 20.6446 6.01522 20.75 5.75 20.75C5.48478 20.75 5.23043 20.6446 5.04289 20.4571C4.85536 20.2696 4.75 20.0152 4.75 19.75C4.75 19.4848 4.85536 19.2304 5.04289 19.0429C5.23043 18.8554 5.48478 18.75 5.75 18.75C6.01522 18.75 6.26957 18.8554 6.45711 19.0429C6.64464 19.2304 6.75 19.4848 6.75 19.75ZM20.75 19.75C20.75 20.0152 20.6446 20.2696 20.4571 20.4571C20.2696 20.6446 20.0152 20.75 19.75 20.75C19.4848 20.75 19.2304 20.6446 19.0429 20.4571C18.8554 20.2696 18.75 20.0152 18.75 19.75C18.75 19.4848 18.8554 19.2304 19.0429 19.0429C19.2304 18.8554 19.4848 18.75 19.75 18.75C20.0152 18.75 20.2696 18.8554 20.4571 19.0429C20.6446 19.2304 20.75 19.4848 20.75 19.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+        <span class="cart-count-badge">{{ cart.item_count }}</span>
+      </a>
     </div>
   </div>
 </header>
@@ -986,6 +1028,33 @@
     if (mobileTrigger) mobileTrigger.addEventListener('click', toggleMobileMenu);
     if (mobileClose) mobileClose.addEventListener('click', toggleMobileMenu);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', toggleMobileMenu);
+    // Sticky scroll header — fix to top only after scrolling past announcement bar
+    const stickyHeader = document.querySelector('.custom-header');
+    if (stickyHeader) {
+      // Create a placeholder to prevent layout jump when header becomes fixed
+      const placeholder = document.createElement('div');
+      placeholder.className = 'custom-header-placeholder';
+      placeholder.style.height = stickyHeader.offsetHeight + 'px';
+      stickyHeader.parentNode.insertBefore(placeholder, stickyHeader.nextSibling);
+
+      function handleHeaderSticky() {
+        const announcement = document.querySelector('.header-announcements, [class*="announcement-bar-"]');
+        const announcementHeight = announcement ? announcement.offsetHeight : 0;
+
+        if (window.scrollY > announcementHeight) {
+          stickyHeader.classList.add('is-sticky', 'scrolled');
+          placeholder.classList.add('is-active');
+          placeholder.style.height = stickyHeader.offsetHeight + 'px';
+        } else {
+          stickyHeader.classList.remove('is-sticky', 'scrolled');
+          placeholder.classList.remove('is-active');
+        }
+      }
+
+      window.addEventListener('scroll', handleHeaderSticky, { passive: true });
+      window.addEventListener('resize', handleHeaderSticky);
+      handleHeaderSticky();
+    }
   });
 </script>
 

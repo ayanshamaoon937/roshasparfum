@@ -298,6 +298,7 @@
   .variant-option__button-label {
     --variant-picker-stroke-color: var(--color-variant-border);
     cursor: pointer;
+    max-width: max-content;
     display: flex;
     flex: 0 0 calc(3ch + 1.3em);
     align-items: center;
@@ -305,7 +306,7 @@
     padding-block: var(--padding-sm);
     padding-inline: var(--padding-lg);
     border: var(--options-border-width) solid var(--color-variant-border);
-    border-radius: var(--options-border-radius);
+    border-radius: 0;
     overflow: clip;
     justify-content: center;
     min-height: calc(3ch + 1.3em);

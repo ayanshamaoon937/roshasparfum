@@ -119,6 +119,7 @@
     font-size: {{ section.settings.heading_font_size_mobile }}px;
     line-height: 1.2;
     font-family: var(--font-heading--family);
+    text-transform: capitalize;
   }
 
   @media screen and (min-width: 750px) {
@@ -158,18 +159,19 @@
     transition: all 0.3s ease;
   }
 
-  .collection-card-button-{{ section.id }}::after {
-    content: '';
-    display: inline-block;
-    width: 40px;
-    height: 1px;
-    background-color: {{ section.settings.btn_color }};
-    margin-left: 15px;
-    transition: width 0.3s ease;
+  .collection-card-button-{{ section.id }} svg {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
   }
 
-  .collection-card-{{ section.id }}:hover .collection-card-button-{{ section.id }}::after {
-    width: 60px;
+  .collection-card-{{ section.id }}:hover .collection-card-button-{{ section.id }} svg {
+    transform: translateX(5px);
+  }
+
+  .collection-card-{{ section.id }}:hover .collection-card-button-{{ section.id }} {
+    color: {{ section.settings.btn_hover_color }};
   }
 {%- endstyle -%}
 
@@ -203,6 +205,9 @@
           {%- endif -%}
           <div class="collection-card-button-{{ section.id }}">
             Discover
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </div>
       </a>
@@ -232,7 +237,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Top",
-      "default": 60
+      "default": 80
     },
     {
       "type": "range",
@@ -242,7 +247,7 @@
       "step": 4,
       "unit": "px",
       "label": "Padding Bottom",
-      "default": 60
+      "default": 80
     },
     {
       "type": "range",
@@ -408,6 +413,12 @@
       "id": "btn_border_color",
       "label": "Border Color",
       "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_color",
+      "label": "Button Hover Color",
+      "default": "#808080"
     }
   ],
   "max_blocks": 3,

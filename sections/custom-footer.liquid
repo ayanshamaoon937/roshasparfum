@@ -154,13 +154,34 @@
     color: #cfcfcf;
     text-decoration: none;
     font-size: 14px;
-    transition: color 0.30s ease;
-    display: block;
+    transition: all 0.30s ease;
+    display: flex;
+    align-items: center;
+    gap:0.5rem;
+    width: 100%;
   }
 
   .footer-nav-list a:hover {
     color: #fff;
-    margin-left: 5px;
+    padding-left: 5px;
+  }
+
+  .footer-nav-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    opacity: 0.6;
+  }
+
+  .footer-nav-arrow svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .footer-nav-list a:hover .footer-nav-arrow {
+    transform: rotate(-45deg);
+    opacity: 1;
   }
 
   /* Bottom Bar */
@@ -268,11 +289,17 @@
           <div class="footer-socials">
             {%- if section.settings.social_instagram != blank -%}
               <a href="{{ section.settings.social_instagram }}" class="social-link" target="_blank">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.75 9.75C0.75 5.507 0.75 3.386 2.068 2.068C3.386 0.75 5.508 0.75 9.75 0.75C13.992 0.75 16.114 0.75 17.432 2.068C18.75 3.386 18.75 5.508 18.75 9.75C18.75 13.992 18.75 16.114 17.432 17.432C16.114 18.75 13.992 18.75 9.75 18.75C5.508 18.75 3.386 18.75 2.068 17.432C0.75 16.114 0.75 13.992 0.75 9.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.125 4.5H15M13.75 9.75C13.75 10.8109 13.3286 11.8283 12.5784 12.5784C11.8283 13.3286 10.8109 13.75 9.75 13.75C8.68913 13.75 7.67172 13.3286 6.92157 12.5784C6.17143 11.8283 5.75 10.8109 5.75 9.75C5.75 8.68913 6.17143 7.67172 6.92157 6.92157C7.67172 6.17143 8.68913 5.75 9.75 5.75C10.8109 5.75 11.8283 6.17143 12.5784 6.92157C13.3286 7.67172 13.75 8.68913 13.75 9.75ZM15.25 4.5C15.25 4.5663 15.2237 4.62989 15.1768 4.67678C15.1299 4.72366 15.0663 4.75 15 4.75C14.9337 4.75 14.8701 4.72366 14.8232 4.67678C14.7763 4.62989 14.75 4.5663 14.75 4.5C14.75 4.4337 14.7763 4.37011 14.8232 4.32322C14.8701 4.27634 14.9337 4.25 15 4.25C15.0663 4.25 15.1299 4.27634 15.1768 4.32322C15.2237 4.37011 15.25 4.4337 15.25 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </a>
             {%- elsif settings.social_instagram_link != blank -%}
               <a href="{{ settings.social_instagram_link }}" class="social-link" target="_blank">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.75 9.75C0.75 5.507 0.75 3.386 2.068 2.068C3.386 0.75 5.508 0.75 9.75 0.75C13.992 0.75 16.114 0.75 17.432 2.068C18.75 3.386 18.75 5.508 18.75 9.75C18.75 13.992 18.75 16.114 17.432 17.432C16.114 18.75 13.992 18.75 9.75 18.75C5.508 18.75 3.386 18.75 2.068 17.432C0.75 16.114 0.75 13.992 0.75 9.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15.125 4.5H15M13.75 9.75C13.75 10.8109 13.3286 11.8283 12.5784 12.5784C11.8283 13.3286 10.8109 13.75 9.75 13.75C8.68913 13.75 7.67172 13.3286 6.92157 12.5784C6.17143 11.8283 5.75 10.8109 5.75 9.75C5.75 8.68913 6.17143 7.67172 6.92157 6.92157C7.67172 6.17143 8.68913 5.75 9.75 5.75C10.8109 5.75 11.8283 6.17143 12.5784 6.92157C13.3286 7.67172 13.75 8.68913 13.75 9.75ZM15.25 4.5C15.25 4.5663 15.2237 4.62989 15.1768 4.67678C15.1299 4.72366 15.0663 4.75 15 4.75C14.9337 4.75 14.8701 4.72366 14.8232 4.67678C14.7763 4.62989 14.75 4.5663 14.75 4.5C14.75 4.4337 14.7763 4.37011 14.8232 4.32322C14.8701 4.27634 14.9337 4.25 15 4.25C15.0663 4.25 15.1299 4.27634 15.1768 4.32322C15.2237 4.37011 15.25 4.4337 15.25 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </a>
             {%- endif -%}
 
@@ -288,13 +315,17 @@
 
             {%- if section.settings.social_twitter != blank -%}
               <a href="{{ section.settings.social_twitter }}" class="social-link" target="_blank">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.025 0H13.172L8.482 5.374L14 12.688H9.68L6.294 8.253L2.424 12.688H0.275L5.291 6.938L0 0.000999987H4.43L7.486 4.054L11.025 0ZM10.27 11.4H11.46L3.78 1.221H2.504L10.27 11.4Z" fill="currentColor"/>
+                </svg>
               </a>
             {%- elsif settings.social_twitter_link != blank -%}
               <a href="{{ settings.social_twitter_link }}" class="social-link" target="_blank">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.025 0H13.172L8.482 5.374L14 12.688H9.68L6.294 8.253L2.424 12.688H0.275L5.291 6.938L0 0.000999987H4.43L7.486 4.054L11.025 0ZM10.27 11.4H11.46L3.78 1.221H2.504L10.27 11.4Z" fill="currentColor"/>
+                </svg>
               </a>
-            {%- endif -%}
+{%- endif -%}
 
             {%- if section.settings.social_pinterest != blank -%}
               <a href="{{ section.settings.social_pinterest }}" class="social-link" target="_blank">
@@ -308,11 +339,17 @@
 
             {%- if section.settings.social_tiktok != blank -%}
               <a href="{{ section.settings.social_tiktok }}" class="social-link" target="_blank">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4h5a4 4 0 0 1-4 4"></path></svg>
+                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.75 10.25C0.75 5.772 0.75 3.532 2.141 2.141C3.532 0.75 5.771 0.75 10.25 0.75C14.728 0.75 16.968 0.75 18.359 2.141C19.75 3.532 19.75 5.771 19.75 10.25C19.75 14.728 19.75 16.968 18.359 18.359C16.968 19.75 14.729 19.75 10.25 19.75C5.772 19.75 3.532 19.75 2.141 18.359C0.75 16.968 0.75 14.729 0.75 10.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M8.78589 9.26138C7.96589 9.14538 6.09589 9.33637 5.17989 11.0314C4.26389 12.7264 5.18689 14.4904 5.76389 15.1604C6.33289 15.7874 8.14189 16.9744 10.0609 15.8154C10.5369 15.5284 11.1299 15.3134 11.8019 13.0684L11.7239 4.23438C11.5939 5.20737 12.6689 7.48937 15.7279 7.75937" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </a>
             {%- elsif settings.social_tiktok_link != blank -%}
               <a href="{{ settings.social_tiktok_link }}" class="social-link" target="_blank">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4h5a4 4 0 0 1-4 4"></path></svg>
+                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0.75 10.25C0.75 5.772 0.75 3.532 2.141 2.141C3.532 0.75 5.771 0.75 10.25 0.75C14.728 0.75 16.968 0.75 18.359 2.141C19.75 3.532 19.75 5.771 19.75 10.25C19.75 14.728 19.75 16.968 18.359 18.359C16.968 19.75 14.729 19.75 10.25 19.75C5.772 19.75 3.532 19.75 2.141 18.359C0.75 16.968 0.75 14.729 0.75 10.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M8.78589 9.26138C7.96589 9.14538 6.09589 9.33637 5.17989 11.0314C4.26389 12.7264 5.18689 14.4904 5.76389 15.1604C6.33289 15.7874 8.14189 16.9744 10.0609 15.8154C10.5369 15.5284 11.1299 15.3134 11.8019 13.0684L11.7239 4.23438C11.5939 5.20737 12.6689 7.48937 15.7279 7.75937" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </a>
             {%- endif -%}
           </div>
@@ -326,7 +363,14 @@
             <h4 class="footer-col-title">{{ block.settings.title }}</h4>
             <ul class="footer-nav-list">
               {% for link in block.settings.menu.links %}
-                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+                <li>
+                  <a href="{{ link.url }}">
+                    {{ link.title }}
+                    <span class="footer-nav-arrow">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </span>
+                  </a>
+                </li>
               {% endfor %}
             </ul>
           </div>

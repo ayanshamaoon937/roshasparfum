@@ -11,36 +11,21 @@
 
 {%- liquid
   assign selected_product = closest.product
-  assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
   assign first_3d_model = selected_product.media | where: 'media_type', 'model' | first
 
   if block_settings.hide_variants
     assign variant_images = selected_product.images | where: 'attached_to_variant?', true | map: 'src'
   endif
 
-  if block_settings.slideshow_controls_style == 'thumbnails'
-    assign controls_on_media = false
-  else
-    assign controls_on_media = true
-  endif
-
-  assign render_slideshow_controls = false
-
-  if block_settings.media_presentation == 'carousel' or block_settings.slideshow_controls_style == block_settings.slideshow_mobile_controls_style
-    assign render_slideshow_controls = true
-  endif
+  assign slideshow_controls_style = 'thumbnails'
+  assign media_presentation = 'carousel'
+  assign controls_on_media = false
+  assign render_slideshow_controls = true
 
   assign render_mobile_slideshow_controls = false
 
-  if block_settings.slideshow_controls_style != block_settings.slideshow_mobile_controls_style
-    assign slideshow_controls_class = 'mobile:hidden'
+  assign slideshow_controls_class = ''
 
-    if block_settings.slideshow_mobile_controls_style != 'hint'
-      assign render_mobile_slideshow_controls = true
-    endif
-  endif
-
-  assign slideshow_controls_style = block_settings.slideshow_controls_style
   # Use a counter instead of dots when there are many images to avoid cropping/overflow.
   if slideshow_controls_style == 'dots' and selected_product.media.size > 15
     assign slideshow_controls_style = 'counter'
@@ -53,16 +38,12 @@
   else
     assign slideshow_class = ''
 
-    if block_settings.media_presentation == 'carousel'
+    if media_presentation == 'carousel'
       assign render_slideshow_arrows = true
     endif
   endif
 
-  if slideshow_controls_style == 'thumbnails'
-    assign pagination_position = block_settings.thumbnail_position
-  else
-    assign pagination_position = 'center'
-  endif
+    assign pagination_position = 'left'
 
   # correct discrepancy between position settings for thumbnails and other controls
   if pagination_position == 'bottom'
@@ -82,28 +63,22 @@
 -%}
 
 {%- liquid
-  assign sorted_media = '' | split: ','
-  if selected_variant_media
-    assign sorted_media = sorted_media | concat: selected_product.media | where: 'id', selected_variant_media.id
+  assign selected_product = closest.product
+  assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
 
-    for media in selected_product.media
-      if block_settings.hide_variants and variant_images contains media.src and sorted_media.size > 0
-        continue
-      endif
+  # Simplified media sorting
+  assign sorted_media = selected_product.media
 
-      if media.id != selected_variant_media.id
-        assign found_media = selected_product.media | where: 'id', media.id
-        assign sorted_media = sorted_media | concat: found_media
-      endif
-    endfor
-  else
+  if selected_variant_media and block_settings.hide_variants == false
+    # Move selected variant media to front if needed, but for now just use all media
     assign sorted_media = selected_product.media
   endif
+
   assign has_image_drop = sorted_media | has: 'media_type', 'image'
 
   # Determine if we're in single column mode (carousel or grid with one column)
   assign is_single_column = false
-  if block_settings.media_presentation == 'carousel' or sorted_media.size == 1 or block_settings.media_presentation == 'grid' and block_settings.media_columns == 'one'
+  if media_presentation == 'carousel' or sorted_media.size == 1 or media_presentation == 'grid' and block_settings.media_columns == 'one'
     assign is_single_column = true
   endif
 
@@ -276,11 +251,11 @@
   class="
     spacing-style
     sticky-content
-    {% if block_settings.media_presentation == 'grid' %}
+    {% if media_presentation == 'grid' %}
       media-gallery--{{ block_settings.media_columns }}-column
       {% if block_settings.media_columns == "two" and block_settings.large_first_image%}media-gallery--large-first-image{% endif %}
     {% endif %}
-    media-gallery--{{ block_settings.media_presentation }}
+    media-gallery--{{ media_presentation }}
     {% if block_settings.slideshow_mobile_controls_style == 'hint' %}
       media-gallery--hint
     {% endif %}
@@ -289,7 +264,7 @@
     {% endif %}
   "
   style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
-  data-presentation="{{ block_settings.media_presentation }}"
+  data-presentation="{{ media_presentation }}"
   {{ block.shopify_attributes }}
 >
   {% capture slides %}
@@ -335,35 +310,44 @@
     {% endfor %}
   {% endcapture %}
 
-  {% if sorted_media.size > 1 %}
-    {% capture controls %}
-      {% if render_slideshow_controls %}
-        {%- render 'slideshow-controls',
-          class: slideshow_controls_class,
-          style: slideshow_controls_style,
-          item_count: sorted_media.size,
-          thumbnails: sorted_media,
-          controls_on_media: controls_on_media,
-          pagination_position: pagination_position,
-          aspect_ratio: block_settings.aspect_ratio
-        -%}
-      {% endif %}
-
-      {% if render_mobile_slideshow_controls %}
-        {%- render 'slideshow-controls',
-          class: 'desktop:hidden media-gallery__mobile-controls',
-          style: block_settings.slideshow_mobile_controls_style,
-          item_count: sorted_media.size,
-          controls_on_media: true,
-          pagination_position: 'center',
-        -%}
-      {% endif %}
-    {% endcapture %}
-  {% endif %}
+      {%- capture controls -%}
+        <slideshow-controls
+          pagination-position="left"
+          scroll-mode="vertical"
+          thumbnails
+          style="display: block !important; width: auto !important; visibility: visible !important; opacity: 1 !important; padding: 0 !important; box-sizing: border-box !important;"
+        >
+          <scroll-hint
+            ref="thumbnailsContainer"
+            class="slideshow-controls__thumbnails-container"
+            style="display: block !important; width: 100% !important; height: 100% !important;"
+          >
+            <div class="slideshow-controls__thumbnails" style="display: flex !important; flex-direction: column !important; gap: 1rem !important;">
+              {% for media in selected_product.media %}
+                <button
+                  type="button"
+                  class="slideshow-control slideshow-controls__thumbnail"
+                  aria-label="{{ 'accessibility.load_slide' | t: index: forloop.index }}"
+                  aria-controls="slideshow-{{ block.id }}"
+                  on:click="/scroll-to/{{ forloop.index0 }}"
+                  {% if forloop.first %}aria-selected="true"{% endif %}
+                  style="display: block !important; width: 100px !important; height: 100px !important; border: 1px solid #e5e5e5; padding: 0px; cursor: pointer; box-sizing: border-box !important;"
+                >
+                  {{-
+                    media.preview_image
+                    | image_url: width: 200
+                    | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 200', style: 'width: 100%; height: 100%; object-fit: contain; background: #f9f9f9;'
+                  -}}
+                </button>
+              {% endfor %}
+            </div>
+          </scroll-hint>
+        </slideshow-controls>
+      {%- endcapture -%}
 
   {% if render_slideshow_arrows %}
     {% capture slideshow_arrows %}
-      {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: block_settings.icons_style %}
+      {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: 'chevron', icon_shape: 'circle' %}
     {% endcapture %}
   {% endif %}
 
@@ -377,7 +361,7 @@
     controls: controls
   %}
 
-  {% if block_settings.media_presentation == 'grid' %}
+  {% if media_presentation == 'grid' %}
     <ul
       class="media-gallery__grid list-unstyled"
       data-testid="media-gallery-grid"
@@ -612,6 +596,86 @@
     .dialog-zoomed-gallery .product-media-container--video,
     .dialog-zoomed-gallery .product-media-container--external_video {
       align-content: center;
+    }
+
+    /* Forced Layout for Product Slider */
+    @media screen and (min-width: 750px) {
+      slideshow-component {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 2rem !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+      }
+
+      slideshow-controls {
+        display: block !important;
+        width: auto !important;
+        flex-shrink: 0 !important;
+        order: -1 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: static !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: 100% !important;
+        min-height: 200px !important;
+        box-sizing: border-box !important;
+      }
+
+      slideshow-container {
+        flex-grow: 1 !important;
+        position: relative !important;
+        min-width: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      .slideshow-controls__thumbnails {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      .slideshow-controls__thumbnail {
+        width: 80px !important;
+        height: 80px !important;
+        border: 1px solid #e5e5e5 !important;
+        cursor: pointer !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+      }
+
+      .slideshow-controls__thumbnail[aria-selected="true"] {
+        border-color: #000 !important;
+        border-width: 2px !important;
+      }
+    }
+
+    .slideshow-control--shape-circle {
+      background: #000 !important;
+      color: #fff !important;
+      border-radius: 50% !important;
+      width: 40px !important;
+      height: 40px !important;
+      opacity: 1 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    .slideshow-control--shape-circle svg {
+      width: 14px !important;
+      height: 14px !important;
+      stroke: currentColor;
     }
 
     .dialog-zoomed-gallery

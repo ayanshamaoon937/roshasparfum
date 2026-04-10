@@ -42,21 +42,21 @@
     font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 15px;
+    margin-bottom: {{ section.settings.subtitle_margin_bottom | default: 0 }}px;
   }
 
   .brands-subtitle .line {
     width: 30px;
     height: 1px;
-    background: {{ section.settings.header_line_color | default: '#5e5e5e' }};
-    opacity: 0.5;
+    background: {{ section.settings.header_subtitle_color | default: '#5e5e5e' }};
   }
 
   .brands-title {
     font-family: 'Playfair Display', serif;
     font-size: 60px;
     color: {{ section.settings.header_title_color | default: '#1a1a1a' }};
-    margin: 0;
+    margin-top: {{ section.settings.title_margin_top | default: 20 }}px;
+    margin-bottom: {{ section.settings.title_margin_bottom | default: 20 }}px;
     line-height: 1.1;
   }
 
@@ -66,7 +66,7 @@
     color: {{ section.settings.header_desc_color | default: '#666666' }};
     max-width: 600px;
     line-height: 1.6;
-    margin: 15px 0 0 0;
+    margin: {{ section.settings.desc_margin_top | default: 0 }}px 0 0 0;
   }
 
   /* Slider Navigation */
@@ -125,7 +125,7 @@
   }
 
   .brand-logo-wrap {
-    margin-bottom: 30px;
+    margin-bottom: {{ section.settings.logo_margin_bottom | default: 0 }}px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -516,10 +516,14 @@
       "default": "#5e5e5e"
     },
     {
-      "type": "color",
-      "id": "header_line_color",
-      "label": "Line Color",
-      "default": "#b59b61"
+       "type": "range",
+       "id": "subtitle_margin_bottom",
+       "min": 0,
+       "max": 100,
+       "step": 2,
+       "unit": "px",
+       "label": "Subtitle Margin Bottom",
+       "default": 0
     },
     {
       "type": "text",
@@ -534,6 +538,26 @@
       "default": "#1a1a1a"
     },
     {
+       "type": "range",
+       "id": "title_margin_top",
+       "min": 0,
+       "max": 100,
+       "step": 2,
+       "unit": "px",
+       "label": "Title Top Margin",
+       "default": 20
+    },
+    {
+       "type": "range",
+       "id": "title_margin_bottom",
+       "min": 0,
+       "max": 100,
+       "step": 2,
+       "unit": "px",
+       "label": "Title Bottom Margin",
+       "default": 20
+    },
+    {
       "type": "textarea",
       "id": "description",
       "label": "Description",
@@ -544,6 +568,16 @@
       "id": "header_desc_color",
       "label": "Description Color",
       "default": "#666666"
+    },
+    {
+       "type": "range",
+       "id": "desc_margin_top",
+       "min": 0,
+       "max": 100,
+       "step": 2,
+       "unit": "px",
+       "label": "Description Margin Top",
+       "default": 0
     },
     {
       "type": "header",
@@ -558,6 +592,16 @@
       "unit": "px",
       "label": "Logo Max Width",
       "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Margin Bottom",
+      "default": 0
     },
     {
       "type": "color",

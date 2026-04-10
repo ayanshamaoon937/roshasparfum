@@ -1,19 +1,54 @@
+{%- doc -%}
+  Renders the cart summary totals.
+
+  @param {string} [accelerated_checkout_buttons_layout] - { 'vertical' } Forced layout of the additional checkout buttons, instead of relying on platform's layout.
+{%- enddoc -%}
+
 <div class="cart__summary-totals">
-  {% # Keep this node for morphing # %}
+  {% # We need to keep this node in place to allow morphing to work properly # %}
   <div class="cart__original-total-container cart-primary-typography">
     {%- if cart.cart_level_discount_applications.size > 0 -%}
-      {%- for discount in cart.cart_level_discount_applications -%}
-        <div class="cart__summary-item cart__discount">
-          <span class="cart__discount-label">Discount ({{ discount.title }})</span>
-          <span class="cart__discount-value">-{{ discount.total_allocated_amount | money }}</span>
-        </div>
-      {%- endfor -%}
+      <span class="cart__summary-item cart__original-total">
+        <span class="cart__original-total-label">{{ 'content.cart_subtotal' | t }}</span>
+        <span class="cart__original-total-value cart-secondary-typography">
+          {{- cart.original_total_price | money -}}
+        </span>
+      </span>
+      <div class="cart__summary-discounts">
+        <ul
+          class="discounts list-unstyled"
+          role="list"
+          aria-label="{{ 'content.discounts' | t }}"
+        >
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <li class="cart__summary-item cart__discount">
+              <span class="cart__discount-label">
+                {{- 'icon-discount.svg' | inline_asset_content -}}
+                {{ discount.title | escape }}
+              </span>
+              <span class="cart__discount-value cart-secondary-typography"
+                >-{{ discount.total_allocated_amount | money -}}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
     {%- endif -%}
   </div>
 
-  <div class="cart-discount-toggle">
-    {% render 'cart-discount', section_id: section.id %}
-  </div>
+  {% if settings.show_cart_note or settings.show_add_discount_code %}
+    <div class="cart-actions">
+      {% if settings.show_cart_note %}
+        {% render 'cart-note' %}
+      {% endif %}
+      {% if settings.show_cart_note and settings.show_add_discount_code %}
+        <div class="cart-actions__divider"></div>
+      {% endif %}
+      {% if settings.show_add_discount_code %}
+        {% render 'cart-discount', section_id: section.id %}
+      {% endif %}
+    </div>
+  {% endif %}
 
   {%- liquid
     if settings.currency_code_enabled_cart_total
@@ -23,110 +58,82 @@
     endif
   -%}
 
-  <div class="cart-footer__totals">
-    <div class="cart-footer__total-row">
-      <span class="cart-footer__total-label">ESTIMATED TOTAL</span>
-      <span class="cart-footer__total-value" ref="cartTotal">{{ total_price }}</span>
-    </div>
-    
-    <p class="cart-footer__tax-note">
-      DUTIES AND TAXES INCLUDED. SHIPPING IS CALCULATED AT CHECKOUT.
-    </p>
-
-    <div class="cart-footer__actions">
-      <button
-        type="submit"
-        id="checkout"
-        class="cart-footer__checkout-button button"
-        name="checkout"
-        {% if cart == empty %}
-          disabled
-        {% endif %}
-        form="cart-form"
+  <div class="cart__total-container">
+    <span
+      class="cart__summary-item cart__total"
+      role="status"
+    >
+      <span class="cart__total-label cart-primary-typography">{{ 'content.cart_estimated_total' | t }}</span>
+      <text-component
+        ref="cartTotal"
+        value="{{ total_price | strip_html }}"
+        class="cart__total-value cart-secondary-typography"
+        {% comment %} Used by payment_terms web component {% endcomment %}
+        data-cart-subtotal
       >
-        <span class="checkout-text">Check Out</span>
-        <span class="checkout-price">{{ total_price }}</span>
-      </button>
+        {{ total_price }}
+      </text-component>
+    </span>
+    {% if settings.show_installments %}
+      <span class="cart__summary-item cart__installments">
+        {% form 'cart', cart %}
+          {{ form | payment_terms }}
+        {% endform %}
+      </span>
+    {% endif %}
+    <div class="cart__summary-item tax-note cart-primary-typography">
+      {% render 'tax-info', has_discounts_enabled: settings.show_add_discount_code %}
     </div>
   </div>
 </div>
 
+<div class="cart__ctas">
+  <button
+    type="submit"
+    id="checkout"
+    class="cart__checkout-button button"
+    name="checkout"
+    {% if cart == empty %}
+      disabled
+    {% endif %}
+    form="cart-form"
+  >
+    {{ 'content.checkout' | t }}
+  </button>
+
+  {% if additional_checkout_buttons and settings.show_accelerated_checkout_buttons %}
+    <div
+      class="
+        additional-checkout-buttons
+        {% if accelerated_checkout_buttons_layout == 'vertical' %}additional-checkout-buttons--vertical{% endif %}
+      "
+    >
+      {{ content_for_additional_checkout_buttons }}
+    </div>
+  {% endif %}
+</div>
+
 {% stylesheet %}
-  .cart-footer__totals {
-    border-top: 1px solid #f0f0f0;
-    padding-top: 30px;
-    margin-top: 20px;
-  }
-
-  .cart-footer__total-row {
+  .cart-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    border-block: 1px solid var(--color-border);
+    padding-block: var(--padding-sm);
+    margin-block-start: var(--margin-3xs);
   }
 
-  .cart-footer__total-label {
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    color: #333;
-    font-weight: 500;
+  .cart-actions__divider {
+    border-block-start: 1px solid var(--color-border);
   }
 
-  .cart-footer__total-value {
-    font-size: 18px;
-    color: #000;
-    font-weight: 500;
+  .cart__summary-totals:not(:has(.cart-actions)) {
+    margin-block-start: var(--margin-3xs);
+    border-block-start: 1px solid var(--color-border);
+    padding-block-start: var(--margin-xl);
   }
 
-  .cart-footer__tax-note {
-    font-size: 11px;
-    color: #999;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .cart-footer__checkout-button {
-    background: #000 !important;
-    color: #fff !important;
-    width: 100%;
-    height: 64px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px !important;
-    border-radius: 0 !important;
-    font-size: 18px;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-  }
-
-  .cart-footer__checkout-button:hover {
-    opacity: 0.9;
-  }
-
-  .cart-footer__checkout-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
-  .cart-discount-toggle {
-    margin-bottom: 25px;
-  }
-
-  /* Override disclosure trigger if needed */
-  .cart-discount .disclosure-trigger {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 15px 0;
-    justify-content: space-between;
-    color: #333;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    border-radius: 0 !important;
+  .cart__installments {
+    color: var(--color-foreground);
   }
 {% endstylesheet %}

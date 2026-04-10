@@ -48,8 +48,9 @@
 
   .feature-icon-wrap img, 
   .feature-icon-wrap svg {
-    max-width: {{ section.settings.icon_max_width }}px;
-    height: auto;
+    width: {{ section.settings.icon_width }}px !important;
+    height: {{ section.settings.icon_height }}px !important;
+    max-width: none !important;
     object-fit: contain;
     color: {{ section.settings.icon_color | default: '#b59b61' }};
   }
@@ -98,9 +99,14 @@
         <div class="feature-item" {{ block.shopify_attributes }}>
           <div class="feature-icon-wrap">
             {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | img_url: '100x' }}" alt="{{ block.settings.heading }}">
+              <img 
+                src="{{ block.settings.image | img_url: '100x' }}" 
+                alt="{{ block.settings.heading }}"
+                width="{{ section.settings.icon_width }}"
+                height="{{ section.settings.icon_height }}"
+              >
             {%- elsif block.settings.icon_svg != blank -%}
-              <div class="svg-wrap" style="width: {{ section.settings.icon_max_width }}px;">
+              <div class="svg-wrap" style="width: {{ section.settings.icon_width }}px; height: {{ section.settings.icon_height }}px;">
                 {{ block.settings.icon_svg }}
               </div>
             {%- endif -%}
@@ -148,13 +154,23 @@
     },
     {
       "type": "range",
-      "id": "icon_max_width",
+      "id": "icon_width",
       "min": 10,
-      "max": 60,
+      "max": 100,
       "step": 2,
       "unit": "px",
-      "label": "Icon Max Width",
-      "default": 24
+      "label": "Icon Width",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "icon_height",
+      "min": 10,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Height",
+      "default": 30
     },
     {
       "type": "color",
@@ -263,7 +279,14 @@
     {
       "name": "Features Marquee",
       "blocks": [
-        { "type": "feature", "settings": { "heading": "Guaranteed", "description": "QUALITY CONTROL" } },
+        { 
+          "type": "feature", 
+          "settings": { 
+            "heading": "Guaranteed", 
+            "description": "QUALITY CONTROL",
+            "icon_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"0 0 32 32\" style=\"enable-background:new 0 0 512 512\" xml:space=\"preserve\"><g><path d=\"M28.71 19.17a3.34 3.34 0 0 0 0-6.34 1.22 1.22 0 0 1-.81-.83 1.39 1.39 0 0 1 .19-1.25 3.32 3.32 0 0 0 0-4 3.09 3.09 0 0 0-3.62-1.08 1.13 1.13 0 0 1-1.06-.15 1.33 1.33 0 0 1-.54-1.12 3.26 3.26 0 0 0-2.27-3.25A3.1 3.1 0 0 0 17 2.46a1.2 1.2 0 0 1-2 0 3.1 3.1 0 0 0-3.59-1.31A3.26 3.26 0 0 0 9.15 4.4a1.33 1.33 0 0 1-.54 1.12 1.13 1.13 0 0 1-1.06.15 3.09 3.09 0 0 0-3.62 1.08 3.32 3.32 0 0 0 0 4A1.39 1.39 0 0 1 4.1 12a1.22 1.22 0 0 1-.81.81 3.34 3.34 0 0 0 0 6.34 1.22 1.22 0 0 1 .81.85 1.39 1.39 0 0 1-.19 1.25 3.32 3.32 0 0 0 0 4 3.09 3.09 0 0 0 3.62 1.08 1.13 1.13 0 0 1 1.06.15 1.33 1.33 0 0 1 .54 1.12 3.26 3.26 0 0 0 2.27 3.25 3.32 3.32 0 0 0 1 .15 3.1 3.1 0 0 0 2.6-1.46 1.2 1.2 0 0 1 2 0 3.1 3.1 0 0 0 3.59 1.31 3.26 3.26 0 0 0 2.27-3.25 1.33 1.33 0 0 1 .54-1.12 1.13 1.13 0 0 1 1.06-.15 3.09 3.09 0 0 0 3.62-1.08 3.32 3.32 0 0 0 0-4A1.39 1.39 0 0 1 27.9 20a1.22 1.22 0 0 1 .81-.83Zm-2.71.19a3.38 3.38 0 0 0 .49 3.06 1.35 1.35 0 0 1 0 1.63 1.15 1.15 0 0 1-1.33.41 3.14 3.14 0 0 0-2.92.39 3.34 3.34 0 0 0-1.38 2.81 1.24 1.24 0 0 1-.86 1.28 1.13 1.13 0 0 1-1.32-.5 3.16 3.16 0 0 0-5.32 0 1.12 1.12 0 0 1-1.32.49 1.24 1.24 0 0 1-.87-1.28 3.34 3.34 0 0 0-1.38-2.81 3.12 3.12 0 0 0-1.83-.59 3.18 3.18 0 0 0-1.09.2 1.15 1.15 0 0 1-1.33-.41 1.35 1.35 0 0 1 0-1.63A3.38 3.38 0 0 0 6 19.36a3.22 3.22 0 0 0-2.12-2.11 1.33 1.33 0 0 1 0-2.5A3.22 3.22 0 0 0 6 12.64a3.38 3.38 0 0 0-.49-3.06A1.35 1.35 0 0 1 5.52 8a1.15 1.15 0 0 1 1.33-.41 3.14 3.14 0 0 0 2.92-.39 3.34 3.34 0 0 0 1.38-2.81A1.24 1.24 0 0 1 12 3.06a1.12 1.12 0 0 1 1.32.5 3.16 3.16 0 0 0-5.32 0 1.12 1.12 0 0 1 1.36-.5 1.24 1.24 0 0 1 .87 1.28 3.34 3.34 0 0 0 1.38 2.81 3.14 3.14 0 0 0 2.92.39 1.15 1.15 0 0 1 1.31.46 1.35 1.35 0 0 1 0 1.63 3.38 3.38 0 0 0-.48 3.01 3.22 3.22 0 0 0 2.12 2.11 1.33 1.33 0 0 1 0 2.5A3.22 3.22 0 0 0 26 19.36Z\" fill=\"currentColor\" /><path d=\"M16 6a10 10 0 1 0 10 10A10 10 0 0 0 16 6Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Z\" fill=\"currentColor\" /><path d=\"m20.29 12.16-5.55 5.56-3-3a1 1 0 1 0-1.42 1.41L14 19.84a1 1 0 0 0 .71.29 1 1 0 0 0 .71-.29l6.26-6.26a1 1 0 0 0-1.42-1.42Z\" fill=\"currentColor\" /></g></svg>"
+          }
+        },
         { "type": "feature", "settings": { "heading": "Sourcing", "description": "GLOBAL NETWORK" } },
         { "type": "feature", "settings": { "heading": "Secure", "description": "ENCRYPTED PAY" } },
         { "type": "feature", "settings": { "heading": "Returns", "description": "EASY EXCHANGE" } },
