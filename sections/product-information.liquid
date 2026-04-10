@@ -51,6 +51,19 @@
     {% assign product_href = '#ProductInformation-' | append: section.id %}
     {% render 'skip-to-content-link', href: product_href, text: 'accessibility.skip_to_product_info' %}
   {% endif %}
+  <nav
+    class="product-information__breadcrumb"
+    role="navigation"
+    aria-label="breadcrumbs"
+  >
+    <a href="{{ routes.root_url }}" title="Home">Home</a>
+    <span class="product-information__breadcrumb-separator">/</span>
+    {%- if collection.url -%}
+      <a href="{{ collection.url }}">{{ collection.title }}</a>
+      <span class="product-information__breadcrumb-separator">/</span>
+    {%- endif -%}
+    <span class="product-information__breadcrumb-current">{{ closest.product.title }}</span>
+  </nav>
   <div
     class="{{ product_grid_class }}"
     data-product-grid-content
@@ -91,7 +104,47 @@
 
 {% stylesheet %}
   .product-information {
-    gap: var(--gap) 0;
+    gap: 24px 0;
+  }
+
+  .product-information__breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+    color: currentColor;
+    padding:15px 0 15px 0;
+  }
+
+  .product-information__breadcrumb a {
+    color: #676464cf;
+    text-decoration: none;
+  }
+
+  .product-information__breadcrumb-separator {
+    color: #676464cf;
+  }
+
+  .product-information__breadcrumb-current {
+    color: #000000;
+  }
+
+  .product-information__breadcrumb a:hover {
+    opacity: 0.75;
+  }
+
+  /* Header is fixed; push breadcrumbs below it */
+  body:has(#header-group #header-component) .product-information__breadcrumb {
+    padding-top: calc(var(--header-height, 0px) + var(--padding-sm));
+  }
+
+  /* Product media gallery is sticky: keep it below fixed header */
+  .product-information media-gallery.sticky-content {
+    --section-top-offset: 80px;
+    --sticky-header-offset: 80px;
   }
 
   /* Base grid layout */
@@ -337,9 +390,21 @@
     }
   }
 
-  /* If the header is sticky, make product details content stick underneath the header */
-  body:has(#header-group #header-component[data-sticky-state='active']) .product-details.sticky-content--desktop {
-    --sticky-header-offset: var(--header-height);
+  /* Thumbnails: remove outline, keep border-color feedback only */
+  .slideshow-controls__thumbnails .slideshow-control[aria-selected='true'] {
+    outline: none !important;
+    border-color: #000 !important;
+  }
+
+  .slideshow-controls__thumbnail:focus,
+  .slideshow-controls__thumbnail:focus-visible {
+    outline: none !important;
+    border-color: #000 !important;
+  }
+
+  /* Product details is sticky on desktop; keep it below fixed header */
+  .product-details.sticky-content--desktop {
+    --sticky-header-offset: 80px;
   }
 {% endstylesheet %}
 

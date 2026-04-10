@@ -311,38 +311,15 @@
   {% endcapture %}
 
       {%- capture controls -%}
-        <slideshow-controls
-          pagination-position="left"
-          scroll-mode="vertical"
-          thumbnails
-          style="display: block !important; width: auto !important; visibility: visible !important; opacity: 1 !important; padding: 0 !important; box-sizing: border-box !important;"
-        >
-          <scroll-hint
-            ref="thumbnailsContainer"
-            class="slideshow-controls__thumbnails-container"
-            style="display: block !important; width: 100% !important; height: 100% !important;"
-          >
-            <div class="slideshow-controls__thumbnails" style="display: flex !important; flex-direction: column !important; gap: 1rem !important;">
-              {% for media in selected_product.media %}
-                <button
-                  type="button"
-                  class="slideshow-control slideshow-controls__thumbnail"
-                  aria-label="{{ 'accessibility.load_slide' | t: index: forloop.index }}"
-                  aria-controls="slideshow-{{ block.id }}"
-                  on:click="/scroll-to/{{ forloop.index0 }}"
-                  {% if forloop.first %}aria-selected="true"{% endif %}
-                  style="display: block !important; width: 100px !important; height: 100px !important; border: 1px solid #e5e5e5; padding: 0px; cursor: pointer; box-sizing: border-box !important;"
-                >
-                  {{-
-                    media.preview_image
-                    | image_url: width: 200
-                    | image_tag: loading: 'lazy', sizes: '100px', widths: '100, 200', style: 'width: 100%; height: 100%; object-fit: contain; background: #f9f9f9;'
-                  -}}
-                </button>
-              {% endfor %}
-            </div>
-          </scroll-hint>
-        </slideshow-controls>
+        {%- render 'slideshow-controls',
+          style: 'thumbnails',
+          item_count: sorted_media.size,
+          thumbnails: sorted_media,
+          pagination_position: 'left',
+          show_arrows: false,
+          controls_on_media: false,
+          arrows_on_media: false
+        -%}
       {%- endcapture -%}
 
   {% if render_slideshow_arrows %}
