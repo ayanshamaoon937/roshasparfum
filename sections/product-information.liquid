@@ -121,7 +121,7 @@
   }
 
   /* Full-width border (spans viewport, not section width) */
-  .product-information__breadcrumb::after {
+  /*.product-information__breadcrumb::after {
     content: '';
     position: absolute;
     left: 50%;
@@ -130,6 +130,11 @@
     width: 100vw;
     border-bottom: 1px solid #e5e5e5;
     pointer-events: none;
+  }*/
+
+  /* Force block stack spacing on product page (overrides inline --gap) */
+  .product-information .group-block-content.layout-panel-flex {
+    --gap: 20px !important;
   }
 
   .product-information__breadcrumb a {
@@ -146,7 +151,8 @@
   }
 
   .product-information__breadcrumb a:hover {
-    opacity: 0.75;
+    color: #000000;
+    opacity:1;
   }
 
   /* Header is fixed; push breadcrumbs below it */
