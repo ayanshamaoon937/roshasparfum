@@ -303,9 +303,102 @@
         "equal_columns": false,
         "limit_details_width": false,
         "gap": 48,
+        "share_platform_order": "facebook,twitter,instagram,whatsapp,snapchat,copy",
+        "share_show_labels": true,
+        "share_facebook": true,
+        "share_facebook_label": "Facebook",
+        "share_twitter": true,
+        "share_twitter_label": "Twitter",
+        "share_instagram": true,
+        "share_instagram_label": "Instagram",
+        "share_whatsapp": false,
+        "share_whatsapp_label": "WhatsApp",
+        "share_snapchat": false,
+        "share_snapchat_label": "Snapchat",
+        "share_copy": true,
+        "share_copy_label": "Copy link",
         "color_scheme": "scheme-2",
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 30
+      }
+    },
+    "experience_hYEdKi": {
+      "type": "experience",
+      "blocks": {
+        "card_za7jxk": {
+          "type": "card",
+          "settings": {
+            "svg_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-shield-check w-6 h-6 text-gold\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"></path><path d=\"m9 12 2 2 4-4\"></path></svg>",
+            "card_heading": "100% Authentic",
+            "card_subheading": "Every product is sourced directly from authorized distributors"
+          }
+        },
+        "card_ghWjNz": {
+          "type": "card",
+          "settings": {
+            "svg_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-award w-6 h-6 text-gold\"><path d=\"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526\"></path><circle cx=\"12\" cy=\"8\" r=\"6\"></circle></svg>",
+            "card_heading": "Luxury Guarantee",
+            "card_subheading": "We stand behind every purchase with our satisfaction promise"
+          }
+        },
+        "card_jUj4fK": {
+          "type": "card",
+          "settings": {
+            "svg_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-recycle w-6 h-6 text-gold\"><path d=\"M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5\"></path><path d=\"M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12\"></path><path d=\"m14 16-3 3 3 3\"></path><path d=\"M8.293 13.596 7.196 9.5 3.1 10.598\"></path><path d=\"m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843\"></path><path d=\"m13.378 9.633 4.096 1.098 1.097-4.096\"></path></svg>",
+            "card_heading": "Elegant Packaging",
+            "card_subheading": "Gift-ready presentation with every order, complimentary"
+          }
+        },
+        "card_EJHkrQ": {
+          "type": "card",
+          "settings": {
+            "svg_icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-headphones w-6 h-6 text-gold\"><path d=\"M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3\"></path></svg>",
+            "card_heading": "Concierge Support",
+            "card_subheading": "Personal fragrance advisors available to guide your choice"
+          }
+        }
+      },
+      "block_order": [
+        "card_za7jxk",
+        "card_ghWjNz",
+        "card_jUj4fK",
+        "card_EJHkrQ"
+      ],
+      "name": "Experience",
+      "settings": {
+        "background_color": "#ebebeb",
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "padding_top_tablet": 40,
+        "padding_bottom_tablet": 40,
+        "padding_top_desktop": 48,
+        "padding_bottom_desktop": 48,
+        "subheading": "THE EXPERIENCE",
+        "heading": "Why Shop With Us",
+        "header_spacing": 48,
+        "subheading_color": "#1a1a1a",
+        "subheading_line_width": 40,
+        "subheading_line_opacity": 100,
+        "subheading_font_size": 12,
+        "subheading_letter_spacing": 2,
+        "subheading_margin_bottom": 18,
+        "heading_color": "#111111",
+        "heading_font_size_mobile": 30,
+        "heading_font_size_tablet": 36,
+        "heading_font_size_desktop": 48,
+        "card_gap_mobile": 16,
+        "card_gap_tablet": 18,
+        "card_gap_desktop": 20,
+        "card_padding_x": 10,
+        "card_padding_y": 10,
+        "icon_color": "#000000",
+        "icon_size": 70,
+        "icon_margin_bottom": 26,
+        "card_heading_color": "#111111",
+        "card_heading_font_size": 19,
+        "card_heading_margin_bottom": 10,
+        "card_description_color": "#333333",
+        "card_description_font_size": 16
       }
     },
     "product_recommendations_qggXJq": {
@@ -448,41 +541,11 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
-    },
-    "1764173691aa0980bf": {
-      "type": "_blocks",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "color_scheme": "",
-        "background_media": "none",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
     }
   },
   "order": [
     "main",
-    "product_recommendations_qggXJq",
-    "1764173691aa0980bf"
+    "experience_hYEdKi",
+    "product_recommendations_qggXJq"
   ]
 }

@@ -353,12 +353,15 @@
   }
 
   .product-card .quick-add__button {
-    /* Match product page: no slide-in reveal animation */
-    opacity: 1;
-    transform: none;
-    transition: color 0.25s ease, background-color 0.25s ease;
+    /* Show on hover (like product cards) */
+    opacity: 0;
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+      color 0.25s ease,
+      background-color 0.25s ease;
     display: flex !important;
-    visibility: visible;
     background-color: #808080 !important;
     color: #fff !important;
     min-height: 45px;
@@ -460,8 +463,16 @@
 
   .product-card:hover .quick-add__button {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
     visibility: visible;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-card .quick-add__button {
+      opacity: 1;
+      transform: none;
+      visibility: visible;
+    }
   }
 
   /* Hide the variant swatches for product cards that show a swatches variant picker */

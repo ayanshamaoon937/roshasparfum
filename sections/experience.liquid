@@ -1,0 +1,570 @@
+{%- liquid
+  assign s = section.settings
+-%}
+
+<section class="experience experience-{{ section.id }}" aria-label="{{ s.heading | escape }}">
+  <div class="experience__container">
+    <header class="experience__header">
+      {%- if s.subheading != blank -%}
+        <div class="experience__subheading">{{ s.subheading }}</div>
+      {%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 class="experience__heading">{{ s.heading }}</h2>
+      {%- endif -%}
+    </header>
+
+    <div class="experience__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type != 'card' -%}{%- continue -%}{%- endif -%}
+        {%- assign b = block.settings -%}
+
+        <article class="experience-card" {{ block.shopify_attributes }}>
+          {%- if b.svg_icon != blank -%}
+            <div class="experience-card__icon" aria-hidden="true">
+              {{ b.svg_icon }}
+            </div>
+          {%- endif -%}
+
+          {%- if b.card_heading != blank -%}
+            <h3 class="experience-card__heading">{{ b.card_heading }}</h3>
+          {%- endif -%}
+
+          {%- if b.card_subheading != blank -%}
+            <div class="experience-card__description">{{ b.card_subheading }}</div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .experience-{{ section.id }} {
+    background-color: {{ s.background_color }};
+    padding-top: {{ s.padding_top_mobile }}px;
+    padding-bottom: {{ s.padding_bottom_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .experience-{{ section.id }} {
+      padding-top: {{ s.padding_top_tablet }}px;
+      padding-bottom: {{ s.padding_bottom_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .experience-{{ section.id }} {
+      padding-top: {{ s.padding_top_desktop }}px;
+      padding-bottom: {{ s.padding_bottom_desktop }}px;
+    }
+  }
+
+  .experience-{{ section.id }} .experience__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .experience-{{ section.id }} .experience__container {
+      padding: 0 20px;
+    }
+  }
+
+  .experience-{{ section.id }} .experience__header {
+    text-align: center;
+    margin-bottom: {{ s.header_spacing }}px;
+  }
+
+  .experience-{{ section.id }} .experience__subheading {
+    font-family: var(--font-body--family), sans-serif;
+    font-size: {{ s.subheading_font_size }}px;
+    letter-spacing: {{ s.subheading_letter_spacing }}px;
+    text-transform: uppercase;
+    color: {{ s.subheading_color }};
+    margin-bottom: {{ s.subheading_margin_bottom }}px;
+  }
+
+  .experience-{{ section.id }} .experience__heading {
+    font-family: var(--font-heading--family), serif;
+    font-size: {{ s.heading_font_size_mobile }}px;
+    line-height: 1.2;
+    color: {{ s.heading_color }};
+    margin: 0;
+    font-weight: 500;
+  }
+
+  @media screen and (min-width: 750px) {
+    .experience-{{ section.id }} .experience__heading {
+      font-size: {{ s.heading_font_size_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .experience-{{ section.id }} .experience__heading {
+      font-size: {{ s.heading_font_size_desktop }}px;
+    }
+  }
+
+  .experience-{{ section.id }} .experience__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: {{ s.card_gap_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .experience-{{ section.id }} .experience__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: {{ s.card_gap_tablet }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .experience-{{ section.id }} .experience__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: {{ s.card_gap_desktop }}px;
+    }
+  }
+
+  .experience-{{ section.id }} .experience-card {
+    text-align: center;
+    padding: {{ s.card_padding_y }}px {{ s.card_padding_x }}px;
+  }
+
+  .experience-{{ section.id }} .experience-card__icon {
+    width: {{ s.icon_size }}px;
+    height: {{ s.icon_size }}px;
+    margin: 0 auto {{ s.icon_margin_bottom }}px;
+    color: {{ s.icon_color }};
+    border-radius:50%;
+    background-color:rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .experience-{{ section.id }} .experience-card__icon svg {
+    width: 30px;
+    height: 30px;
+    display: block;
+  }
+
+  .experience-{{ section.id }} .experience-card__heading {
+    font-family: var(--font-body--family), sans-serif;
+    font-size: {{ s.card_heading_font_size }}px;
+    color: {{ s.card_heading_color }};
+    margin: 0 0 {{ s.card_heading_margin_bottom }}px;
+    font-weight: 600;
+  }
+
+  .experience-{{ section.id }} .experience-card__description {
+    font-family: var(--font-body--family), sans-serif;
+    font-size: {{ s.card_description_font_size }}px;
+    color: {{ s.card_description_color }};
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Subtitle with lines (like "MOST WANTED") */
+  .experience-{{ section.id }} .experience__subheading {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .experience-{{ section.id }} .experience__subheading::before,
+  .experience-{{ section.id }} .experience__subheading::after {
+    content: '';
+    display: inline-block;
+    width: {{ s.subheading_line_width }}px;
+    height: 1px;
+    background: currentColor;
+    opacity: {{ s.subheading_line_opacity | divided_by: 100.0 }};
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Experience",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Padding (tablet)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "label": "Top",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "label": "Bottom",
+      "min": 0,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Top",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Bottom",
+      "min": 0,
+      "max": 300,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Header text"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "THE EXPERIENCE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Shop With Us"
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Space below header",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Header styles"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading color",
+      "default": "#9a9a9a"
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_width",
+      "label": "Subheading line width",
+      "min": 10,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "subheading_line_opacity",
+      "label": "Subheading line opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "label": "Subheading font size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "subheading_letter_spacing",
+      "label": "Subheading letter spacing",
+      "min": 0,
+      "max": 8,
+      "step": 0.5,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "subheading_margin_bottom",
+      "label": "Subheading margin bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_mobile",
+      "label": "Heading size (mobile)",
+      "min": 18,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_tablet",
+      "label": "Heading size (tablet)",
+      "min": 18,
+      "max": 70,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size_desktop",
+      "label": "Heading size (desktop)",
+      "min": 18,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 42
+    },
+    {
+      "type": "header",
+      "content": "Cards layout"
+    },
+    {
+      "type": "range",
+      "id": "card_gap_mobile",
+      "label": "Card gap (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "card_gap_tablet",
+      "label": "Card gap (tablet)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "card_gap_desktop",
+      "label": "Card gap (desktop)",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "card_padding_x",
+      "label": "Card padding X",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "card_padding_y",
+      "label": "Card padding Y",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Icon styles"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#c7b98a"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Icon size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "range",
+      "id": "icon_margin_bottom",
+      "label": "Space below icon",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Card text styles"
+    },
+    {
+      "type": "color",
+      "id": "card_heading_color",
+      "label": "Card heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "card_heading_font_size",
+      "label": "Card heading size",
+      "min": 10,
+      "max": 26,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "card_heading_margin_bottom",
+      "label": "Card heading margin bottom",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "card_description_color",
+      "label": "Description color",
+      "default": "#888888"
+    },
+    {
+      "type": "range",
+      "id": "card_description_font_size",
+      "label": "Description size",
+      "min": 10,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "svg_icon",
+          "label": "SVG icon (paste SVG markup)"
+        },
+        {
+          "type": "text",
+          "id": "card_heading",
+          "label": "Card heading",
+          "default": "100% Authentic"
+        },
+        {
+          "type": "text",
+          "id": "card_subheading",
+          "label": "Description",
+          "default": "Every product is sourced directly from authorized distributors"
+        },
+        {
+          "type": "paragraph",
+          "content": "Tip: Use the Description field above. (Legacy description removed.)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experience",
+      "blocks": [
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" },
+        { "type": "card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
