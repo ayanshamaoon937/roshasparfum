@@ -446,7 +446,8 @@
 
   /* Size swatch (variant buttons) styling to match design */
   .product-information .variant-option--buttons:not(.variant-option--swatches) {
-    gap: 16px !important;
+    display: flex;
+    gap: 8px !important;
   }
 
   .product-information
@@ -455,11 +456,12 @@
     border: 1px solid #e3e3e3 !important;
     background: transparent !important;
     border-radius: 0 !important;
-    padding: 18px 26px !important;
-    min-width: 80px !important;
-    min-height: 40px !important;
+    padding: 14px 22px !important;
+    min-width: 96px !important;
+    min-height: 52px !important;
     box-shadow: none !important;
     flex: 0 0 auto !important;
+    position: relative;
   }
 
   .product-information
@@ -475,6 +477,36 @@
     .variant-option--buttons:not(.variant-option--swatches)
     .variant-option__button-label__pill {
     display: none !important;
+  }
+
+  /* Disabled/unavailable style (grey + diagonal strike) */
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:has([data-option-available='false']),
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:has([aria-disabled='true']) {
+    cursor: not-allowed;
+  }
+
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:has([data-option-available='false'])::after,
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:has([aria-disabled='true'])::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      #000 calc(50% - 1px),
+      #000 calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+    pointer-events: none;
+    opacity: 0.45;
   }
   .jdgm-rev-widg {
     padding:24px 0px !important;
@@ -518,7 +550,7 @@
     width: 52px;
     height: 52px;
     aspect-ratio: 1 / 1;
-    border: 1px solid #d7d7d7;
+    border: 1px solid #000000;
     background: transparent;
     color: #000000;
     display: inline-flex;
@@ -615,6 +647,14 @@
     object-fit: cover !important;
   }
 
+  .pi-related .product-card h3 {
+    margin-bottom: 0 !important;
+    font-size:18px !important;
+  }
+  .pi-related .product-card .product-card__vendor-label{
+    margin-top:0 !important;
+  }
+
   @media screen and (max-width: 749px) {
     .pi-related__grid {
       grid-template-columns: var(--resource-list-columns-mobile);
@@ -633,7 +673,9 @@
     width: 18px;
     height: 18px;
   }
-
+  .jdgm-write-rev-link{
+    max-width:max-content !important;
+  }
   .product-information__share-text {
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -829,7 +871,7 @@
         .product-information__grid--half,
         :has(.product-information__media:empty)
       ).product-information--media-left {
-      grid-template-columns: 1.5fr 1fr;
+      grid-template-columns: 1.4fr 1fr;
       gap:0 !important;
     }
 
