@@ -9,7 +9,12 @@
   @param {number} [product_card_gap] - The gap between the product card children (overrides block settings)
 {%- enddoc -%}
 
-{% assign block_settings = block.settings %}
+{%- liquid
+  assign block_settings = block.settings
+  if block_settings == blank
+    assign block_settings = settings
+  endif
+-%}
 
 {% style %}
   {% if request.visual_preview_mode %}
@@ -31,8 +36,9 @@
     assign has_mobile_quick_add = true
   endif
 
-  assign product_card_id = 'product-card-link-' | append: block.id | append: '-' | append: product.id
-  assign product_card_gap_value = product_card_gap | default: block_settings.product_card_gap
+  assign block_id_safe = block.id | default: 'pi'
+  assign product_card_id = 'product-card-link-' | append: block_id_safe | append: '-' | append: product.id
+  assign product_card_gap_value = product_card_gap | default: block_settings.product_card_gap | default: 16
 
   # Logic to determine which variant URL to use (matching swatch selection logic)
   assign variant_to_link = product.selected_or_first_available_variant
@@ -99,9 +105,9 @@
   class="product-card"
   data-product-id="{{ product.id }}"
   data-product-variants-size="{{ product.variants.size }}"
-  id="product-card-{{ block.id }}"
+  id="product-card-{{ block_id_safe }}"
   data-product-transition="{{ settings.transition_to_main_product }}"
-  {{ block.shopify_attributes }}
+  {% if block != blank %}{{ block.shopify_attributes }}{% endif %}
   {% if no_swatch_selected %}
     data-no-swatch-selected="true"
   {% endif %}

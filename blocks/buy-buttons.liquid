@@ -129,12 +129,25 @@
             </span>
           {%- endunless -%}
 
-          {% content_for 'block',
-            type: 'add-to-cart',
-            id: 'add-to-cart',
-            can_add_to_cart: can_add_to_cart,
-            add_to_cart_text: add_to_cart_text
-          %}
+          <div class="product-form-buttons__main-row">
+            {% content_for 'block',
+              type: 'add-to-cart',
+              id: 'add-to-cart',
+              can_add_to_cart: can_add_to_cart,
+              add_to_cart_text: add_to_cart_text
+            %}
+
+            <button
+              type="button"
+              class="product-form-buttons__wishlist wishlist-toggle"
+              data-product-handle="{{ product.handle }}"
+              aria-label="Add to wishlist"
+            >
+              <svg viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <path d="M14.75 0.75C11.55 0.75 9.75 3.417 9.75 4.75C9.75 3.417 7.95 0.75 4.75 0.75C1.55 0.75 0.75 3.417 0.75 4.75C0.75 11.75 9.75 16.75 9.75 16.75C9.75 16.75 18.75 11.75 18.75 4.75C18.75 3.417 17.95 0.75 14.75 0.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
 
           {% content_for 'block',
             type: 'accelerated-checkout',

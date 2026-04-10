@@ -295,8 +295,8 @@ p:empty {
 
 /* Focus */
 *:focus-visible {
-  outline: var(--focus-outline-width) solid currentcolor;
-  outline-offset: var(--focus-outline-offset);
+  outline: unset;
+  outline-offset: unset;
 }
 
 @supports not selector(:focus-visible) {

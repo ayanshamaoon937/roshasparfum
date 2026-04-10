@@ -45,31 +45,130 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const share = document.querySelector('.product-information__share');
-    const banner = document.querySelector('.onhow-shipping-banner');
-    if (share && banner && banner.parentNode) {
-      banner.insertAdjacentElement('afterend', share);
+    const bannerContent = document.querySelector('.onhow-shipping-banner .onhow-shipping-content');
+    if (share && bannerContent && bannerContent.parentNode) {
+      bannerContent.insertAdjacentElement('afterend', share);
+    }
+
+    document.querySelectorAll('[data-pi-tabs]').forEach((tabsRoot) => {
+      const tabs = tabsRoot.querySelectorAll('.pi-tabs__tab');
+      const panels = tabsRoot.querySelectorAll('.pi-tabs__panel');
+
+      function activate(tabName) {
+        tabs.forEach((t) => t.setAttribute('aria-selected', t.dataset.tab === tabName ? 'true' : 'false'));
+        panels.forEach((p) => {
+          const active = p.dataset.panel === tabName;
+          p.toggleAttribute('hidden', !active);
+        });
+      }
+
+      tabsRoot.addEventListener('click', (e) => {
+        const btn = e.target.closest('.pi-tabs__tab');
+        if (!btn) return;
+        activate(btn.dataset.tab);
+      });
+    });
+
+    function moveJudgeMeIntoReviewsTab() {
+      const reviewsSlot = document.querySelector('[data-pi-reviews-slot]');
+      if (!reviewsSlot) return false;
+
+      const jdgmWidgets = Array.from(
+        document.querySelectorAll('.shopify-app-block.jdgm-horizon-widget, .jdgm-horizon-widget')
+      );
+      if (!jdgmWidgets.length) return false;
+
+      // Prefer the Shopify app block wrapper if present.
+      const preferred = jdgmWidgets.find((el) => el.classList.contains('shopify-app-block')) || jdgmWidgets[0];
+      reviewsSlot.appendChild(preferred);
+
+      // Remove any duplicate widgets still on page.
+      jdgmWidgets.forEach((el) => {
+        if (el !== preferred && el.parentNode) el.remove();
+      });
+
+      return true;
+    }
+
+    // Try immediately (in case it's already in DOM)
+    if (!moveJudgeMeIntoReviewsTab()) {
+      // Judge.me often injects later; observe DOM until widget appears.
+      const observer = new MutationObserver(() => {
+        if (moveJudgeMeIntoReviewsTab()) observer.disconnect();
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
     }
   });
 
-  document.addEventListener('click', async (event) => {
-    const button = event.target.closest('.product-information__share-copy');
-    if (!button) return;
-
-    const url = button.getAttribute('data-share-url');
-    if (!url) return;
-
+  async function copyText(text) {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(text);
+      return true;
     } catch (e) {
-      const input = document.createElement('input');
-      input.value = url;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand('copy');
-      input.remove();
+      try {
+        const input = document.createElement('input');
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        input.remove();
+        return true;
+      } catch (e2) {
+        return false;
+      }
+    }
+  }
+
+  document.addEventListener('click', async (event) => {
+    const shareEl = event.target.closest('.product-information__share-link');
+    if (!shareEl) return;
+
+    const shareUrl = shareEl.getAttribute('data-share-url');
+    if (!shareUrl) return;
+
+    const shareTitle =
+      shareEl.getAttribute('data-share-title') ||
+      document.title ||
+      'Share product';
+
+    event.preventDefault();
+    await copyText(shareUrl);
+
+    /**
+     * Best possible "inbox + choose recipient" behavior:
+     * - On mobile (and some desktop browsers), Web Share API opens the system share sheet
+     *   where the user can pick a person/app (WhatsApp, Messages, Instagram, etc).
+     * - If not supported, we fall back to platform URLs (these usually do NOT let you pick a person).
+     */
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: shareTitle, text: shareTitle, url: shareUrl });
+        return;
+      } catch (e) {
+        // user cancelled or share failed; fall back to platform links below
+      }
     }
 
-    window.open('https://www.instagram.com/', '_blank', 'noopener');
+    // Fallbacks
+    if (shareEl.dataset.platform === 'twitter') {
+      window.open(
+        `https://twitter.com/messages/compose?text=${encodeURIComponent(`${shareTitle} ${shareUrl}`)}`,
+        '_blank',
+        'noopener,noreferrer'
+      );
+      return;
+    }
+
+    if (shareEl.dataset.platform === 'facebook') {
+      // Facebook DM chooser requires app_id; fall back to share dialog.
+      const href = shareEl.getAttribute('href');
+      if (href) window.open(href, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    if (shareEl.dataset.platform === 'instagram') {
+      window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+    }
   });
 </script>
 
@@ -99,6 +198,9 @@
     {%- assign share_url = canonical_url | default: shop.url | append: closest.product.url -%}
     <a
       class="product-information__share-link"
+      data-share-url="{{ share_url | escape }}"
+      data-share-title="{{ closest.product.title | escape }}"
+      data-platform="facebook"
       href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}"
       target="_blank"
       rel="noopener noreferrer"
@@ -112,6 +214,9 @@
 
     <a
       class="product-information__share-link"
+      data-share-url="{{ share_url | escape }}"
+      data-share-title="{{ closest.product.title | escape }}"
+      data-platform="twitter"
       href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&text={{ closest.product.title | url_encode }}"
       target="_blank"
       rel="noopener noreferrer"
@@ -129,7 +234,9 @@
       type="button"
       class="product-information__share-link product-information__share-copy"
       data-share-url="{{ share_url | escape }}"
-      aria-label="Copy product link for Instagram"
+      data-share-title="{{ closest.product.title | escape }}"
+      data-platform="instagram"
+      aria-label="Share on Instagram"
     >
       <span class="product-information__share-icon" aria-hidden="true">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -175,6 +282,84 @@
     {% endfor %}
   </div>
 
+  <section class="product-information__tabs-related" aria-label="Product details tabs and related products">
+    <div class="product-information__tabs-related-inner">
+      <div class="pi-tabs" data-pi-tabs>
+        <div class="pi-tabs__tabs" role="tablist" aria-label="Product information tabs">
+          <button class="pi-tabs__tab" type="button" role="tab" aria-selected="true" data-tab="description">
+            Description
+          </button>
+          <button class="pi-tabs__tab" type="button" role="tab" aria-selected="false" data-tab="shipping">
+            Shipping &amp; Returns
+          </button>
+          <button class="pi-tabs__tab" type="button" role="tab" aria-selected="false" data-tab="reviews">
+            Reviews
+          </button>
+        </div>
+
+        <div class="pi-tabs__panels">
+          <div class="pi-tabs__panel" role="tabpanel" data-panel="description">
+            {{ closest.product.description }}
+          </div>
+          <div class="pi-tabs__panel" role="tabpanel" hidden data-panel="shipping">
+            {%- if closest.product.metafields.custom.shipping_return != blank -%}
+              {{ closest.product.metafields.custom.shipping_return | metafield_tag }}
+            {%- else -%}
+              <p>Shipping &amp; returns information is not available.</p>
+            {%- endif -%}
+          </div>
+          <div class="pi-tabs__panel" role="tabpanel" hidden data-panel="reviews">
+            <div class="pi-tabs__reviews-slot" data-pi-reviews-slot>
+              <!-- Judge.me app block will be moved here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="pi-related" aria-label="Related products">
+        <h3 class="pi-related__title">Related products</h3>
+        <div class="pi-related__grid resource-list resource-list--grid">
+          {%- liquid
+            assign rel_collection = collection
+            if rel_collection == blank
+              for c in closest.product.collections
+                unless c.handle == 'all'
+                  assign rel_collection = c
+                  break
+                endunless
+              endfor
+            endif
+          -%}
+
+          {%- if rel_collection != blank -%}
+            {%- assign shown = 0 -%}
+            {%- for p in rel_collection.products -%}
+              {%- if p.id == closest.product.id -%}
+                {%- continue -%}
+              {%- endif -%}
+              <div class="resource-list__item">
+                {%- capture related_children -%}
+                  {% render 'card-gallery', product: p %}
+                  <product-title class="text-block">
+                    <h3>{{ p.title }}</h3>
+                  </product-title>
+                  <product-price class="text-block">
+                    {{ p.price | money }}
+                  </product-price>
+                {%- endcapture -%}
+                {% render 'product-card', product: p, children: related_children %}
+              </div>
+              {%- assign shown = shown | plus: 1 -%}
+              {%- if shown == 2 -%}{%- break -%}{%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            <p>No related products found.</p>
+          {%- endif -%}
+        </div>
+      </aside>
+    </div>
+  </section>
+
   {% content_for 'blocks' %}
 </div>
 
@@ -192,7 +377,7 @@
     letter-spacing: 1px;
     font-size: 12px;
     color: currentColor;
-    padding:15px 0 15px 0;
+    padding:25px 0 15px 0;
     position: relative;
   }
 
@@ -238,6 +423,49 @@
     padding: 24px 0;
   }
 
+  /* Size swatch (variant buttons) styling to match design */
+  .product-information .variant-option--buttons:not(.variant-option--swatches) {
+    gap: 16px !important;
+  }
+
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:not(.variant-option__button-label--has-swatch) {
+    border: 1px solid #e3e3e3 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    padding: 18px 26px !important;
+    min-width: 80px !important;
+    min-height: 40px !important;
+    box-shadow: none !important;
+    flex: 0 0 auto !important;
+  }
+
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:not(.variant-option__button-label--has-swatch)::before,
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:not(.variant-option__button-label--has-swatch)::after {
+    content: none !important;
+  }
+
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label__pill {
+    display: none !important;
+  }
+  .jdgm-rev-widg {
+    padding:24px 0px !important;
+  }
+  .product-information
+    .variant-option--buttons:not(.variant-option--swatches)
+    .variant-option__button-label:not(.variant-option__button-label--has-swatch):has(:checked) {
+    border-color: #000000 !important;
+    color: #000000 !important;
+    border-width: 1px !important;
+  }
+
   .product-information__share-link {
     display: inline-flex;
     align-items: center;
@@ -250,6 +478,118 @@
     text-decoration: none;
     cursor: pointer;
     font: inherit;
+  }
+
+  /* Wishlist button next to Add to cart */
+  .product-information .product-form-buttons__main-row {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .product-information .product-form-buttons__main-row > :first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .product-information .product-form-buttons__wishlist {
+    width: 52px;
+    height: 52px;
+    aspect-ratio: 1 / 1;
+    border: 1px solid #d7d7d7;
+    background: transparent;
+    color: #000000;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .product-information .product-form-buttons__wishlist svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .product-information .product-form-buttons__wishlist.is-active {
+    border-color: #000000;
+    background-color: #000000;
+    color:#ffffff;
+  }
+
+  .product-information__tabs-related {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #e6e6e6;
+  }
+
+  .product-information__tabs-related-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media screen and (max-width: 989px) {
+    .product-information__tabs-related-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .pi-tabs__tabs {
+    display: flex;
+    gap: 28px;
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+
+  .pi-tabs__tab {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    color: #000;
+    position: relative;
+  }
+
+  .pi-tabs__tab[aria-selected='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -13px;
+    height: 2px;
+    background: #000;
+  }
+
+  .pi-tabs__panel {
+    color: #333;
+    line-height: 1.75;
+  }
+
+  .pi-related__title {
+    margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+  }
+
+  .pi-related__grid {
+    --resource-list-columns: repeat(2, minmax(0, 1fr));
+    --resource-list-columns-mobile: repeat(2, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: var(--resource-list-columns);
+    gap: 18px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .pi-related__grid {
+      grid-template-columns: var(--resource-list-columns-mobile);
+    }
   }
 
   .product-information__share-icon {
@@ -460,7 +800,8 @@
         .product-information__grid--half,
         :has(.product-information__media:empty)
       ).product-information--media-left {
-      grid-template-columns: 2fr 1fr;
+      grid-template-columns: 1.5fr 1fr;
+      gap:0 !important;
     }
 
     .product-information__grid:not(
@@ -499,7 +840,7 @@
       position: absolute !important;
       top: 50% !important;
       left: 0 !important;
-      width: 100% !important;
+      
       display: flex !important;
       justify-content: space-between !important;
       transform: translateY(-50%) !important;
