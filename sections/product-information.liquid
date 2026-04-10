@@ -42,6 +42,37 @@
   {{ closest.product | structured_data }}
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const share = document.querySelector('.product-information__share');
+    const banner = document.querySelector('.onhow-shipping-banner');
+    if (share && banner && banner.parentNode) {
+      banner.insertAdjacentElement('afterend', share);
+    }
+  });
+
+  document.addEventListener('click', async (event) => {
+    const button = event.target.closest('.product-information__share-copy');
+    if (!button) return;
+
+    const url = button.getAttribute('data-share-url');
+    if (!url) return;
+
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch (e) {
+      const input = document.createElement('input');
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+    }
+
+    window.open('https://www.instagram.com/', '_blank', 'noopener');
+  });
+</script>
+
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="product-information section section--{{ content_width }} spacing-style color-{{ section.settings.color_scheme }} relative"
@@ -64,6 +95,51 @@
     {%- endif -%}
     <span class="product-information__breadcrumb-current">{{ closest.product.title }}</span>
   </nav>
+  <div class="product-information__share" aria-label="Share this product">
+    {%- assign share_url = canonical_url | default: shop.url | append: closest.product.url -%}
+    <a
+      class="product-information__share-link"
+      href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Share on Facebook"
+    >
+      <span class="product-information__share-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      </span>
+      <span class="product-information__share-text">FACEBOOK</span>
+    </a>
+
+    <a
+      class="product-information__share-link"
+      href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&text={{ closest.product.title | url_encode }}"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Share on Twitter"
+    >
+      <span class="product-information__share-icon" aria-hidden="true">
+        <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.025 0H13.172L8.482 5.374L14 12.688H9.68L6.294 8.253L2.424 12.688H0.275L5.291 6.938L0 0.000999987H4.43L7.486 4.054L11.025 0ZM10.27 11.4H11.46L3.78 1.221H2.504L10.27 11.4Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="product-information__share-text">TWITTER</span>
+    </a>
+
+    <button
+      type="button"
+      class="product-information__share-link product-information__share-copy"
+      data-share-url="{{ share_url | escape }}"
+      aria-label="Copy product link for Instagram"
+    >
+      <span class="product-information__share-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.75 9.75C0.75 5.507 0.75 3.386 2.068 2.068C3.386 0.75 5.508 0.75 9.75 0.75C13.992 0.75 16.114 0.75 17.432 2.068C18.75 3.386 18.75 5.508 18.75 9.75C18.75 13.992 18.75 16.114 17.432 17.432C16.114 18.75 13.992 18.75 9.75 18.75C5.508 18.75 3.386 18.75 2.068 17.432C0.75 16.114 0.75 13.992 0.75 9.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M15.125 4.5H15M13.75 9.75C13.75 10.8109 13.3286 11.8283 12.5784 12.5784C11.8283 13.3286 10.8109 13.75 9.75 13.75C8.68913 13.75 7.67172 13.3286 6.92157 12.5784C6.17143 11.8283 5.75 10.8109 5.75 9.75C5.75 8.68913 6.17143 7.67172 6.92157 6.92157C7.67172 6.17143 8.68913 5.75 9.75 5.75C10.8109 5.75 11.8283 6.17143 12.5784 6.92157C13.3286 7.67172 13.75 8.68913 13.75 9.75ZM15.25 4.5C15.25 4.5663 15.2237 4.62989 15.1768 4.67678C15.1299 4.72366 15.0663 4.75 15 4.75C14.9337 4.75 14.8701 4.72366 14.8232 4.67678C14.7763 4.62989 14.75 4.5663 14.75 4.5C14.75 4.4337 14.7763 4.37011 14.8232 4.32322C14.8701 4.27634 14.9337 4.25 15 4.25C15.0663 4.25 15.1299 4.27634 15.1768 4.32322C15.2237 4.37011 15.25 4.4337 15.25 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="product-information__share-text">INSTAGRAM</span>
+    </button>
+  </div>
   <div
     class="{{ product_grid_class }}"
     data-product-grid-content
@@ -153,6 +229,58 @@
   .product-information__breadcrumb a:hover {
     color: #000000;
     opacity:1;
+  }
+
+  .product-information__share {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 24px 0;
+  }
+
+  .product-information__share-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: #000000;
+    text-decoration: none;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .product-information__share-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-information__share-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .product-information__share-text {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-information__share {
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .product-information__share-text {
+      font-size: 14px;
+    }
   }
 
   /* Header is fixed; push breadcrumbs below it */

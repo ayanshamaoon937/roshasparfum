@@ -1,0 +1,278 @@
+{%- assign s = block.settings -%}
+
+<div
+  class="onhow-shipping-banner onhow-shipping-banner--{{ block.id }}"
+  {{ block.shopify_attributes }}
+>
+  <div
+    class="onhow-shipping-content"
+    style="
+      --onhow-bg: {{ s.background_color }};
+      --onhow-accent: {{ s.accent_color }};
+      --onhow-subtitle: {{ s.subtitle_color }};
+      --onhow-border-color: {{ s.border_color }};
+      --onhow-border-color-hover: {{ s.border_color_hover }};
+      --onhow-border-width: {{ s.border_width }}px;
+      --onhow-radius: {{ s.border_radius }}px;
+      --onhow-padding-y: {{ s.padding_y }}px;
+      --onhow-padding-x: {{ s.padding_x }}px;
+      --onhow-border-width-mobile: {{ s.border_width_mobile }}px;
+      --onhow-radius-mobile: {{ s.border_radius_mobile }}px;
+      --onhow-padding-y-mobile: {{ s.padding_y_mobile }}px;
+      --onhow-padding-x-mobile: {{ s.padding_x_mobile }}px;
+    "
+  >
+    <div class="onhow-shipping-icon" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 8h12v8H1V8z" stroke="currentColor" stroke-width="2" fill="none" />
+        <path d="M13 8h5l3 3v5h-8V8z" stroke="currentColor" stroke-width="2" fill="none" />
+        <circle cx="6" cy="19" r="2" stroke="currentColor" stroke-width="2" fill="none" />
+        <circle cx="18" cy="19" r="2" stroke="currentColor" stroke-width="2" fill="none" />
+        <path d="M8 19h8" stroke="currentColor" stroke-width="2" />
+      </svg>
+    </div>
+
+    <div class="onhow-shipping-text">
+      {%- if s.title != blank -%}
+        <div class="onhow-shipping-title">{{ s.title }}</div>
+      {%- endif -%}
+      {%- if s.subtitle != blank -%}
+        <div class="onhow-shipping-subtitle">{{ s.subtitle }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .onhow-shipping-banner--{{ block.id }} {
+    margin: 0;
+    width: 100%;
+  }
+
+  .onhow-shipping-banner--{{ block.id }} .onhow-shipping-content {
+    background-color: var(--onhow-bg);
+    border: var(--onhow-border-width) solid var(--onhow-border-color);
+    border-radius: var(--onhow-radius);
+    padding: var(--onhow-padding-y) var(--onhow-padding-x);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  .onhow-shipping-banner--{{ block.id }}:hover .onhow-shipping-content {
+    border-color: var(--onhow-border-color-hover);
+
+    {% if s.enable_hover %}
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    {% else %}
+      transform: none;
+      box-shadow: none;
+    {% endif %}
+  }
+
+  .onhow-shipping-banner--{{ block.id }} .onhow-shipping-icon {
+    color: var(--onhow-accent);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .onhow-shipping-banner--{{ block.id }} .onhow-shipping-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .onhow-shipping-banner--{{ block.id }} .onhow-shipping-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .onhow-shipping-banner--{{ block.id }} .onhow-shipping-title {
+    color: var(--onhow-accent);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .onhow-shipping-banner--{{ block.id }} .onhow-shipping-subtitle {
+    color: var(--onhow-subtitle);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.3;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 750px) {
+    .onhow-shipping-banner--{{ block.id }} {
+      margin: 0;
+      width: 100%;
+    }
+
+    .onhow-shipping-banner--{{ block.id }} .onhow-shipping-content {
+      padding: var(--onhow-padding-y-mobile) var(--onhow-padding-x-mobile);
+      border-width: var(--onhow-border-width-mobile);
+      border-radius: var(--onhow-radius-mobile);
+      gap: 12px;
+      white-space: normal;
+    }
+
+    .onhow-shipping-banner--{{ block.id }} .onhow-shipping-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .onhow-shipping-banner--{{ block.id }} .onhow-shipping-title {
+      font-size: 16px;
+    }
+
+    .onhow-shipping-banner--{{ block.id }} .onhow-shipping-subtitle {
+      font-size: 13px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "OnHOW shipping banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Fast and Free Shipping!"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Order now to get free fast delivery"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover",
+      "label": "Enable hover effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width (desktop)",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_width_mobile",
+      "label": "Border width (mobile)",
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "border_color_hover",
+      "label": "Border color (hover)",
+      "default": "#CCFF00"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#CCFF00"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#CCCCCC"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius (desktop)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_x",
+      "label": "Padding X (desktop)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_y",
+      "label": "Padding Y (desktop)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "border_radius_mobile",
+      "label": "Border radius (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_x_mobile",
+      "label": "Padding X (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_y_mobile",
+      "label": "Padding Y (mobile)",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    }
+  ]
+}
+{% endschema %}
