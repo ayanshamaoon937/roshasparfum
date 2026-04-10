@@ -2573,6 +2573,13 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   position: relative;
   overflow: hidden;
   border-radius: 0;
+  background-color:transparent;
+  border:1px solid #000000;
+  color:#000000;
+}
+.button[id^='BuyButtons-ProductSubmitButton-']:hover {
+  background-color:#000000;
+  color:#ffffff;
 }
 
 /* Cart bubble */

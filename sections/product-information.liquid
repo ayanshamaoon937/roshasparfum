@@ -165,25 +165,17 @@
     }
 
     // Fallbacks
-    if (shareEl.dataset.platform === 'twitter') {
-      window.open(
-        `https://twitter.com/messages/compose?text=${encodeURIComponent(`${shareTitle} ${shareUrl}`)}`,
-        '_blank',
-        'noopener,noreferrer'
-      );
-      return;
-    }
-
-    if (shareEl.dataset.platform === 'facebook') {
-      // Facebook DM chooser requires app_id; fall back to share dialog.
-      const href = shareEl.getAttribute('href');
-      if (href) window.open(href, '_blank', 'noopener,noreferrer');
-      return;
-    }
-
     if (shareEl.dataset.platform === 'instagram') {
       window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+      return;
     }
+
+    if (shareEl.dataset.platform === 'copy') {
+      return;
+    }
+
+    const href = shareEl.getAttribute('href');
+    if (href) window.open(href, '_blank', 'noopener,noreferrer');
   });
 </script>
 
@@ -209,58 +201,116 @@
     {%- endif -%}
     <span class="product-information__breadcrumb-current">{{ closest.product.title }}</span>
   </nav>
+  {%- liquid
+    assign share_url = canonical_url | default: shop.url | append: closest.product.url
+    assign share_title = closest.product.title
+    assign share_url_encoded = share_url | url_encode
+    assign share_title_encoded = share_title | url_encode
+    assign whatsapp_text_encoded = share_title | append: ' ' | append: share_url | url_encode
+
+    assign platform_order = section.settings.share_platform_order | default: 'facebook,twitter,instagram,whatsapp,snapchat,copy'
+    assign platform_list = platform_order | split: ','
+  -%}
+
   <div class="product-information__share" aria-label="Share this product">
-    {%- assign share_url = canonical_url | default: shop.url | append: closest.product.url -%}
-    <a
-      class="product-information__share-link"
-      data-share-url="{{ share_url | escape }}"
-      data-share-title="{{ closest.product.title | escape }}"
-      data-platform="facebook"
-      href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Share on Facebook"
-    >
-      <span class="product-information__share-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-      </span>
-      <span class="product-information__share-text">FACEBOOK</span>
-    </a>
+    {%- for raw_platform in platform_list -%}
+      {%- liquid
+        assign platform = raw_platform | strip
 
-    <a
-      class="product-information__share-link"
-      data-share-url="{{ share_url | escape }}"
-      data-share-title="{{ closest.product.title | escape }}"
-      data-platform="twitter"
-      href="https://twitter.com/intent/tweet?url={{ share_url | url_encode }}&text={{ closest.product.title | url_encode }}"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Share on Twitter"
-    >
-      <span class="product-information__share-icon" aria-hidden="true">
-        <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.025 0H13.172L8.482 5.374L14 12.688H9.68L6.294 8.253L2.424 12.688H0.275L5.291 6.938L0 0.000999987H4.43L7.486 4.054L11.025 0ZM10.27 11.4H11.46L3.78 1.221H2.504L10.27 11.4Z" fill="currentColor"/>
-        </svg>
-      </span>
-      <span class="product-information__share-text">TWITTER</span>
-    </a>
+        assign enabled = false
+        assign label = platform
+        case platform
+          when 'facebook'
+            assign enabled = section.settings.share_facebook
+            assign label = section.settings.share_facebook_label | default: 'Facebook'
+            assign href = 'https://www.facebook.com/sharer/sharer.php?u=' | append: share_url_encoded
+          when 'twitter'
+            assign enabled = section.settings.share_twitter
+            assign label = section.settings.share_twitter_label | default: 'Twitter'
+            assign href = 'https://twitter.com/intent/tweet?url=' | append: share_url_encoded | append: '&text=' | append: share_title_encoded
+          when 'instagram'
+            assign enabled = section.settings.share_instagram
+            assign label = section.settings.share_instagram_label | default: 'Instagram'
+            assign href = blank
+          when 'whatsapp'
+            assign enabled = section.settings.share_whatsapp
+            assign label = section.settings.share_whatsapp_label | default: 'WhatsApp'
+            assign href = 'https://wa.me/?text=' | append: whatsapp_text_encoded
+          when 'snapchat'
+            assign enabled = section.settings.share_snapchat
+            assign label = section.settings.share_snapchat_label | default: 'Snapchat'
+            assign href = 'https://www.snapchat.com/scan?attachmentUrl=' | append: share_url_encoded
+          when 'copy'
+            assign enabled = section.settings.share_copy
+            assign label = section.settings.share_copy_label | default: 'Copy link'
+            assign href = blank
+        endcase
 
-    <button
-      type="button"
-      class="product-information__share-link product-information__share-copy"
-      data-share-url="{{ share_url | escape }}"
-      data-share-title="{{ closest.product.title | escape }}"
-      data-platform="instagram"
-      aria-label="Share on Instagram"
-    >
-      <span class="product-information__share-icon" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0.75 9.75C0.75 5.507 0.75 3.386 2.068 2.068C3.386 0.75 5.508 0.75 9.75 0.75C13.992 0.75 16.114 0.75 17.432 2.068C18.75 3.386 18.75 5.508 18.75 9.75C18.75 13.992 18.75 16.114 17.432 17.432C16.114 18.75 13.992 18.75 9.75 18.75C5.508 18.75 3.386 18.75 2.068 17.432C0.75 16.114 0.75 13.992 0.75 9.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M15.125 4.5H15M13.75 9.75C13.75 10.8109 13.3286 11.8283 12.5784 12.5784C11.8283 13.3286 10.8109 13.75 9.75 13.75C8.68913 13.75 7.67172 13.3286 6.92157 12.5784C6.17143 11.8283 5.75 10.8109 5.75 9.75C5.75 8.68913 6.17143 7.67172 6.92157 6.92157C7.67172 6.17143 8.68913 5.75 9.75 5.75C10.8109 5.75 11.8283 6.17143 12.5784 6.92157C13.3286 7.67172 13.75 8.68913 13.75 9.75ZM15.25 4.5C15.25 4.5663 15.2237 4.62989 15.1768 4.67678C15.1299 4.72366 15.0663 4.75 15 4.75C14.9337 4.75 14.8701 4.72366 14.8232 4.67678C14.7763 4.62989 14.75 4.5663 14.75 4.5C14.75 4.4337 14.7763 4.37011 14.8232 4.32322C14.8701 4.27634 14.9337 4.25 15 4.25C15.0663 4.25 15.1299 4.27634 15.1768 4.32322C15.2237 4.37011 15.25 4.4337 15.25 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
-      <span class="product-information__share-text">INSTAGRAM</span>
-    </button>
+        assign show_label = section.settings.share_show_labels
+      -%}
+
+      {%- if enabled -%}
+        {%- if platform == 'instagram' or platform == 'copy' -%}
+          <button
+            type="button"
+            class="product-information__share-link product-information__share-copy"
+            data-share-url="{{ share_url | escape }}"
+            data-share-title="{{ share_title | escape }}"
+            data-platform="{{ platform }}"
+            aria-label="{{ label | escape }}"
+          >
+            <span class="product-information__share-icon" aria-hidden="true">
+              {% case platform %}
+                {% when 'instagram' %}
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.75 9.75C0.75 5.507 0.75 3.386 2.068 2.068C3.386 0.75 5.508 0.75 9.75 0.75C13.992 0.75 16.114 0.75 17.432 2.068C18.75 3.386 18.75 5.508 18.75 9.75C18.75 13.992 18.75 16.114 17.432 17.432C16.114 18.75 13.992 18.75 9.75 18.75C5.508 18.75 3.386 18.75 2.068 17.432C0.75 16.114 0.75 13.992 0.75 9.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M15.125 4.5H15M13.75 9.75C13.75 10.8109 13.3286 11.8283 12.5784 12.5784C11.8283 13.3286 10.8109 13.75 9.75 13.75C8.68913 13.75 7.67172 13.3286 6.92157 12.5784C6.17143 11.8283 5.75 10.8109 5.75 9.75C5.75 8.68913 6.17143 7.67172 6.92157 6.92157C7.67172 6.17143 8.68913 5.75 9.75 5.75C10.8109 5.75 11.8283 6.17143 12.5784 6.92157C13.3286 7.67172 13.75 8.68913 13.75 9.75ZM15.25 4.5C15.25 4.5663 15.2237 4.62989 15.1768 4.67678C15.1299 4.72366 15.0663 4.75 15 4.75C14.9337 4.75 14.8701 4.72366 14.8232 4.67678C14.7763 4.62989 14.75 4.5663 14.75 4.5C14.75 4.4337 14.7763 4.37011 14.8232 4.32322C14.8701 4.27634 14.9337 4.25 15 4.25C15.0663 4.25 15.1299 4.27634 15.1768 4.32322C15.2237 4.37011 15.25 4.4337 15.25 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                {% else %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l1.5-1.5a5 5 0 0 0-7.07-7.07L11 4.9"/><path d="M14 11a5 5 0 0 0-7.54-.54l-1.5 1.5a5 5 0 0 0 7.07 7.07L13 19.1"/></svg>
+              {% endcase %}
+            </span>
+            {% if show_label %}
+              <span class="product-information__share-text">{{ label }}</span>
+            {% endif %}
+          </button>
+        {%- else -%}
+          <a
+            class="product-information__share-link"
+            data-share-url="{{ share_url | escape }}"
+            data-share-title="{{ share_title | escape }}"
+            data-platform="{{ platform }}"
+            href="{{ href }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="{{ label | escape }}"
+          >
+            <span class="product-information__share-icon" aria-hidden="true">
+              {% case platform %}
+                {% when 'facebook' %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                {% when 'twitter' %}
+                  <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.025 0H13.172L8.482 5.374L14 12.688H9.68L6.294 8.253L2.424 12.688H0.275L5.291 6.938L0 0.000999987H4.43L7.486 4.054L11.025 0ZM10.27 11.4H11.46L3.78 1.221H2.504L10.27 11.4Z" fill="currentColor"/>
+                  </svg>
+                {% when 'whatsapp' %}
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.5 11.9a8.5 8.5 0 0 1-12.7 7.4L3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 20.5 11.9Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M9.2 8.9c.3-.6.6-.6.9-.6h.6c.2 0 .4 0 .6.4.2.4.8 1.9.9 2.1.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.3-.2.6.2.3 1 1.7 2.2 2.7 1.5 1.3 2.8 1.7 3.2 1.9.4.2.6.1.8-.1.2-.2 1-1.1 1.2-1.5.2-.4.4-.3.6-.2.2.1 1.7.8 2 1 .3.2.5.3.6.4.1.1.1.9-.2 1.7-.3.8-1.6 1.6-2.2 1.7-.6.1-1.3.2-2.1-.1-.5-.2-1.2-.4-2.1-.8-3.7-1.6-6.1-5.6-6.3-5.9-.2-.3-1.5-2-1.5-3.9 0-1.9 1-2.8 1.3-3.2Z" fill="currentColor"/>
+                  </svg>
+                {% when 'snapchat' %}
+                  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3c2.7 0 4.8 2.2 4.8 4.9v1.8c0 .6.3 1 .8 1.3.6.3 1.3.5 1.8.8.4.2.6.7.4 1.1-.4.8-1.5 1.2-2.3 1.5-.6.2-.9.7-1 1.3-.2 1.4-1.5 2.3-3.5 2.3h-.2c-2 0-3.3-.9-3.5-2.3-.1-.6-.4-1.1-1-1.3-.8-.3-1.9-.7-2.3-1.5-.2-.4 0-.9.4-1.1.5-.3 1.2-.5 1.8-.8.5-.3.8-.7.8-1.3V7.9C7.2 5.2 9.3 3 12 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+              {% endcase %}
+            </span>
+            {% if show_label %}
+              <span class="product-information__share-text">{{ label }}</span>
+            {% endif %}
+          </a>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
   </div>
   <div
     class="{{ product_grid_class }}"
@@ -550,7 +600,7 @@
     width: 52px;
     height: 52px;
     aspect-ratio: 1 / 1;
-    border: 1px solid #000000;
+    border: 1px solid rgba(0 0 0 / 0.13);
     background: transparent;
     color: #000000;
     display: inline-flex;
@@ -570,6 +620,11 @@
     background-color: #000000;
     color:#ffffff;
   }
+ .product-information .product-form-buttons__wishlist:hover {
+  border-color: #000000;
+  background-color: #000000;
+  color: #ffffff;
+}
 
   .product-information__tabs-related {
     margin-top: 48px;
@@ -678,8 +733,8 @@
   }
   .product-information__share-text {
     letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 16px;
+    text-transform: capitalize;
+    font-size: 14px;
     line-height: 1;
   }
 
@@ -1037,6 +1092,94 @@
       "step": 4,
       "unit": "px",
       "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Social share"
+    },
+    {
+      "type": "text",
+      "id": "share_platform_order",
+      "label": "Platform order (comma-separated)",
+      "default": "facebook,twitter,instagram,whatsapp,snapchat,copy"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_show_labels",
+      "label": "Show text labels",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "share_facebook",
+      "label": "Enable Facebook",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_facebook_label",
+      "label": "Facebook label",
+      "default": "Facebook"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_twitter",
+      "label": "Enable Twitter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_twitter_label",
+      "label": "Twitter label",
+      "default": "Twitter"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_instagram",
+      "label": "Enable Instagram",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_instagram_label",
+      "label": "Instagram label",
+      "default": "Instagram"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_whatsapp",
+      "label": "Enable WhatsApp",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "share_whatsapp_label",
+      "label": "WhatsApp label",
+      "default": "WhatsApp"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_snapchat",
+      "label": "Enable Snapchat",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "share_snapchat_label",
+      "label": "Snapchat label",
+      "default": "Snapchat"
+    },
+    {
+      "type": "checkbox",
+      "id": "share_copy",
+      "label": "Enable Copy link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_copy_label",
+      "label": "Copy link label",
+      "default": "Copy link"
     },
     {
       "type": "color_scheme",
