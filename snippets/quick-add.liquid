@@ -216,7 +216,7 @@
     position: relative;
     grid-row: 1 / span 1;
     grid-column: 1 / span 1;
-    justify-self: end;
+    justify-self: center;
     line-height: 1;
 
     @media screen and (min-width: 750px) {
@@ -296,13 +296,13 @@
   @keyframes atc-fade-in {
     from {
       opacity: 0;
-      transform: translateX(1em);
+      transform: translateY(1em);
       position: absolute;
     }
 
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
       position: inherit;
     }
   }
@@ -310,13 +310,13 @@
   @keyframes atc-fade-out {
     from {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
       position: inherit;
     }
 
     to {
       opacity: 0;
-      transform: translateX(-1em);
+      transform: translateY(-1em);
       position: absolute;
     }
   }

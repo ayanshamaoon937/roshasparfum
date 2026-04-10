@@ -353,11 +353,12 @@
   }
 
   .product-card .quick-add__button {
-    opacity: 0;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1), color 0.4s ease;
+    /* Match product page: no slide-in reveal animation */
+    opacity: 1;
+    transform: none;
+    transition: color 0.25s ease, background-color 0.25s ease;
     display: flex !important;
-    visibility: hidden;
+    visibility: visible;
     background-color: #808080 !important;
     color: #fff !important;
     min-height: 45px;
@@ -374,6 +375,58 @@
     z-index: 1;
     border: none;
     text-transform: uppercase;
+  }
+
+  /* Quick-add "added" text animation: bottom -> top (and prevent it sitting on right) */
+  .product-card .quick-add__button {
+    display: grid !important;
+  }
+
+  .product-card .quick-add__button .add-to-cart-text,
+  .product-card .quick-add__button .add-to-cart-text--added {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card .quick-add__button .add-to-cart-text--added {
+    opacity: 0;
+    transform: translateY(1em);
+    animation: none;
+    position: relative !important;
+    width: auto !important;
+  }
+
+  .product-card .quick-add__button.atc-added .add-to-cart-text {
+    animation: pc-atc-fade-out 0.35s ease forwards;
+  }
+
+  .product-card .quick-add__button.atc-added .add-to-cart-text--added {
+    opacity: 1;
+    animation: pc-atc-fade-in 0.35s ease forwards;
+  }
+
+  @keyframes pc-atc-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(1em);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pc-atc-fade-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-1em);
+    }
   }
 
   .product-card .quick-add__button::before {
@@ -407,16 +460,8 @@
 
   .product-card:hover .quick-add__button {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
     visibility: visible;
-  }
-
-  @media screen and (max-width: 749px) {
-    .product-card .quick-add__button {
-      opacity: 1;
-      transform: none;
-      visibility: visible;
-    }
   }
 
   /* Hide the variant swatches for product cards that show a swatches variant picker */
