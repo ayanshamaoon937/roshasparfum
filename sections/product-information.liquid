@@ -73,19 +73,34 @@
       const reviewsSlot = document.querySelector('[data-pi-reviews-slot]');
       if (!reviewsSlot) return false;
 
-      const jdgmWidgets = Array.from(
-        document.querySelectorAll('.shopify-app-block.jdgm-horizon-widget, .jdgm-horizon-widget')
-      );
-      if (!jdgmWidgets.length) return false;
+      // Prefer the FULL Judge.me review widget (with review form), not the preview badge.
+      const fullWidget =
+        document.querySelector('#judgeme_product_reviews') ||
+        document.querySelector('.jdgm-widget.jdgm-review-widget') ||
+        document.querySelector('.jdgm-review-widget');
 
-      // Prefer the Shopify app block wrapper if present.
-      const preferred = jdgmWidgets.find((el) => el.classList.contains('shopify-app-block')) || jdgmWidgets[0];
+      // Fallback to any Judge.me container if needed
+      const anyWidget =
+        document.querySelector('.shopify-app-block.jdgm-horizon-widget') ||
+        document.querySelector('.jdgm-horizon-widget') ||
+        document.querySelector('.jdgm-widget');
+
+      const target = fullWidget || anyWidget;
+      if (!target) return false;
+
+      // If it's inside a Shopify app block wrapper, move the wrapper for correct spacing/settings.
+      const preferred = target.closest('.shopify-app-block') || target;
       reviewsSlot.appendChild(preferred);
 
-      // Remove any duplicate widgets still on page.
-      jdgmWidgets.forEach((el) => {
-        if (el !== preferred && el.parentNode) el.remove();
-      });
+      // Remove duplicates (but don't remove the one we just moved).
+      document
+        .querySelectorAll(
+          '.shopify-app-block.jdgm-horizon-widget, .jdgm-horizon-widget, #judgeme_product_reviews, .jdgm-widget.jdgm-review-widget'
+        )
+        .forEach((el) => {
+          const wrapper = el.closest('.shopify-app-block') || el;
+          if (wrapper !== preferred && wrapper.parentNode) wrapper.remove();
+        });
 
       return true;
     }
@@ -338,16 +353,22 @@
                 {%- continue -%}
               {%- endif -%}
               <div class="resource-list__item">
+                {%- capture related_gallery_children -%}
+                  {% if settings.quick_add and p.available %}
+                    {% render 'quick-add', product: p, section_id: section.id %}
+                  {% endif %}
+                {%- endcapture -%}
+
                 {%- capture related_children -%}
-                  {% render 'card-gallery', product: p %}
+                  {% render 'card-gallery', product: p, children: related_gallery_children %}
                   <product-title class="text-block">
                     <h3>{{ p.title }}</h3>
                   </product-title>
                   <product-price class="text-block">
-                    {{ p.price | money }}
+                    {% render 'price', product_resource: p, show_unit_price: true %}
                   </product-price>
                 {%- endcapture -%}
-                {% render 'product-card', product: p, children: related_children %}
+                {% render 'product-card', product: p, children: related_children, product_card_gap: 8 %}
               </div>
               {%- assign shown = shown | plus: 1 -%}
               {%- if shown == 2 -%}{%- break -%}{%- endif -%}
@@ -393,8 +414,8 @@
     pointer-events: none;
   }*/
 
-  /* Force block stack spacing on product page (overrides inline --gap) */
-  .product-information .group-block-content.layout-panel-flex {
+  /* Force product-details stack spacing only (avoid affecting product cards, etc.) */
+  .product-information .product-details .group-block-content.layout-panel-flex {
     --gap: 20px !important;
   }
 
@@ -520,8 +541,6 @@
 
   .product-information__tabs-related {
     margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid #e6e6e6;
   }
 
   .product-information__tabs-related-inner {
@@ -584,6 +603,16 @@
     display: grid;
     grid-template-columns: var(--resource-list-columns);
     gap: 18px;
+  }
+
+  /* Related products: reduce media gallery height */
+  .pi-related .product-card slideshow-slides {
+    min-height: 320px !important;
+  }
+
+  .pi-related .product-card .card-gallery img {
+    height: 320px !important;
+    object-fit: cover !important;
   }
 
   @media screen and (max-width: 749px) {
