@@ -59,9 +59,9 @@
     position: relative;
     z-index: 5;
     width: 100%;
-    max-width: 1400px;
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 var(--page-margin);
   }
   @media (max-width: 768px) {
     .col-slider-content-slider {
@@ -122,7 +122,7 @@
     background-color: #808080;
     color: #ffffff;
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-size: 12px;
     letter-spacing: 0.2em;
     font-weight: 500;

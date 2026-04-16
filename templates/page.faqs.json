@@ -10,32 +10,24 @@
 {
   "sections": {
     "banner": {
-      "type": "roshas-page-banner",
+      "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/1.1.jpg",
+        "background_image": "shopify://shop_images/4.1-_Miss_Dior.jpg",
+        "text_alignment": "center",
+        "banner_height": 400,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "show_overlay": true,
+        "overlay_color": "#000000",
         "overlay_opacity": 50,
-        "min_height_desktop": 450,
-        "min_height_tablet": 300,
-        "min_height_mobile": 300,
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
         "custom_title": "Frequently Asked Questions",
         "title_color": "#ffffff",
-        "title_font_size_desktop": 56,
-        "title_font_size_tablet": 40,
-        "title_font_size_mobile": 32,
-        "title_font_weight": "500",
+        "title_font_size": 48,
+        "title_font_weight": "700",
         "title_margin_bottom": 10,
-        "breadcrumb_color": "#ffffff",
-        "home_link_color": "#ffffff",
-        "current_page_color": "#cccccc",
-        "breadcrumb_font_size": 14,
-        "breadcrumb_font_weight": "400",
-        "breadcrumb_margin_bottom": 0
+        "breadcrumb_link_color": "#ffffff",
+        "breadcrumb_current_color": "#dddddd",
+        "breadcrumb_font_size": 14
       }
     },
     "faqs": {
@@ -44,68 +36,172 @@
         "cat_1": {
           "type": "category",
           "settings": {
-            "title": "01. Authenticity & Quality"
+            "title": "01. Authenticity & Quality",
+            "margin_bottom": 50
           }
         },
-        "item_1": {
+        "item_1_1": {
           "type": "faq_item",
           "settings": {
             "question": "Are your perfumes 100% original?",
             "answer": "Yes, all our perfumes are guaranteed to be 100% authentic. We source them directly from trusted and verified suppliers."
           }
         },
-        "item_2": {
+        "item_1_2": {
           "type": "faq_item",
           "settings": {
             "question": "How can I tell if a perfume is original or fake?",
-            "answer": "Original perfumes usually have high-quality packaging, strong lasting scent, batch codes, and clean branding. At ROSHAS, we guarantee authenticity by sourcing only from official distributors."
+            "answer": "Original perfumes usually have high-quality packaging, strong lasting scent, batch codes, and clean branding."
           }
         },
-        "item_3": {
+        "item_1_3": {
           "type": "faq_item",
           "settings": {
             "question": "Why do original perfumes cost less on ROSHAS?",
-            "answer": "We work directly with suppliers and cut unnecessary costs to offer the best value. Lower price doesn’t mean fake — it means smart sourcing and fair pricing."
+            "answer": "We work directly with suppliers and cut unnecessary costs to offer the best value."
           }
         },
         "cat_2": {
           "type": "category",
           "settings": {
-            "title": "02. Orders & Returns"
+            "title": "02. The Order",
+            "margin_bottom": 50
           }
         },
-        "item_4": {
+        "item_2_1": {
           "type": "faq_item",
           "settings": {
-            "question": "When will I get my order?",
-            "answer": "We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location."
+            "question": "When do I receive my order?",
+            "answer": "Once your order has shipped, you will receive a confirmation email with a tracking number."
           }
         },
-        "item_5": {
+        "item_2_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I cancel my order?",
+            "answer": "You can cancel your order within 24 hours of placement."
+          }
+        },
+        "item_2_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When will I receive the invoice?",
+            "answer": "The invoice is sent to your registered email address automatically after payment."
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "title": "03. Shipment",
+            "margin_bottom": 50
+          }
+        },
+        "item_3_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "Yes, we ship to most countries worldwide."
+          }
+        },
+        "item_3_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How can I track my package?",
+            "answer": "You will receive a tracking link via email once your order leaves our warehouse."
+          }
+        },
+        "item_3_3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What if my package is lost?",
+            "answer": "If your package is lost during transit, we will initiate an investigation."
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "title": "04. Payment",
+            "margin_bottom": 50
+          }
+        },
+        "item_4_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "We accept all major credit cards, PayPal, Apple Pay, and Google Pay."
+          }
+        },
+        "item_4_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Is my payment information secure?",
+            "answer": "Absolutely. We use industry-standard SSL encryption."
+          }
+        },
+        "cat_5": {
+          "type": "category",
+          "settings": {
+            "title": "05. Returns & Exchanges",
+            "margin_bottom": 0
+          }
+        },
+        "item_5_1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "We offer a 30-day return policy for unopened and unused items."
+          }
+        },
+        "item_5_2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I make a return?",
+            "answer": "To make a return, please pack the item securely and use the pre-paid label."
+          }
+        },
+        "item_5_3": {
           "type": "faq_item",
           "settings": {
             "question": "Do you accept returns or exchanges?",
-            "answer": "Returns and exchanges are accepted only if the item is broken or incorrect, and within 48 hours of receiving the order. The perfume must be unopened and in its original condition."
+            "answer": "Returns and exchanges are accepted only if the item is broken or incorrect."
           }
         }
       },
       "block_order": [
         "cat_1",
-        "item_1",
-        "item_2",
-        "item_3",
+        "item_1_1",
+        "item_1_2",
+        "item_1_3",
         "cat_2",
-        "item_4",
-        "item_5"
+        "item_2_1",
+        "item_2_2",
+        "item_2_3",
+        "cat_3",
+        "item_3_1",
+        "item_3_2",
+        "item_3_3",
+        "cat_4",
+        "item_4_1",
+        "item_4_2",
+        "cat_5",
+        "item_5_1",
+        "item_5_2",
+        "item_5_3"
       ],
       "settings": {
         "bg_color": "#ffffff",
-        "padding_top_desktop": 80,
+        "padding_top_desktop": 60,
         "padding_bottom_desktop": 80,
         "padding_top_tablet": 50,
         "padding_bottom_tablet": 50,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
+        "cat_title_color": "#000000",
+        "cat_title_font_size_desktop": 28,
+        "cat_title_font_size_tablet": 24,
+        "cat_title_font_size_mobile": 22,
+        "cat_title_font_weight": "500",
+        "cat_title_margin_bottom": 25,
         "question_color": "#000000",
         "question_font_size_desktop": 18,
         "question_font_size_tablet": 16,
@@ -116,7 +212,7 @@
         "answer_font_size_desktop": 15,
         "answer_font_size_tablet": 14,
         "answer_font_size_mobile": 14,
-        "answer_font_weight": "300",
+        "answer_font_weight": "400",
         "answer_margin_bottom": 10
       }
     },
@@ -133,12 +229,14 @@
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
         "subtitle": "EXCLUSIVE MEMBERSHIP",
+        "subtitle_margin_bottom": 0,
         "heading": "Join the [Roshas] Circle",
         "heading_font_size_desktop": 80,
         "heading_font_size_tablet": 60,
         "heading_font_size_mobile": 40,
         "heading_font_weight": "400",
         "heading_color": "#ffffff",
+        "heading_margin_top": 20,
         "heading_margin_bottom": 20,
         "description": "Subscribe to receive curated olfactory guides, private launch invitations, and bespoke offers reserved exclusively for our community.",
         "desc_font_size": 14,

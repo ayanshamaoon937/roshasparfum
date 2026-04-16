@@ -15,6 +15,7 @@
 {% assign product_card_size = product_card_size | strip %}
 
 {% style %}
+
   @media (min-width: 750px) {
     {% case section.settings.layout_type %}
       {% when 'grid' %}
@@ -72,6 +73,10 @@
       padding-block-end: var(--zoom-out-padding-block-end, 0);
     }
   }
+  .main-collection-grid__empty-link:hover{
+  color:#000 !important;
+  text-decoration: underline !important;
+}
 {% endstyle %}
 
 <div
@@ -107,7 +112,11 @@
           {{ 'content.no_products_found' | t }}
         </h2>
         <p>
-          {{ 'content.use_fewer_filters_html' | t: link: collection.url, class: 'main-collection-grid__empty-link' }}
+          {%- assign clear_url = collection.url -%}
+          {%- if template.name == 'search' -%}
+            {%- assign clear_url = routes.search_url | default: '/search' -%}
+          {%- endif -%}
+          {{ 'content.use_fewer_filters_html' | t: link: clear_url, class: 'main-collection-grid__empty-link' }}
         </p>
       </div>
     {% else %}
@@ -115,9 +124,6 @@
         <span ref="viewMorePrevious"></span>
       {% endif %}
 
-      {% if title %}
-        <h4 class="main-collection-grid__title">{{ title }}</h4>
-      {% endif %}
       <ul
         class="product-grid product-grid--{{ section.id }} product-grid--{{ section.settings.layout_type }} {% if section.settings.mobile_product_card_size == 'large' %} product-grid-mobile--large{% endif %}"
         product-grid-view="default"

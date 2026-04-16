@@ -6,37 +6,33 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/4.1-_Miss_Dior.jpg",
+        "text_alignment": "center",
+        "banner_height": 300,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "show_overlay": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 40,
+        "custom_title": "ROSHAS News",
+        "title_color": "#ffffff",
+        "title_font_size": 48,
+        "title_font_weight": "700",
+        "title_margin_bottom": 10,
+        "breadcrumb_link_color": "#ffffff",
+        "breadcrumb_current_color": "#dddddd",
+        "breadcrumb_font_size": 14
+      }
+    },
     "main": {
       "type": "main-blog",
       "blocks": {
-        "title": {
-          "type": "text",
-          "name": "Title",
-          "settings": {
-            "text": "<h1>{{ closest.blog.title }}</h1>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-primary--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 48,
-            "padding-block-end": 48,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "static-blog-post-card": {
           "type": "_blog-post-card",
           "static": true,
@@ -83,6 +79,23 @@
               },
               "blocks": {}
             },
+            "content": {
+              "type": "_blog-post-description",
+              "static": true,
+              "settings": {
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "padding-block-start": 16,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "image": {
               "type": "_blog-post-image",
               "static": true,
@@ -99,17 +112,20 @@
           "block_order": []
         }
       },
-      "block_order": [
-        "title"
-      ],
       "settings": {
-        "color_scheme": "",
-        "padding-block-start": 0,
-        "padding-block-end": 48
+        "background_color": "#efefef",
+        "card_background_color": "#ffffff",
+        "padding_top_desktop": 80,
+        "padding_bottom_desktop": 80,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     }
   },
   "order": [
+    "page_banner",
     "main"
   ]
 }

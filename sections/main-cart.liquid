@@ -1,199 +1,538 @@
-
-
-<cart-items-component
-  class="cart-items-component"
-  data-section-id="{{ section.id }}"
->
-  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-  <div
-    class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
-  >
-    <div
-      class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
-      style="{% render 'spacing-style', settings: section.settings %}"
-    >
-      <div class="cart-page__title">
-        {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
-      </div>
-
-      <div class="cart-page__items">
-        {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}
-      </div>
-
-      {%- unless cart.empty? -%}
-        <div class="cart-page__summary">
-          {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
-        </div>
-      {%- endunless -%}
-
-      <div class="cart-page__more-blocks">
-        {%- content_for 'blocks' -%}
-      </div>
-    </div>
-  </div>
-</cart-items-component>
-
-{% stylesheet %}
-  .cart-page {
-    --cart-font-size--2xs: var(--font-size--2xs);
-    --cart-font-size--xs: var(--font-size--xs);
-    --cart-font-size--sm: var(--font-size--sm);
-    --cart-font-size--md: var(--font-size--md);
-    --cart-font-size--2xl: var(--font-size--2xl);
-
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0 var(--padding-5xl);
+{%- style -%}
+  .cart-main-container * {
+    box-sizing: border-box;
   }
 
-  .cart-page--empty {
+  .cart-main-container {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding-left: var(--page-margin);
+    padding-right: var(--page-margin);
+  }
+
+  @media screen and (max-width: 768px) {
+    .cart-main-container {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  .cart-flex {
     display: flex;
-    flex-direction: column;
+    gap: 50px;
+    align-items: flex-start;
+  }
+
+  .cart-left {
+    flex-grow: 1;
+  }
+
+  .cart-right {
+    width: 400px;
+    flex-shrink: 0;
+    background: #f9f9f9;
+    padding: 40px;
+    position: sticky;
+    top: 80px;
+    @media screen and (max-width: 768px) {
+       padding: 16px;
+    }
+      
+  }
+
+  /* Desktop Table */
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ebebeb;
+  }
+
+  .cart-table th {
+    background: #fdfdfd;
+    border-bottom: 1px solid #ebebeb;
+    padding: 15px 20px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+  }
+
+  .cart-table td {
+    padding: 25px 20px;
+    border-bottom: 1px solid #ebebeb;
+    vertical-align: middle;
+  }
+
+  /* Mobile Items (Hidden on Desktop) */
+  .cart-mobile-items {
+    display: none;
+  }
+
+  .cart-mobile-item {
+    border: 1px solid #ebebeb;
+    margin-bottom: 20px;
+    padding: 15px;
+    position: relative;
+    background: #fff;
+  }
+
+  .cart-mobile-item-top {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+  }
+
+  .cart-mobile-item-image {
+    width: 100px;
+    flex-shrink: 0;
+  }
+
+  .cart-mobile-item-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .cart-mobile-item-details {
+    flex-grow: 1;
+    padding-right: 25px;
+  }
+
+  .cart-mobile-item-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: #000;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .cart-mobile-item-options {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .cart-mobile-item-price {
+    font-size: 14px;
+    color: #000;
+  }
+
+  .cart-mobile-item-price span {
+    color: #666;
+  }
+
+  .cart-mobile-item-remove {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #ccc;
+    font-size: 20px;
+  }
+
+  .cart-mobile-item-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #f5f5f5;
+    padding-top: 15px;
+  }
+
+  .cart-mobile-item-subtotal {
+    font-size: 14px;
+    color: #000;
+  }
+
+  .cart-mobile-item-subtotal span {
+    color: #666;
+  }
+
+  .cart-mobile-item-subtotal span {
+    color: #666;
+  }
+
+  .line-price-value {
+    /* Base styles */
+  }
+  .price-updating {
+    --shimmer-text-color: rgb(0 0 0 / 0.5);
+    --shimmer-color-light: rgb(0 0 0 / 0.1);
+    --shimmer-speed: 1.25s;
+    color: transparent !important;
+    position: relative;
+    display: inline-block;
+  }
+  .price-updating::after {
+    content: attr(data-value);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(-85deg, var(--shimmer-text-color) 10%, var(--shimmer-color-light) 50%, var(--shimmer-text-color) 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 200% 100%;
+    animation: text-shimmer var(--shimmer-speed) infinite linear;
+  }
+
+  /* Shared Components */
+  .quantity-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ebebeb;
+    height: 40px;
+    background: #fff;
+  }
+
+  .quantity-btn {
+    width: 35px;
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .cart-page--empty .cart-page__title,
-  .cart-page--empty .cart-page__more-blocks {
-    margin-top: var(--margin-6xl);
-  }
-
-  .cart-page__more-blocks {
-    width: 100%;
-  }
-
-  .cart-page--empty .cart-title {
+  .quantity-input {
+    width: 40px;
+    height: 100%;
+    border: none;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
     text-align: center;
+    font-size: 14px;
+    color: #000;
+    background: none;
+    -moz-appearance: textfield;
+  }
+  .quantity-input::-webkit-outer-spin-button,
+  .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
-  .cart-page__main {
-    grid-column: 1;
+  .cart-table-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 20px;
+    border: 1px solid #ebebeb;
+    border-top: none;
   }
 
-  .cart-page__summary {
-    padding-top: var(--padding-xl);
+  .coupon-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ebebeb;
+    height: 48px;
+    width: 100%;
+    max-width: 350px;
+    background: #fff;
   }
 
-  @media screen and (min-width: 750px) {
-    .cart-page {
-      grid-template-columns: 1fr min(50vw, var(--sidebar-width));
-      grid-template-rows: min-content min-content 1fr;
+  .coupon-input {
+    flex-grow: 1;
+    height: 100%;
+    border: none;
+    padding: 0 15px;
+    font-size: 13px;
+    outline: none;
+  }
+
+  .coupon-btn {
+    height: 100%;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .clear-all-link {
+    font-size: 13px;
+    color: #999;
+    text-decoration: underline;
+    margin-right: 20px;
+    transition: color 0.2s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .clear-all-link:hover {
+    color: #ff0000;
+  }
+
+  .continue-shopping-btn {
+    background: #000;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+  }
+
+  .summary-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #000;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 1px solid #ebebeb;
+    font-size: 15px;
+  }
+
+  .summary-row.total {
+    border-bottom: none;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 18px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .checkout-btn:hover, .continue-shopping-btn:hover, .coupon-btn:hover {
+    background: #333;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .cart-flex {
+      flex-direction: column;
     }
-
-    .cart-page__summary {
-      display: grid;
-      height: 100%;
-      grid-column: 2;
-      grid-row: 1 / -1;
-      align-self: stretch;
-      grid-template-rows: subgrid;
-      padding-top: 0;
-
-      /* needed to support blurred effect from hero section */
-      position: relative;
-    }
-
-    .section--page-width .cart-page:has(.cart__container--extend) {
-      grid-column: 2 / 4;
-      grid-template-columns: 1fr minmax(
-          var(--sidebar-width),
-          calc((100vw - var(--page-width)) / 2 + var(--sidebar-width))
-        );
-    }
-
-    .cart__container--extend {
-      height: 100%;
+    .cart-right {
+      width: 100%;
     }
   }
 
-  @media screen and (min-width: 1400px) {
-    .cart-page {
-      grid-template-columns: 1fr var(--sidebar-width);
+  @media screen and (max-width: 768px) {
+    .cart-table {
+      display: none;
+    }
+    .cart-mobile-items {
+      display: block;
+    }
+    .cart-table-footer {
+      flex-direction: column;
+      gap: 20px;
+      padding: 16px;
+      border: 1px solid #ebebeb;
+    }
+    .coupon-box {
+      max-width: none;
+    }
+    .continue-shopping-btn {
+      width: 100%;
+      text-align: center;
     }
   }
-{% endstylesheet %}
+
+  @media screen and (max-width: 400px) {
+    .cart-mobile-item-image {
+      width: 80px;
+    }
+    .cart-mobile-item-title {
+      font-size: 14px;
+    }
+    .cart-mobile-item-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    .cart-mobile-item-subtotal {
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  .quantity-box, .coupon-box, .coupon-btn, .continue-shopping-btn, .checkout-btn, .quantity-input {
+    border-radius: 0 !important;
+  }
+{%- endstyle -%}
+
+<div class="cart-main-container">
+  {%- if cart != empty -%}
+    <div class="cart-flex">
+      <div class="cart-left">
+        <form action="{{ routes.cart_url }}" method="post" id="cart">
+          
+          {%- comment -%} Desktop Table {%- endcomment -%}
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for item in cart.items -%}
+                <tr>
+                  <td>
+                    <div style="display: flex; align-items: width:100%; center; gap: 20px;">
+                      <div style="width: 80px; flex-shrink: 0;">
+                        {% if item.image %}
+                          <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.image.alt | escape }}" loading="lazy" width="80" height="{{ 80 | divided_by: item.image.aspect_ratio | ceil }}">
+                        {% endif %}
+                      </div>
+                      <div style="display: flex; flex-direction: column; gap: 5px;">
+                        <a href="{{ item.url }}" style="font-family: 'Playfair Display', serif; font-size: 16px; color: #000; text-decoration: none;">{{ item.product.title }}</a>
+                        <div style="font-size: 13px; color: #999;">
+                          {%- if item.product.has_only_default_variant == false -%}
+                            {%- for option in item.options_with_values -%}
+                              {{ option.name }}: {{ option.value }}{% unless forloop.last %} / {% endunless %}
+                            {%- endfor -%}
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ item.original_price | money }}</td>
+                  <td>
+                    <div style="display: flex; align-items: center;">
+                      <div class="quantity-box">
+                        <button type="button" class="quantity-btn" onclick="adjustCartQty('{{ item.key }}', -1, this)">−</button>
+                        <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="quantity-input" readonly>
+                        <button type="button" class="quantity-btn" onclick="adjustCartQty('{{ item.key }}', 1, this)">+</button>
+                      </div>
+                      <a href="{{ item.url_to_remove }}" style="margin-left: 20px; color: #ccc;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                      </a>
+                    </div>
+                  </td>
+                  <td><span class="line-price-value" data-price="{{ item.price }}">{{ item.final_line_price | money }}</span></td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+
+          {%- comment -%} Mobile Items {%- endcomment -%}
+          <div class="cart-mobile-items">
+            {%- for item in cart.items -%}
+              <div class="cart-mobile-item">
+                <a href="{{ item.url_to_remove }}" class="cart-mobile-item-remove">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                </a>
+                <div class="cart-mobile-item-top">
+                  <div class="cart-mobile-item-image">
+                    {% if item.image %}
+                      <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" loading="lazy" width="100" height="{{ 100 | divided_by: item.image.aspect_ratio | ceil }}">
+                    {% endif %}
+                  </div>
+                  <div class="cart-mobile-item-details">
+                    <a href="{{ item.url }}" class="cart-mobile-item-title">{{ item.product.title }}</a>
+                    <div class="cart-mobile-item-options">
+                      {%- if item.product.has_only_default_variant == false -%}
+                        {%- for option in item.options_with_values -%}
+                          {{ option.name }}: {{ option.value }}{% unless forloop.last %} / {% endunless %}
+                        {%- endfor -%}
+                      {%- endif -%}
+                    </div>
+                    <div class="cart-mobile-item-price"><span>Prix : </span>{{ item.original_price | money }}</div>
+                  </div>
+                </div>
+                <div class="cart-mobile-item-bottom">
+                  <div class="quantity-box">
+                    <button type="button" class="quantity-btn" onclick="adjustCartQty('{{ item.key }}', -1, this)">−</button>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" class="quantity-input" readonly>
+                    <button type="button" class="quantity-btn" onclick="adjustCartQty('{{ item.key }}', 1, this)">+</button>
+                  </div>
+                  <div class="cart-mobile-item-subtotal"><span>Sous-total : </span><span class="line-price-value" data-price="{{ item.price }}">{{ item.final_line_price | money }}</span></div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div class="cart-table-footer">
+            <div class="coupon-box">
+              <input type="text" name="coupon" class="coupon-input" placeholder="Coupon code">
+              <button type="button" class="coupon-btn">Apply Coupon</button>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;width:100%;justify-content: end;">
+              <a href="{{ routes.cart_clear_url }}" class="clear-all-link">Clear all</a>
+              <a href="{{ routes.all_products_collection_url }}" class="continue-shopping-btn">Continue Shopping</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="cart-right">
+        <h2 class="summary-title">Cart totals</h2>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span class="js-cart-subtotal">{{ cart.total_price | money }}</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span class="js-cart-total">{{ cart.total_price | money }}</span>
+        </div>
+        <button type="submit" form="cart" name="checkout" class="checkout-btn">Proceed to checkout</button>
+      </div>
+    </div>
+  {%- else -%}
+    <div style="text-align: center; padding: 100px 0;">
+      <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 50px;">Your cart is empty</h2>
+      <a href="{{ routes.all_products_collection_url }}" class="continue-shopping-btn">Continue Shopping</a>
+    </div>
+  {%- endif -%}
+</div>
 
 {% schema %}
 {
-  "name": "t:names.cart",
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  },
-  "blocks": [
-    {
-      "type": "@theme"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "video"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "spacer"
-    }
-  ],
+  "name": "Luxury Cart",
   "settings": [
     {
-      "type": "select",
-      "id": "section_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "page-width"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:content.padding"
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
     },
     {
       "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top",
+      "id": "padding_bottom",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
+      "label": "Padding Bottom",
+      "default": 60
     }
   ]
 }

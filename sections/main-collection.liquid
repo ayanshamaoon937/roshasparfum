@@ -42,11 +42,8 @@
       results_size: collection.products_count
     %}
 
-    {% assign products_per_page = 24 %}
-
-    {% if section.settings.enable_infinite_scroll == false %}
-      {% assign products_per_page = section.settings.products_per_page %}
-    {% endif %}
+    {% assign products_per_page = 15 %}
+    {% assign enable_infinite_scroll = false %}
 
     {% paginate collection.products by products_per_page %}
       {% capture children %}
@@ -70,7 +67,7 @@
         children: children,
         products: collection.products,
         paginate: paginate,
-        enable_infinite_scroll: section.settings.enable_infinite_scroll
+        enable_infinite_scroll: enable_infinite_scroll
       %}
     {% endpaginate %}
   </div>
@@ -218,16 +215,16 @@
       "type": "checkbox",
       "id": "enable_infinite_scroll",
       "label": "t:settings.auto_load_products",
-      "default": true
+      "default": false
     },
     {
       "type": "range",
       "id": "products_per_page",
       "label": "t:settings.products_per_page",
-      "min": 8,
-      "max": 36,
-      "step": 4,
-      "default": 24,
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "default": 15,
       "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
     },
     {

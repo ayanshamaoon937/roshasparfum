@@ -1,0 +1,114 @@
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/4.1-_Miss_Dior.jpg",
+        "text_alignment": "center",
+        "banner_height": 300,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "show_overlay": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 40,
+        "custom_title": "Shipping Policy",
+        "title_color": "#ffffff",
+        "title_font_size": 48,
+        "title_font_weight": "700",
+        "title_margin_bottom": 10,
+        "breadcrumb_link_color": "#ffffff",
+        "breadcrumb_current_color": "#dddddd",
+        "breadcrumb_font_size": 14
+      }
+    },
+    "shipping_policy_content": {
+      "type": "shipping-policy",
+      "settings": {
+        "container_width": 1200,
+        "background_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "text_alignment": "left",
+        "heading": "Shipping Policy",
+        "heading_font_size_desktop": 40,
+        "heading_font_size_tablet": 32,
+        "heading_font_size_mobile": 24,
+        "heading_color": "#121212",
+        "heading_font_weight": "700",
+        "heading_margin_bottom": 24,
+        "description": "<p>Thank you for shopping at ROSHAS. We aim to provide a smooth, reliable delivery experience for all customers within Jordan.</p>",
+        "desc_font_size_desktop": 16,
+        "desc_color": "#4a4a4a",
+        "desc_font_weight": "400",
+        "desc_margin_bottom": 48,
+        "footer_contact_heading": "Contact",
+        "footer_contact_content": "<p>Should you have any questions about our shipping practices, please call or email us at <strong>laviniaperfumee@gmail.com</strong> or contact us at Amman, Amman, 11118, JO</p>",
+        "footer_margin_top": 60
+      },
+      "blocks": {
+        "section_1": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Shipping Within Jordan",
+            "content": "<ul><li>Orders are processed and dispatched within 1–2 business days.</li><li>Standard delivery time is 1–3 business days, depending on location.</li><li>Delivery fees vary by area and will be shown at checkout.</li></ul>"
+          }
+        },
+        "section_2": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Order Confirmation",
+            "content": "<p>Once your order is placed, you will receive a confirmation email. A second notification will be sent when your order is out for delivery.</p>"
+          }
+        },
+        "section_3": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Cash on Delivery",
+            "content": "<p>Cash on delivery may be available depending on your location. Please ensure accurate contact and address details to avoid delays.</p>"
+          }
+        },
+        "section_4": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Delivery Attempts",
+            "content": "<p>If the courier is unable to reach you after multiple attempts, the order may be returned, and redelivery fees may apply.</p>"
+          }
+        },
+        "section_5": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Shipping Accuracy",
+            "content": "<p>Customers are responsible for providing complete and correct delivery information. Incorrect details may result in delays or failed delivery.</p>"
+          }
+        },
+        "section_6": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Damaged or Wrong Items",
+            "content": "<p>If your order arrives damaged, leaking, or incorrect, please contact us within 24–48 hours with photos so we can assist you.</p>"
+          }
+        },
+        "section_7": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "International Shipping",
+            "content": "<p>At this time, we currently ship within Jordan only. International shipping may be added in the future.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "section_1",
+        "section_2",
+        "section_3",
+        "section_4",
+        "section_5",
+        "section_6",
+        "section_7"
+      ]
+    }
+  },
+  "order": [
+    "page_banner",
+    "shipping_policy_content"
+  ]
+}

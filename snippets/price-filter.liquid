@@ -98,7 +98,7 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-GTE"
             >
-              {{ cart.currency.symbol }}
+              {{ cart.currency.iso_code }}
             </label>
           </div>
 
@@ -127,7 +127,7 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-LTE"
             >
-              {{ cart.currency.symbol }}
+              {{ cart.currency.iso_code }}
             </label>
           </div>
         </div>

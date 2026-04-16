@@ -2370,7 +2370,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
 .field__input {
   flex-grow: 1;
   text-align: left;
-  border-radius: var(--style-border-radius-inputs);
+  border-radius: 0;
   transition: box-shadow var(--animation-speed) ease, background-color var(--animation-speed) ease;
   padding: var(--input-padding);
   box-shadow: var(--input-box-shadow);
@@ -2387,7 +2387,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
 }
 
 .field__input:is(:focus, :hover) {
-  box-shadow: var(--input-box-shadow-focus);
+  box-shadow: 0 0 0 calc(var(--input-box-shadow-width) + 0.1px) #000000;
   background-color: var(--color-input-hover-background);
 }
 
@@ -2494,7 +2494,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   @media screen and (min-width: 750px) {
     --checkbox-size: 16px;
     --checkbox-border-radius: 5px;
-    --checkbox-label-padding: 6px;
+    --checkbox-label-padding: 9px;
   }
 
   &:has(.checkbox__input:checked) {
@@ -2573,13 +2573,14 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   position: relative;
   overflow: hidden;
   border-radius: 0;
-  background-color:transparent;
-  border:1px solid #000000;
-  color:#000000;
+  background-color: transparent;
+  border: 1px solid #000000;
+  color: #000000;
 }
+
 .button[id^='BuyButtons-ProductSubmitButton-']:hover {
-  background-color:#000000;
-  color:#ffffff;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 /* Cart bubble */
@@ -2725,7 +2726,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6)>*:not(.tax-note) {
   gap: var(--gap-sm);
   min-width: 48px;
   padding: 6px 12px;
-  border-radius: var(--style-border-radius-pills);
+  border-radius: 0;
   cursor: pointer;
   background-color: var(--pills-pill-background-color);
   transition: background-color var(--animation-speed) var(--animation-easing);
@@ -3676,7 +3677,7 @@ slideshow-component[autoplay] slideshow-controls {
   gap: var(--gap-xs);
   margin-inline: auto;
   height: fit-content;
-  
+
 
   .slideshow-control {
     border-radius: var(--media-radius);

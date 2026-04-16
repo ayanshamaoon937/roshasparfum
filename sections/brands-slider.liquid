@@ -11,9 +11,9 @@
   }
 
   .brands-container {
-    max-width: {{ section.settings.container_width | default: 1400 }}px;
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 var(--page-margin);
     position: relative;
   }
 

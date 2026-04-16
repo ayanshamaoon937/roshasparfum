@@ -1,43 +1,534 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
-      "type": "roshas-page-banner",
+      "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/1.1.jpg",
+        "background_image": "shopify://shop_images/4.1-_Miss_Dior.jpg",
+        "text_alignment": "center",
+        "banner_height": 400,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "show_overlay": true,
+        "overlay_color": "#000000",
         "overlay_opacity": 50,
-        "min_height_desktop": 450,
-        "min_height_tablet": 300,
-        "min_height_mobile": 300,
-        "padding_top_desktop": 80,
-        "padding_bottom_desktop": 80,
-        "padding_top_tablet": 40,
-        "padding_bottom_tablet": 40,
-        "padding_top_mobile": 30,
-        "padding_bottom_mobile": 30,
         "custom_title": "Our Brands",
         "title_color": "#ffffff",
-        "title_font_size_desktop": 56,
-        "title_font_size_tablet": 40,
-        "title_font_size_mobile": 32,
+        "title_font_size": 56,
         "title_font_weight": "500",
         "title_margin_bottom": 10,
-        "breadcrumb_color": "#ffffff",
-        "home_link_color": "#ffffff",
-        "current_page_color": "#cccccc",
-        "breadcrumb_font_size": 14,
-        "breadcrumb_font_weight": "400",
-        "breadcrumb_margin_bottom": 0
+        "breadcrumb_link_color": "#ffffff",
+        "breadcrumb_current_color": "#cccccc",
+        "breadcrumb_font_size": 14
       }
     },
     "brands": {
       "type": "brands",
+      "blocks": {
+        "h_b": {
+          "type": "heading",
+          "settings": {
+            "title": "B",
+            "margin_bottom": 60
+          }
+        },
+        "boss": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/boss-perfumes-logo.png",
+            "brand_name": "boss",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "burberry": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/burberry-perfumes-logo-in-black-and-white.png",
+            "brand_name": "Burberry",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "bvlgari": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Bvlgari",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_c": {
+          "type": "heading",
+          "settings": {
+            "title": "C",
+            "margin_bottom": 60
+          }
+        },
+        "carolina": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Carolina Herrera",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "chanel": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Chanel",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "chloe": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Chloé",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "creed": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/1.1-_Creed.jpg",
+            "brand_name": "Creed",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_d": {
+          "type": "heading",
+          "settings": {
+            "title": "D",
+            "margin_bottom": 60
+          }
+        },
+        "davidoff": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "DAVIDOFF",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "demarly": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "De Marly",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "dior": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/dior-perfumes-logo.png",
+            "brand_name": "Dior",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "dg": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Dolce&Gabbana",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "dunhill": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Dunhill",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_e": {
+          "type": "heading",
+          "settings": {
+            "title": "E",
+            "margin_bottom": 60
+          }
+        },
+        "emporio": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Emporio Armani",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_g": {
+          "type": "heading",
+          "settings": {
+            "title": "G",
+            "margin_bottom": 60
+          }
+        },
+        "giorgio": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/6.2-_Giorgio_Armani.jpg",
+            "brand_name": "Giorgio Armani",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "givenchy": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/2.1-_IRRESISTIBLE_Givenchy.jpg",
+            "brand_name": "Givenchy",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "gucci": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/gucci-perfumes-logo.png",
+            "brand_name": "Gucci",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_h": {
+          "type": "heading",
+          "settings": {
+            "title": "H",
+            "margin_bottom": 60
+          }
+        },
+        "hermes": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Hermès",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_j": {
+          "type": "heading",
+          "settings": {
+            "title": "J",
+            "margin_bottom": 60
+          }
+        },
+        "jpg": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Jean Paul Gaultier",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_k": {
+          "type": "heading",
+          "settings": {
+            "title": "K",
+            "margin_bottom": 60
+          }
+        },
+        "kayali": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "KAYALI",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_l": {
+          "type": "heading",
+          "settings": {
+            "title": "L",
+            "margin_bottom": 60
+          }
+        },
+        "lancome": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Lancôme",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "laverne": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Laverne",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_m": {
+          "type": "heading",
+          "settings": {
+            "title": "M",
+            "margin_bottom": 60
+          }
+        },
+        "marc": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Marc Jacobs",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "montblanc": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Montblanc",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_n": {
+          "type": "heading",
+          "settings": {
+            "title": "N",
+            "margin_bottom": 60
+          }
+        },
+        "narcisco": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Narcisco",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_p": {
+          "type": "heading",
+          "settings": {
+            "title": "P",
+            "margin_bottom": 60
+          }
+        },
+        "prada": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/prada-perfumes-logo.png",
+            "brand_name": "Prada",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_r": {
+          "type": "heading",
+          "settings": {
+            "title": "R",
+            "margin_bottom": 60
+          }
+        },
+        "rabanne": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Rabanne",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "roshas": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Roshas",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_t": {
+          "type": "heading",
+          "settings": {
+            "title": "T",
+            "margin_bottom": 60
+          }
+        },
+        "tomford": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Tom Ford",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_v": {
+          "type": "heading",
+          "settings": {
+            "title": "V",
+            "margin_bottom": 60
+          }
+        },
+        "valentino": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Valentino",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "versace": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Versace",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "victoria": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Victoria's Secret",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "viktor": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Viktor & Rolf",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "h_y": {
+          "type": "heading",
+          "settings": {
+            "title": "Y",
+            "margin_bottom": 0
+          }
+        },
+        "ysl": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/10.1-_YSL_Libre_Eau_de_Parfum.jpg",
+            "brand_name": "Yves Saint Laurent",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        }
+      },
+      "block_order": [
+        "h_b",
+        "boss",
+        "burberry",
+        "bvlgari",
+        "h_c",
+        "carolina",
+        "chanel",
+        "chloe",
+        "creed",
+        "h_d",
+        "davidoff",
+        "demarly",
+        "dior",
+        "dg",
+        "dunhill",
+        "h_e",
+        "emporio",
+        "h_g",
+        "giorgio",
+        "givenchy",
+        "gucci",
+        "h_h",
+        "hermes",
+        "h_j",
+        "jpg",
+        "h_k",
+        "kayali",
+        "h_l",
+        "lancome",
+        "laverne",
+        "h_m",
+        "marc",
+        "montblanc",
+        "h_n",
+        "narcisco",
+        "h_p",
+        "prada",
+        "h_r",
+        "rabanne",
+        "roshas",
+        "h_t",
+        "tomford",
+        "h_v",
+        "valentino",
+        "versace",
+        "victoria",
+        "viktor",
+        "h_y",
+        "ysl"
+      ],
       "settings": {
-        "columns_desktop": 3,
+        "subtitle": "THE ROSHAS CURATION",
+        "header_subtitle_color": "#5e5e5e",
+        "title": "The Ateliers",
+        "title_font_size": 64,
+        "header_title_color": "#1a1a1a",
+        "description": "We partner exclusively with authorized maisons to bring you the global icons of olfactory art.",
+        "desc_font_size": 18,
+        "header_desc_color": "#666666",
+        "header_margin_bottom": 80,
+        "columns_desktop": 4,
         "columns_tablet": 2,
         "columns_mobile": 1,
         "gap_desktop": 24,
-        "padding_top_desktop": 100,
-        "padding_bottom_desktop": 100
+        "alphabet_header_font_size": 42,
+        "alphabet_header_color": "#1a1a1a",
+        "show_alphabet_border": false,
+        "alphabet_header_margin_bottom": 30,
+        "alphabet_group_margin_bottom": 60,
+        "bg_color": "#f0f0f0",
+        "border_color": "#f0f0f0",
+        "logo_max_width": 120,
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 50,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
       }
     }
   },

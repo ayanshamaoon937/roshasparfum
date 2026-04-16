@@ -62,20 +62,6 @@
         </span>
       </label>
 
-      <label class="column-options__option">
-        <input
-          type="radio"
-          name="grid"
-          value="zoom-out"
-          class="column-options__option-input"
-          aria-label="{{ 'content.grid_view.zoom_out' | t }}"
-          on:change="results-list/updateLayout"
-          data-skip-node-update
-        >
-        <span class="column-picker column-picker--zoom-out">
-          {{- 'icon-grid-dense.svg' | inline_asset_content -}}
-        </span>
-      </label>
     {% endif %}
   </fieldset>
 </div>
@@ -164,7 +150,7 @@
   .column-picker {
     color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
     padding: var(--padding-2xs);
-    border-radius: var(--style-border-radius-xs);
+    border-radius: 0;
     transition: background-color var(--animation-speed) ease, color var(--animation-speed) ease;
   }
 

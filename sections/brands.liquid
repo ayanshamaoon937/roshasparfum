@@ -1,24 +1,39 @@
 {%- liquid
-  assign columns_desktop = section.settings.columns_desktop | default: 3
+  assign columns_desktop = section.settings.columns_desktop | default: 4
   assign columns_mobile = section.settings.columns_mobile | default: 1
-  assign gap_desktop = section.settings.gap_desktop | default: 24
-  assign items_per_page = 9
+  assign gap_desktop = section.settings.gap_desktop | default: 20
 -%}
 
 {%- style -%}
-  .brands-grid-section-{{ section.id }} {
+  .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top_desktop }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
     background: {{ section.settings.bg_color | default: '#ffffff' }};
   }
 
-  .brands-container {
-    max-width: 1400px;
+  .brand-grid-wrapper {
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 var(--page-margin);
   }
 
-  .brands-grid {
+  .brand-group {
+    /* Margin managed via individual block settings */
+  }
+
+  .alphabet-header {
+    font-family: 'Playfair Display', serif;
+    font-size: {{ section.settings.alphabet_header_font_size }}px;
+    font-weight: 500;
+    margin-bottom: {{ section.settings.alphabet_header_margin_bottom }}px;
+    color: {{ section.settings.alphabet_header_color }};
+    {% if section.settings.show_alphabet_border %}
+    padding-bottom: 15px;
+    border-bottom: 1px solid {{ section.settings.border_color }};
+    {% endif %}
+  }
+
+  .brand-grid {
     display: grid;
     grid-template-columns: repeat({{ columns_desktop }}, 1fr);
     gap: {{ gap_desktop }}px;
@@ -41,12 +56,8 @@
     opacity: 1;
   }
 
-  .brand-card.is-hidden {
-    display: none;
-  }
-
   .brand-logo-wrap {
-    margin-bottom: 30px;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -97,8 +108,8 @@
   }
 
   .brand-card:hover {
-    border-color: #b59b61;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+    border-color: #000000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
     z-index: 10;
   }
 
@@ -106,129 +117,228 @@
     transform: scale(1.05);
   }
 
-  /* Pagination Styling */
-  .brands-pagination {
-    margin-top: 60px;
+
+  .brands-header {
+    margin-bottom: {{ section.settings.header_margin_bottom }}px;
+    display: flex;
+    justify-content: center;
     text-align: center;
+    width: 100%;
   }
 
-  .load-more-btn {
-    background: #000;
-    color: #fff;
-    border: none;
-    padding: 15px 45px;
+  .brands-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+  }
+
+  .brands-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: {{ section.settings.header_subtitle_color | default: '#5e5e5e' }};
     font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: var(--font-body--family), sans-serif;
+    margin-bottom: 20px;
   }
 
-  .load-more-btn:hover {
-    background: #333;
+  .brands-subtitle .line {
+    width: 30px;
+    height: 1px;
+    background: {{ section.settings.header_subtitle_color | default: '#5e5e5e' }};
   }
 
-  .load-more-btn.is-hidden {
-    display: none;
+  .brands-main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: {{ section.settings.title_font_size | default: 64 }}px;
+    color: {{ section.settings.header_title_color | default: '#1a1a1a' }};
+    margin: 0 0 25px 0;
+    line-height: 1.1;
+    font-weight: 500;
+  }
+
+  .brands-main-desc {
+    font-family: 'Jost', sans-serif;
+    font-size: {{ section.settings.desc_font_size | default: 18 }}px;
+    color: {{ section.settings.header_desc_color | default: '#666666' }};
+    max-width: 650px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .brands-main-title { font-size: calc({{ section.settings.title_font_size | default: 64 }}px * 0.7); }
+    .brands-main-desc { font-size: calc({{ section.settings.desc_font_size | default: 18 }}px * 0.9); }
+    .brands-header { margin-bottom: 50px; }
   }
 
   @media screen and (max-width: 989px) {
-    .brands-grid {
+    .brand-grid {
       grid-template-columns: repeat({{ section.settings.columns_tablet | default: 2 }}, 1fr);
     }
-    .brands-container {
+    .brand-grid-wrapper {
       padding: 0 20px;
+    }
+    .alphabet-header {
+      font-size: calc({{ section.settings.alphabet_header_font_size }}px * 0.75);
     }
   }
 
   @media screen and (max-width: 749px) {
-    .brands-grid {
+    .brand-grid {
       grid-template-columns: repeat({{ columns_mobile }}, 1fr);
     }
-    .brands-grid-section-{{ section.id }} {
+    .section-{{ section.id }}-padding {
        padding-top: {{ section.settings.padding_top_mobile }}px;
        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
     }
   }
 {%- endstyle -%}
 
-<section class="brands-grid-section-{{ section.id }}">
-  <div class="brands-container">
-    <div class="brands-grid" id="brands-grid-{{ section.id }}">
-      {%- liquid
-        # Priority: Blocks (Manual) then Vendors (Automatic)
-        assign total_brands = 0
-      -%}
-
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- assign total_brands = total_brands | plus: 1 -%}
-          <div class="brand-item {% if total_brands > items_per_page %}is-hidden{% endif %}" {{ block.shopify_attributes }}>
+<main class="brands-main section-{{ section.id }}-padding">
+  <div class="brand-grid-wrapper">
+    
+    <div class="brands-header">
+      <div class="brands-header-content">
+        {%- if section.settings.subtitle != blank -%}
+          <div class="brands-subtitle">
+            <span class="line"></span>
+            {{ section.settings.subtitle }}
+            <span class="line"></span>
+          </div>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}
+          <h1 class="brands-main-title">{{ section.settings.title }}</h1>
+        {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="brands-main-desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- assign in_grid = false -%}
+    
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'heading' -%}
+          {%- if in_grid -%}
+            </div></div> <!-- Close previous grid and group wrapper -->
+          {%- endif -%}
+          
+          <div class="brand-group" 
+               {{ block.shopify_attributes }}
+               style="margin-bottom: {{ block.settings.margin_bottom | default: section.settings.alphabet_group_margin_bottom }}px;"
+          >
+            <h2 class="alphabet-header">{{ block.settings.title }}</h2>
+            <div class="brand-grid">
+            {%- assign in_grid = true -%}
+            
+        {%- when 'brand' -%}
+          {%- if in_grid == false -%}
+            {%- comment -%} Open a default grid if brands are added before a heading {%- endcomment -%}
+            <div class="brand-group">
+              <div class="brand-grid">
+              {%- assign in_grid = true -%}
+          {%- endif -%}
+          
+          <div class="brand-card-item" {{ block.shopify_attributes }}>
             {%- render 'brand-card-item', block: block, section: section -%}
           </div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for vendor in shop.vendors -%}
-          {%- assign total_brands = total_brands | plus: 1 -%}
-          <div class="brand-item {% if total_brands > items_per_page %}is-hidden{% endif %}">
-            <a href="{{ vendor | url_for_vendor }}" class="brand-card">
-              <div class="brand-logo-wrap">
-                <div class="brand-name" style="font-size: 32px;">{{ vendor | slice: 0 | upcase }}</div>
-              </div>
-              <div class="brand-info">
-                 <h3 class="brand-name">{{ vendor }}</h3>
-                 <p class="brand-description">OUR PARTNER ATELIER</p>
-              </div>
-            </a>
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
-    </div>
+      {%- endcase -%}
+    {%- endfor -%}
+    
+    {%- if in_grid -%}
+      </div></div> <!-- Final closing -->
+    {%- endif -%}
 
-    {%- if total_brands > items_per_page -%}
-      <div class="brands-pagination">
-        <button class="load-more-btn" id="load-more-{{ section.id }}">
-          Load More Brands
-        </button>
+    {%- if section.blocks.size == 0 -%}
+      <div class="brand-empty-state" style="text-align: center; padding: 40px;">
+        <p>Add a <strong>Heading</strong> block to start a group, then add <strong>Brand Card</strong> blocks below it.</p>
       </div>
     {%- endif -%}
   </div>
-</section>
-
-<script>
-  (function() {
-    const sectionId = '{{ section.id }}';
-    const grid = document.getElementById('brands-grid-' + sectionId);
-    const btn = document.getElementById('load-more-' + sectionId);
-    const itemsPerPage = {{ items_per_page }};
-    
-    if (!grid || !btn) return;
-
-    btn.addEventListener('click', function() {
-      const hiddenItems = grid.querySelectorAll('.brand-item.is-hidden');
-      const toShow = Array.from(hiddenItems).slice(0, itemsPerPage);
-      
-      toShow.forEach(item => {
-        item.classList.remove('is-hidden');
-        item.style.opacity = '0';
-        setTimeout(() => {
-          item.style.transition = 'opacity 0.5s ease-in-out';
-          item.style.opacity = '1';
-        }, 10);
-      });
-
-      if (hiddenItems.length <= itemsPerPage) {
-        btn.classList.add('is-hidden');
-      }
-    });
-  })();
-</script>
+</main>
 
 {% schema %}
 {
   "name": "Brands Grid",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "THE ROSHAS CURATION"
+    },
+    {
+      "type": "color",
+      "id": "header_subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#5e5e5e"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "The Ateliers"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size",
+      "default": 64
+    },
+    {
+      "type": "color",
+      "id": "header_title_color",
+      "label": "Title Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "We partner exclusively with authorized maisons to bring you the global icons of olfactory art."
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Description Font Size",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "header_desc_color",
+      "label": "Description Color",
+      "default": "#666666"
+    },
+    {
+       "type": "range",
+       "id": "header_margin_bottom",
+       "min": 0,
+       "max": 150,
+       "step": 5,
+       "unit": "px",
+       "label": "Header Margin Bottom",
+       "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Grid Layout"
+    },
     {
       "type": "range",
       "id": "columns_desktop",
@@ -236,7 +346,7 @@
       "max": 6,
       "step": 1,
       "label": "Columns on Desktop",
-      "default": 3
+      "default": 4
     },
     {
       "type": "range",
@@ -264,7 +374,57 @@
       "step": 4,
       "unit": "px",
       "label": "Gap between cards",
-      "default": 24
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Heading Styling"
+    },
+    {
+      "type": "range",
+      "id": "alphabet_header_font_size",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading Font Size",
+      "default": 42
+    },
+    {
+      "type": "color",
+      "id": "alphabet_header_color",
+      "label": "Heading Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_alphabet_border",
+      "label": "Show Bottom Border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "alphabet_header_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Heading Margin Bottom",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "alphabet_group_margin_bottom",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Group Margin Bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Card Colors"
     },
     {
       "type": "color",
@@ -335,8 +495,30 @@
   ],
   "blocks": [
     {
+      "type": "heading",
+      "name": "Heading Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "A"
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom",
+          "min": 0,
+          "max": 200,
+          "step": 10,
+          "unit": "px",
+          "label": "Group Margin Bottom",
+          "default": 60
+        }
+      ]
+    },
+    {
       "type": "brand",
-      "name": "Brand Item",
+      "name": "Brand Card",
       "settings": [
         {
           "type": "image_picker",
@@ -345,34 +527,96 @@
         },
         {
           "type": "text",
-          "id": "location",
-          "label": "Location",
-          "default": "PARIS"
-        },
-        {
-          "type": "text",
           "id": "brand_name",
-          "label": "Brand Name",
-          "default": "Chanel"
+          "label": "Page URL Mapping",
+          "default": "Chanel",
+          "info": "Enter the brand name (e.g., 'Boss'). It will be used as the label and to create the link (e.g., /collections/boss)."
         },
         {
-          "type": "text",
-          "id": "brand_desc",
-          "label": "Description",
-          "default": "THE ULTIMATE LUXURY STATEMENT"
+          "type": "header",
+          "content": "Custom Styling"
         },
         {
-          "type": "url",
-          "id": "link",
-          "label": "Brand Link"
+          "type": "color",
+          "id": "custom_bg_color",
+          "label": "Custom Background Color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "color",
+          "id": "custom_text_color",
+          "label": "Custom Text Color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "range",
+          "id": "custom_logo_width",
+          "min": 50,
+          "max": 250,
+          "step": 5,
+          "unit": "px",
+          "label": "Custom Logo Width",
+          "default": 120
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Brands Grid"
+      "name": "Brands Grid",
+      "blocks": [
+        { "type": "heading", "settings": { "title": "B" } },
+        { "type": "brand", "settings": { "brand_name": "Boss" } },
+        { "type": "brand", "settings": { "brand_name": "Burberry" } },
+        { "type": "brand", "settings": { "brand_name": "Bvlgari" } },
+        { "type": "heading", "settings": { "title": "C" } },
+        { "type": "brand", "settings": { "brand_name": "Carolina Herrera" } },
+        { "type": "brand", "settings": { "brand_name": "Chanel" } },
+        { "type": "brand", "settings": { "brand_name": "Chloé" } },
+        { "type": "brand", "settings": { "brand_name": "Creed" } },
+        { "type": "heading", "settings": { "title": "D" } },
+        { "type": "brand", "settings": { "brand_name": "DAVIDOFF" } },
+        { "type": "brand", "settings": { "brand_name": "De Marly" } },
+        { "type": "brand", "settings": { "brand_name": "Dior" } },
+        { "type": "brand", "settings": { "brand_name": "Dolce&Gabbana" } },
+        { "type": "brand", "settings": { "brand_name": "Dunhill" } },
+        { "type": "heading", "settings": { "title": "E" } },
+        { "type": "brand", "settings": { "brand_name": "Emporio Armani" } },
+        { "type": "heading", "settings": { "title": "G" } },
+        { "type": "brand", "settings": { "brand_name": "Giorgio Armani" } },
+        { "type": "brand", "settings": { "brand_name": "Givenchy" } },
+        { "type": "brand", "settings": { "brand_name": "Gucci" } },
+        { "type": "heading", "settings": { "title": "H" } },
+        { "type": "brand", "settings": { "brand_name": "Hermès" } },
+        { "type": "heading", "settings": { "title": "J" } },
+        { "type": "brand", "settings": { "brand_name": "Jean Paul Gaultier" } },
+        { "type": "heading", "settings": { "title": "K" } },
+        { "type": "brand", "settings": { "brand_name": "KAYALI" } },
+        { "type": "heading", "settings": { "title": "L" } },
+        { "type": "brand", "settings": { "brand_name": "Lancôme" } },
+        { "type": "brand", "settings": { "brand_name": "Laverne" } },
+        { "type": "heading", "settings": { "title": "M" } },
+        { "type": "brand", "settings": { "brand_name": "Marc Jacobs" } },
+        { "type": "brand", "settings": { "brand_name": "Montblanc" } },
+        { "type": "heading", "settings": { "title": "N" } },
+        { "type": "brand", "settings": { "brand_name": "Narcisco" } },
+        { "type": "heading", "settings": { "title": "P" } },
+        { "type": "brand", "settings": { "brand_name": "Prada" } },
+        { "type": "heading", "settings": { "title": "R" } },
+        { "type": "brand", "settings": { "brand_name": "Rabanne" } },
+        { "type": "brand", "settings": { "brand_name": "Roshas" } },
+        { "type": "heading", "settings": { "title": "T" } },
+        { "type": "brand", "settings": { "brand_name": "Tom Ford" } },
+        { "type": "heading", "settings": { "title": "V" } },
+        { "type": "brand", "settings": { "brand_name": "Valentino" } },
+        { "type": "brand", "settings": { "brand_name": "Versace" } },
+        { "type": "brand", "settings": { "brand_name": "Victoria's Secret" } },
+        { "type": "brand", "settings": { "brand_name": "Viktor & Rolf" } },
+        { "type": "heading", "settings": { "title": "Y" } },
+        { "type": "brand", "settings": { "brand_name": "Yves Saint Laurent" } }
+      ]
     }
   ]
 }
 {% endschema %}
+

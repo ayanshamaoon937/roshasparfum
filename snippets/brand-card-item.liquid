@@ -1,9 +1,11 @@
 {%- liquid
-  assign block = block
-  assign section = section
+  assign brand_link = block.settings.brand_name | url_for_vendor
 -%}
 
-<a href="{{ block.settings.link | default: '#' }}" class="brand-card">
+<a href="{{ brand_link | default: '#' }}" 
+   class="brand-card"
+   style="background-color: {{ block.settings.custom_bg_color | default: 'white' }}; color: {{ block.settings.custom_text_color | default: '#1a1a1a' }};"
+>
   <div class="brand-logo-wrap">
     {%- if block.settings.logo != blank -%}
       <img 
@@ -12,23 +14,10 @@
         loading="lazy"
         width="{{ block.settings.logo.width }}"
         height="{{ block.settings.logo.height }}"
+        style="max-width: {{ block.settings.custom_logo_width }}px;"
       >
     {%- else -%}
-      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-    {%- endif -%}
-  </div>
-  
-  <div class="brand-info">
-    {%- if block.settings.location != blank -%}
-      <span class="brand-location">{{ block.settings.location }}</span>
-    {%- endif -%}
-    
-    {%- if block.settings.brand_name != blank -%}
-      <h3 class="brand-name">{{ block.settings.brand_name }}</h3>
-    {%- endif -%}
-    
-    {%- if block.settings.brand_desc != blank -%}
-      <p class="brand-description">{{ block.settings.brand_desc }}</p>
+      <span class="brand-fallback-name" style="font-family: var(--font-body--family); font-size: 16px; letter-spacing: 1px; text-transform: uppercase;">{{ block.settings.brand_name }}</span>
     {%- endif -%}
   </div>
 </a>

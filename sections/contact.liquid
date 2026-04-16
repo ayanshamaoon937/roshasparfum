@@ -12,9 +12,9 @@
   }
 
   .contact-container-{{ section.id }} {
-    max-width: 1400px;
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 var(--page-margin);
   }
 
   .contact-header {
@@ -62,21 +62,38 @@
   .contact-field label {
     margin-bottom: 8px;
     font-size: 14px;
-    font-weight: 400;
-    color: #333;
+    font-weight: {{ section.settings.label_font_weight }};
+    color: {{ section.settings.label_color }};
     font-family: var(--font-body--family), sans-serif;
+  }
+
+  .contact-field label span {
+    color: {{ section.settings.required_color }};
   }
 
   .contact-field input, 
   .contact-field textarea {
     padding: 15px;
-    border: 1px solid #707070;
-    border-radius: 4px;
+    border: 1px solid #dfdfdf;
+    border-radius: 0;
     font-size: 14px;
     font-family: var(--font-body--family), sans-serif;
     background: transparent;
   }
+  .contact-field input::placeholder, 
+  .contact-field textarea::placeholder {
+    color: #888;
+    opacity: 1; /* Firefox fix */
+  }
 
+  .contact-field input:focus, 
+  .contact-field textarea:focus, 
+  .contact-field input:focus-visible, 
+  .contact-field textarea:focus-visible {
+    outline: none;
+    border-color: #000000;
+    box-shadow: none;
+  }
   .contact-field textarea {
     min-height: 180px;
     resize: vertical;
@@ -105,6 +122,7 @@
     transition: all 0.3s ease;
     min-width: 250px;
     font-family: var(--font-body--family), sans-serif;
+    border-radius: 0;
   }
 
   .contact-submit-btn:hover {
@@ -171,21 +189,21 @@
 
         <div class="contact-form-grid">
           <div class="contact-field">
-            <label for="ContactFormName">Nom *</label>
+            <label for="ContactFormName">Name <span>*</span></label>
             <input type="text"
               id="ContactFormName"
               name="contact[name]"
-              placeholder="Votre nom"
+              placeholder="Your Name"
               value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
               required>
           </div>
 
           <div class="contact-field">
-            <label for="ContactFormEmail">E-mail *</label>
+            <label for="ContactFormEmail">Email <span>*</span></label>
             <input type="email"
               id="ContactFormEmail"
               name="contact[email]"
-              placeholder="Votre e-mail"
+              placeholder="Your Email"
               value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
               spellcheck="false"
               autocomplete="off"
@@ -194,20 +212,20 @@
           </div>
 
           <div class="contact-field contact-form-full">
-            <label for="ContactFormPhone">Phone</label>
+            <label for="ContactFormPhone">Phone <span>*</span></label>
             <input type="tel"
               id="ContactFormPhone"
               name="contact[phone]"
-              placeholder="Votre numéro de téléphone"
+              placeholder="Your Phone Number"
               value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
           </div>
 
           <div class="contact-field contact-form-full">
-            <label for="ContactFormMessage">Message *</label>
+            <label for="ContactFormMessage">Message <span>*</span></label>
             <textarea rows="10"
               id="ContactFormMessage"
               name="contact[note]"
-              placeholder="Votre message"
+              placeholder="Your Message"
               required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
           </div>
         </div>
@@ -217,7 +235,7 @@
             {% if section.settings.button_text != blank %}
               {{ section.settings.button_text }}
             {% else %}
-              SOUMETTRE
+              SUBMIT
             {% endif %}
           </button>
         </div>
@@ -426,13 +444,42 @@
     },
     {
       "type": "header",
+      "content": "Label Settings"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Color",
+      "default": "#333333"
+    },
+    {
+      "type": "select",
+      "id": "label_font_weight",
+      "label": "Label Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "required_color",
+      "label": "Required Asterisk Color",
+      "default": "#d30505"
+    },
+    {
+      "type": "header",
       "content": "Button Settings"
     },
     {
       "type": "text",
       "id": "button_text",
       "label": "Button Label",
-      "default": "SOUMETTRE"
+      "default": "SUBMIT"
     },
     {
       "type": "color",

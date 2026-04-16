@@ -63,12 +63,12 @@
 
 
   .header-container {
-    max-width: 1400px;
+    max-width: var(--page-width);
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    padding: 0 var(--page-margin);
   }
 
   /* Logo */
@@ -196,8 +196,8 @@
     color: #fff;
     font-size: 10px;
     font-weight: 600;
-    width: 16px;
-    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -227,9 +227,9 @@
   }
 
   .mega-menu-content {
-    max-width: 1400px;
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 60px 50px;
+    padding: 60px var(--page-margin);
   }
 
   .mega-columns-wrap {
@@ -415,9 +415,9 @@
 
   /* Bottom Bar */
   .mega-bottom-bar {
-    max-width: 1320px;
+    max-width: var(--page-width);
     margin: 0 auto;
-    padding: 20px 40px;
+    padding: 20px var(--page-margin);
     border-top: 1px solid #f5f5f5;
     display: flex;
     justify-content: space-between;
@@ -477,12 +477,13 @@
   }
 
   .search-bar-form {
-    max-width: 1400px;
+    max-width: var(--page-width);
     margin: 0 auto;
     width: 100%;
     display: flex;
     align-items: center;
     position: relative;
+    padding: 0 var(--page-margin);
   }
 
   .search-bar-input {
@@ -632,6 +633,370 @@
   .mobile-menu-backdrop.active {
     opacity: 1;
     visibility: visible;
+  }
+  /* Cart Drawer Styles */
+  .cart-drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  .cart-drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 450px;
+    max-width: 90%;
+    height: 100%;
+    background: #fff;
+    z-index: 2001;
+    transition: right 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+  }
+  .cart-drawer.active {
+    right: 0;
+  }
+
+  .cart-drawer-header {
+    padding: 15px 10px 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .cart-drawer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #000;
+    margin-bottom:0;
+  }
+  .cart-drawer-title span {
+    color: #999;
+    font-weight: 400;
+    margin-left: 10px;
+    font-family: var(--font-body--family);
+  }
+  .cart-drawer-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #000;
+  }
+
+  .cart-drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 15px;
+    background: #fcfcfc;
+  }
+
+  .cart-drawer-item {
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 0px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 15px;
+    position: relative;
+  }
+  .cart-drawer-item-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 0px;
+    overflow: hidden;
+    background: #f9f9f9;
+    flex-shrink: 0;
+  }
+  .cart-drawer-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .cart-drawer-item-info {
+    flex-grow: 1;
+  }
+  .cart-drawer-item-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 0;
+    display: block;
+    color: #000;
+    text-decoration: none;
+    line-height: 1.4;
+    padding-right: 20px;
+  }
+  .cart-drawer-item-variant {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+  .cart-drawer-item-bundle {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 0;
+  }
+  .cart-drawer-item-price {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+  }
+  .cart-drawer-item-price s {
+    color: #ccc;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+
+  .cart-drawer-item-remove {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .cart-drawer-item-remove:hover {
+    color: #000;
+  }
+
+  .js-cart-subtotal, .js-cart-total, .cart-drawer-item-subtotal {
+    /* Base styles */
+  }
+  .price-updating {
+    --shimmer-text-color: rgb(0 0 0 / 0.5);
+    --shimmer-color-light: rgb(0 0 0 / 0.1);
+    --shimmer-speed: 1.25s;
+    color: transparent !important;
+    position: relative;
+    display: inline-block;
+  }
+  .price-updating::after {
+    content: attr(data-value);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: linear-gradient(-85deg, var(--shimmer-text-color) 10%, var(--shimmer-color-light) 50%, var(--shimmer-text-color) 90%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 200% 100%;
+    animation: text-shimmer var(--shimmer-speed) infinite linear;
+  }
+
+  .cart-drawer-item-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .cart-drawer-quantity {
+    display: flex;
+    align-items: center;
+    border: 1px solid #f0f0f0;
+    height: 32px;
+    border-radius: 0;
+  }
+  .qty-btn {
+    width: 32px;
+    height: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .qty-input {
+    width: 35px;
+    border: none;
+    font-size: 13px;
+    height: 100%;
+    padding: 0;
+    text-align: center;
+    background: transparent;
+    -moz-appearance: textfield;
+  }
+  .qty-input::-webkit-outer-spin-button,
+  .qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .cart-drawer-item-subtotal {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+  }
+
+  .cart-drawer-footer {
+    padding: 20px 15px;
+    background: #fff;
+    border-top: 1px solid #f5f5f5;
+  }
+  .drawer-summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #666;
+    letter-spacing: 0.5px;
+  }
+  .drawer-summary-row span:last-child {
+    color: #000;
+    font-weight: 500;
+    text-transform: none;
+  }
+  .drawer-summary-row.discount {
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0;
+    padding: 12px 0;
+  }
+  .drawer-summary-row.discount .toggle-icon {
+    font-size: 18px;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+  }
+  .drawer-summary-row.discount.active .toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .drawer-discount-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .drawer-discount-content.active {
+    max-height: 100px;
+    margin-bottom: 20px;
+    transition: 0.2s all ease-in-out;
+  }
+  .discount-input-wrap {
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+  }
+  .discount-input {
+    flex: 1;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    padding: 0 12px;
+    font-size: 13px;
+    border-radius: 0;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .discount-input:focus {
+    border-color: #000;
+  }
+  .discount-apply-btn {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 0 15px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .drawer-summary-row.total {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #000;
+  }
+  .drawer-summary-row.total span:last-child {
+    font-size: 16px;
+  }
+  .drawer-disclaimer {
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+  .drawer-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 15px;
+  }
+  .drawer-btn {
+    padding: 18px 0;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 0;
+    transition: all 0.3s ease;
+  }
+  .drawer-btn-secondary {
+    border:1px solid #333;
+    color: #333;
+  }
+  .drawer-btn-primary {
+    background: #000;
+    color: #fff;
+  }
+  .drawer-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  @media screen and (max-width: 480px) {
+    .cart-drawer {
+      width: 100%;
+    }
+  }
+
+  /* Mobile Search Bar */
+  .mobile-drawer-search {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 20px;
+  }
+  .mobile-search-form {
+    display: flex;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 0 12px;
+    height: 44px;
+    border-radius: 4px;
+  }
+  .mobile-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    outline: none;
+    padding: 0;
+  }
+  .mobile-search-submit {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
+    color: #000;
   }
 {% endstyle %}
 
@@ -934,7 +1299,7 @@
           <path d="M8.47656 8.75C10.6857 8.75 12.4766 6.95914 12.4766 4.75C12.4766 2.54086 10.6857 0.75 8.47656 0.75C6.26742 0.75 4.47656 2.54086 4.47656 4.75C4.47656 6.95914 6.26742 8.75 8.47656 8.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
       </a>
-      <a href="/cart" class="header-icon-link">
+      <a href="/cart" class="header-icon-link cart-trigger-btn">
         <svg viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0.75 0.75H3.75L6.75 11.75M6.75 11.75L5.75 15.75H20.75M6.75 11.75H18.75L21.75 2.75H4.295L6.75 11.75ZM6.75 19.75C6.75 20.0152 6.64464 20.2696 6.45711 20.4571C6.26957 20.6446 6.01522 20.75 5.75 20.75C5.48478 20.75 5.23043 20.6446 5.04289 20.4571C4.85536 20.2696 4.75 20.0152 4.75 19.75C4.75 19.4848 4.85536 19.2304 5.04289 19.0429C5.23043 18.8554 5.48478 18.75 5.75 18.75C6.01522 18.75 6.26957 18.8554 6.45711 19.0429C6.64464 19.2304 6.75 19.4848 6.75 19.75ZM20.75 19.75C20.75 20.0152 20.6446 20.2696 20.4571 20.4571C20.2696 20.6446 20.0152 20.75 19.75 20.75C19.4848 20.75 19.2304 20.6446 19.0429 20.4571C18.8554 20.2696 18.75 20.0152 18.75 19.75C18.75 19.4848 18.8554 19.2304 19.0429 19.0429C19.2304 18.8554 19.4848 18.75 19.75 18.75C20.0152 18.75 20.2696 18.8554 20.4571 19.0429C20.6446 19.2304 20.75 19.4848 20.75 19.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
         </svg>
@@ -953,6 +1318,16 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
   </div>
+  <div class="mobile-drawer-search">
+    <form action="/search" method="get" class="mobile-search-form">
+      <input type="text" name="q" placeholder="SEARCH FOR PRODUCTS..." class="mobile-search-input">
+      <button type="submit" class="mobile-search-submit">
+        <svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+          <path d="M12.4625 11.6016L8.40469 7.54375C9.03438 6.72969 9.375 5.73438 9.375 4.6875C9.375 3.43438 8.88594 2.25937 8.00156 1.37344C7.11719 0.4875 5.93906 0 4.6875 0C3.43594 0 2.25781 0.489062 1.37344 1.37344C0.4875 2.25781 0 3.43438 0 4.6875C0 5.93906 0.489062 7.11719 1.37344 8.00156C2.25781 8.8875 3.43438 9.375 4.6875 9.375C5.73438 9.375 6.72813 9.03438 7.54219 8.40625L11.6 12.4625C11.6119 12.4744 11.626 12.4838 11.6416 12.4903C11.6571 12.4967 11.6738 12.5001 11.6906 12.5001C11.7075 12.5001 11.7241 12.4967 11.7397 12.4903C11.7552 12.4838 11.7694 12.4744 11.7812 12.4625L12.4625 11.7828C12.4744 11.7709 12.4838 11.7568 12.4903 11.7412C12.4967 11.7257 12.5001 11.709 12.5001 11.6922C12.5001 11.6754 12.4967 11.6587 12.4903 11.6431C12.4838 11.6276 12.4744 11.6135 12.4625 11.6016ZM7.1625 7.1625C6.5 7.82344 5.62187 8.1875 4.6875 8.1875C3.75313 8.1875 2.875 7.82344 2.2125 7.1625C1.55156 6.5 1.1875 5.62187 1.1875 4.6875C1.1875 3.75313 1.55156 2.87344 2.2125 2.2125C2.875 1.55156 3.75313 1.1875 4.6875 1.1875C5.62187 1.1875 6.50156 1.55 7.1625 2.2125C7.82344 2.875 8.1875 3.75313 8.1875 4.6875C8.1875 5.62187 7.82344 6.50156 7.1625 7.1625Z" fill="currentColor"/>
+        </svg>
+      </button>
+    </form>
+  </div>
   <nav>
     <ul class="mobile-nav-list">
       {% for link in main_menu.links %}
@@ -962,6 +1337,82 @@
       {% endfor %}
     </ul>
   </nav>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer-overlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-header">
+    <h2 class="cart-drawer-title">{{ section.settings.cart_drawer_title | default: 'Cart' }} <span>{{ cart.item_count }}</span></h2>
+    <button class="cart-drawer-close" aria-label="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+  
+  <div class="cart-drawer-content js-cart-items-container">
+    {% if cart.item_count > 0 %}
+      {% for item in cart.items %}
+        <div class="cart-drawer-item" data-id="{{ item.id }}" data-index="{{ forloop.index }}">
+          <div class="cart-drawer-item-image">
+            <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}">
+          </div>
+          <div class="cart-drawer-item-info">
+            <a href="{{ item.url }}" class="cart-drawer-item-title">{{ item.product.title }}</a>
+            <div class="cart-drawer-item-variant">{{ item.variant.title }}</div>
+            <div class="cart-drawer-item-bundle">{{ item.vendor }}</div>
+            <div class="cart-drawer-item-price">
+              {{ item.final_price | money }}
+              {% if item.original_price > item.final_price %}
+                <s>{{ item.original_price | money }}</s>
+              {% endif %}
+            </div>
+            
+            <div class="cart-drawer-item-bottom">
+              <div class="cart-drawer-quantity">
+                <button type="button" class="qty-btn" onclick="adjustCartQty('{{ item.key }}', -1, this)">−</button>
+                <input type="number" class="qty-input" value="{{ item.quantity }}" readonly>
+                <button type="button" class="qty-btn" onclick="adjustCartQty('{{ item.key }}', 1, this)">+</button>
+              </div>
+              <div class="cart-drawer-item-subtotal" data-price="{{ item.price }}">{{ item.final_line_price | money }}</div>
+            </div>
+          </div>
+          <div class="cart-drawer-item-remove" onclick="updateCartQty('{{ item.key }}', 0, this)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div style="text-align:center; padding: 50px 0;">Your cart is empty</div>
+    {% endif %}
+  </div>
+
+  <div class="cart-drawer-footer">
+    <div class="drawer-summary-row">
+      <span>SUBTOTAL</span>
+      <span class="js-cart-subtotal">{{ cart.total_price | money }}</span>
+    </div>
+    <div class="drawer-summary-row discount js-discount-toggle">
+      <span>DISCOUNT</span>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="drawer-discount-content js-discount-content">
+      <div class="discount-input-wrap">
+        <input type="text" class="discount-input" placeholder="Coupon code">
+        <button type="button" class="discount-apply-btn js-discount-apply">Apply</button>
+      </div>
+    </div>
+    <div class="drawer-summary-row total">
+      <span>ESTIMATED TOTAL</span>
+      <span class="js-cart-total">{{ cart.total_price | money }}</span>
+    </div>
+    <div class="drawer-disclaimer">
+      {{ section.settings.cart_disclaimer | default: 'DUTIES AND TAXES INCLUDED. SHIPPING IS CALCULATED AT CHECKOUT.' }}
+    </div>
+    <div class="drawer-actions">
+      <a href="/cart" class="drawer-btn drawer-btn-secondary">{{ section.settings.view_order_label | default: 'View Order' }}</a>
+      <a href="/checkout" class="drawer-btn drawer-btn-primary">{{ section.settings.checkout_label | default: 'Proceed To Checkout' }}</a>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -1055,6 +1506,219 @@
       window.addEventListener('resize', handleHeaderSticky);
       handleHeaderSticky();
     }
+
+    // Cart Drawer Logic
+    const cartTrigger = document.querySelector('.cart-trigger-btn');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartOverlay = document.querySelector('.cart-drawer-overlay');
+    const cartClose = document.querySelector('.cart-drawer-close');
+
+    window.toggleCartDrawer = function(open = true) {
+      if(open) {
+        cartDrawer.classList.add('active');
+        cartOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        cartDrawer.classList.remove('active');
+        cartOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (cartTrigger) {
+      cartTrigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.toggleCartDrawer(true);
+      });
+    }
+    if (cartClose) cartClose.addEventListener('click', () => window.toggleCartDrawer(false));
+    if (cartOverlay) cartOverlay.addEventListener('click', () => window.toggleCartDrawer(false));
+
+    // Format money dynamically removed - relying on server exactly.
+
+    window.adjustCartQty = function(key, delta, el) {
+      const container = el.closest('.cart-drawer-quantity') || el.closest('.quantity-box');
+      const input = container.querySelector('input');
+      const currentQty = parseInt(input.value) || 0;
+      const newQty = Math.max(0, currentQty + delta);
+      
+      updateCartQty(key, newQty, el);
+    };
+
+    let updateTimer;
+    let pendingQtyUpdate = null;
+    window.updateCartQty = function(key, qty, el) {
+      // Optimistic Update UI (keep this instant)
+      if (el) {
+        const itemContainer = el.closest('.cart-drawer-item') || el.closest('tr') || el.closest('.cart-mobile-item');
+        const input = itemContainer.querySelector('.qty-input') || itemContainer.querySelector('.quantity-input');
+        const lineSubtotal = itemContainer.querySelector('.cart-drawer-item-subtotal') || itemContainer.querySelector('.line-price-value');
+        
+        if (qty > 0) {
+          if (input) input.value = qty;
+          if (lineSubtotal && !lineSubtotal.classList.contains('price-updating')) {
+            // Use existing text to preserve exact currency symbol and format
+            lineSubtotal.setAttribute('data-value', lineSubtotal.textContent.trim());
+            lineSubtotal.classList.add('price-updating');
+          }
+        } else {
+          itemContainer.style.opacity = '0.5';
+          itemContainer.style.pointerEvents = 'none';
+        }
+      }
+
+      // Animate all global totals
+      document.querySelectorAll('.js-cart-subtotal, .js-cart-total').forEach(totalEl => {
+        if (!totalEl.classList.contains('price-updating')) {
+          totalEl.setAttribute('data-value', totalEl.textContent.trim());
+          totalEl.classList.add('price-updating');
+        }
+      });
+
+      // Store latest qty and debounce - always fires, no lock check
+      pendingQtyUpdate = { key, qty };
+      clearTimeout(updateTimer);
+      updateTimer = setTimeout(() => {
+        const { key: k, qty: q } = pendingQtyUpdate;
+        pendingQtyUpdate = null;
+
+        fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: k, quantity: q })
+        })
+        .then(response => response.json())
+        .then(() => { updateCartState(); })
+        .catch(() => {
+          document.querySelectorAll('.price-updating').forEach(e => {
+            e.classList.remove('price-updating');
+            e.removeAttribute('data-value');
+          });
+        });
+      }, 400);
+    };
+
+    // Discount Accordion & Apply Logic
+    const discountToggle = document.querySelector('.js-discount-toggle');
+    const discountContent = document.querySelector('.js-discount-content');
+    const discountInput = document.querySelector('.discount-input');
+    const discountApplyBtn = document.querySelector('.js-discount-apply');
+    const checkoutBtn = document.querySelector('.drawer-btn-primary');
+
+    if (discountToggle && discountContent) {
+      discountToggle.addEventListener('click', () => {
+        discountToggle.classList.toggle('active');
+        discountContent.classList.toggle('active');
+      });
+    }
+
+    if (discountApplyBtn && discountInput && checkoutBtn) {
+      discountApplyBtn.addEventListener('click', () => {
+        const code = discountInput.value.trim();
+        if (code !== "") {
+          const originalHref = "/checkout";
+          checkoutBtn.href = `${originalHref}?discount=${encodeURIComponent(code)}`;
+          discountApplyBtn.textContent = 'APPLIED';
+          discountApplyBtn.style.background = '#4CAF50';
+          setTimeout(() => {
+            discountApplyBtn.textContent = 'APPLY';
+            discountApplyBtn.style.background = '#000';
+          }, 2000);
+        }
+      });
+    }
+
+    // Global AJAX Add to Cart Handler
+    document.addEventListener('submit', (e) => {
+      const form = e.target;
+      if (form.matches('form[action^="/cart/add"]')) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('[type="submit"]');
+        if (submitBtn) submitBtn.disabled = true;
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(item => {
+          // Instant local update for better UX
+          document.querySelectorAll('.cart-count-badge').forEach(badge => {
+            let count = parseInt(badge.textContent) || 0;
+            badge.textContent = count + (parseInt(formData.get('quantity')) || 1);
+          });
+
+          // Sync with server state
+          window.updateCartState();
+          // Open drawer
+          window.toggleCartDrawer(true);
+        })
+        .catch(error => {
+          console.error('Error adding to cart:', error);
+        })
+        .finally(() => {
+          if (submitBtn) submitBtn.disabled = false;
+        });
+      }
+    });
+
+    let isUpdatingCart = false;
+    window.updateCartState = function() {
+      // Request both sections in one call
+      const sectionsParam = 'custom-header,main-cart';
+      fetch(`${window.location.pathname}?sections=${sectionsParam}`)
+      .then(response => {
+        if (!response.ok) throw new Error('Refresh failed');
+        return response.json();
+      })
+      .then(sections => {
+        const parser = new DOMParser();
+
+        // Update header/drawer from custom-header section
+        if (sections['custom-header']) {
+          const doc = parser.parseFromString(sections['custom-header'], 'text/html');
+
+          const newBadge = doc.querySelector('.cart-count-badge');
+          if (newBadge) {
+            document.querySelectorAll('.cart-count-badge').forEach(b => b.textContent = newBadge.textContent);
+          }
+          const newDrawerCount = doc.querySelector('.cart-drawer-title span');
+          if (newDrawerCount) {
+            document.querySelectorAll('.cart-drawer-title span').forEach(s => s.textContent = newDrawerCount.textContent);
+          }
+          const newDrawerContent = doc.querySelector('.js-cart-items-container');
+          if (newDrawerContent) {
+            document.querySelector('.js-cart-items-container').innerHTML = newDrawerContent.innerHTML;
+          }
+          const newFooter = doc.querySelector('.cart-drawer-footer');
+          if (newFooter) {
+            document.querySelector('.cart-drawer-footer').innerHTML = newFooter.innerHTML;
+          }
+        }
+
+        // Update main cart page from main-cart section
+        if (sections['main-cart'] && document.querySelector('.cart-main-container')) {
+          const doc2 = parser.parseFromString(sections['main-cart'], 'text/html');
+          const newMainCart = doc2.querySelector('.cart-main-container');
+          if (newMainCart) {
+            document.querySelector('.cart-main-container').innerHTML = newMainCart.innerHTML;
+          }
+        }
+      })
+      .catch(error => {
+        console.warn('Cart update failed. Falling back to reload...', error);
+        location.reload(); // Reliable backup
+      })
+      .finally(() => {
+        document.querySelectorAll('.price-updating').forEach(el => {
+          el.classList.remove('price-updating');
+          el.removeAttribute('data-value');
+        });
+        isUpdatingCart = false;
+      });
+    }
   });
 </script>
 
@@ -1078,6 +1742,34 @@
       "id": "menu",
       "label": "Main Menu",
       "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Cart Drawer Settings"
+    },
+    {
+      "type": "text",
+      "id": "cart_drawer_title",
+      "label": "Drawer Title",
+      "default": "Cart"
+    },
+    {
+      "type": "textarea",
+      "id": "cart_disclaimer",
+      "label": "Disclaimer Text",
+      "default": "DUTIES AND TAXES INCLUDED. SHIPPING IS CALCULATED AT CHECKOUT."
+    },
+    {
+      "type": "text",
+      "id": "view_order_label",
+      "label": "View Order Button Label",
+      "default": "View Order"
+    },
+    {
+      "type": "text",
+      "id": "checkout_label",
+      "label": "Checkout Button Label",
+      "default": "Proceed To Checkout"
     }
   ],
   "blocks": [

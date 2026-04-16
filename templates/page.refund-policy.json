@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/4.1-_Miss_Dior.jpg",
+        "text_alignment": "center",
+        "banner_height": 300,
+        "padding_top": 50,
+        "padding_bottom": 50,
+        "show_overlay": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 40,
+        "custom_title": "Refund Policy",
+        "title_color": "#ffffff",
+        "title_font_size": 48,
+        "title_font_weight": "700",
+        "title_margin_bottom": 10,
+        "breadcrumb_link_color": "#ffffff",
+        "breadcrumb_current_color": "#dddddd",
+        "breadcrumb_font_size": 14
+      }
+    },
+    "refund_policy_content": {
+      "type": "refund-policy",
+      "blocks": {
+        "section_1": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Return Conditions",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<ul><li>Returns are accepted within 48 hours of receiving your order and only under specific conditions.</li><li>The perfume must be completely unused, unopened, and in its original, undamaged packaging.</li><li>If the item has been opened, sprayed, or shows any signs of use, it will not be eligible for return or refund — even if the wrong item was delivered.</li></ul>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "content_margin_bottom": 30,
+            "start_new_column": false
+          }
+        },
+        "section_2": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Damaged or Incorrect Items",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>If a product arrives broken, leaking, or damaged during delivery, or if you received an item different from what you ordered, we will review the case and provide a suitable resolution. A replacement or store credit may be offered once the claim is verified. Requests must be submitted within 48 hours of delivery, along with clear photos and order details.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "content_margin_bottom": 30,
+            "start_new_column": false
+          }
+        },
+        "section_3": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "On-Delivery Inspection",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>If your order included our in-person inspection service (معاينة) at the time of delivery, you are required to check the item before accepting it. Once accepted, any issue reported afterward may not be eligible for return unless the product is proven defective upon opening.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "content_margin_bottom": 30,
+            "start_new_column": false
+          }
+        },
+        "section_4": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Shipping Costs",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>Return shipping costs may be the responsibility of the customer unless the item arrived damaged or incorrect.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "content_margin_bottom": 30,
+            "start_new_column": false
+          }
+        }
+      },
+      "block_order": [
+        "section_1",
+        "section_2",
+        "section_3",
+        "section_4"
+      ],
+      "settings": {
+        "container_width": 1200,
+        "background_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "text_alignment": "left",
+        "heading": "Refund policy",
+        "heading_font_size_desktop": 40,
+        "heading_font_size_tablet": 32,
+        "heading_font_size_mobile": 24,
+        "heading_color": "#121212",
+        "heading_font_weight": "700",
+        "heading_margin_bottom": 24,
+        "description": "<p>At ROSHAS, we are committed to providing authentic, premium fragrances that arrive to you in perfect condition. While every item is carefully checked before it leaves our store, we understand that exceptional situations may occur. This policy outlines the conditions under which returns or refunds may be considered.</p>",
+        "desc_font_size_desktop": 16,
+        "desc_color": "#4a4a4a",
+        "desc_font_weight": "400",
+        "desc_margin_bottom": 48,
+        "grid_gap": 40,
+        "grid_margin_top": 40,
+        "footer_contact_heading": "Contact",
+        "footer_contact_content": "<p>Should you have any questions about our refund practices, please call or email us at <strong>laviniaperfumee@gmail.com</strong> or contact us at Amman, Amman, 11118, JO</p>",
+        "footer_margin_top": 60
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "refund_policy_content"
+  ]
+}

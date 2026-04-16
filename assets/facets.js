@@ -632,9 +632,10 @@ class SortingFilterComponent extends Component {
       }
     }
 
-    // Close the details element when a value is selected
+    // Close the details element when a value is selected, unless it's in vertical mode
     const { details } = this.refs;
     if (!(details instanceof HTMLDetailsElement)) return;
+    if (this.classList.contains('facets__item')) return;
     details.open = false;
   }
 

@@ -1,0 +1,319 @@
+{%- style -%}
+  #PageBanner-{{ section.id }} {
+    background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');
+    background-size: cover;
+    background-position: center;
+    min-height: {{ section.settings.banner_height }}px;
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  {%- if section.settings.show_overlay -%}
+  #PageBanner-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: {{ section.settings.overlay_color }};
+    opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    z-index: 1;
+  }
+  {%- endif -%}
+
+  .page-banner__container {
+    position: relative;
+    z-index: 2;
+    text-align: {{ section.settings.text_alignment }};
+    width: 100%;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .page-banner__title {
+    color: {{ section.settings.title_color }};
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    margin-bottom: {{ section.settings.title_margin_bottom }}px;
+    margin-top: 0;
+    line-height: 1.2;
+    text-transform: capitalize;
+  }
+
+  .breadcrumb {
+    font-size: {{ section.settings.breadcrumb_font_size }}px;
+    display: flex;
+    align-items: center;
+    justify-content: {% if section.settings.text_alignment == 'center' %}center{% elsif section.settings.text_alignment == 'right' %}flex-end{% else %}flex-start{% endif %};
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .breadcrumb__item a {
+    color: {{ section.settings.breadcrumb_link_color }};
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .breadcrumb__item a:hover {
+    opacity: 0.7;
+  }
+
+  .breadcrumb__item--current {
+    color: {{ section.settings.breadcrumb_current_color }};
+  }
+
+  .breadcrumb__separator {
+    color: {{ section.settings.breadcrumb_link_color }};
+    opacity: 0.5;
+  }
+
+  @media screen and (max-width: 749px) {
+    .page-banner__title {
+      font-size: calc({{ section.settings.title_font_size }}px * 0.7);
+    }
+  }
+{%- endstyle -%}
+
+<section id="PageBanner-{{ section.id }}" class="page-banner">
+  <div class="page-banner__container">
+    
+    <h1 class="page-banner__title">
+      {%- if section.settings.custom_title != blank -%}
+        {{ section.settings.custom_title }}
+      {%- else -%}
+        {%- liquid
+          if template contains 'collection' and collection.title
+            echo collection.title
+          elsif template contains 'product' and product.title
+            echo product.title
+          elsif template contains 'blog' and blog.title
+            echo blog.title
+          elsif template contains 'article' and article.title
+            echo article.title
+          elsif template contains 'page' and page.title
+            echo page.title
+          else
+            echo page_title
+          endif
+        -%}
+      {%- endif -%}
+    </h1>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <ul class="breadcrumb">
+        <li class="breadcrumb__item">
+          <a href="{{ routes.root_url }}">{{ 'gempages.Breadcrumb.home' | t | default: 'Home' }}</a>
+        </li>
+        <span class="breadcrumb__separator">/</span>
+        
+        {%- if template contains 'collection' and collection.handle -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__item--current" aria-current="page">{{ collection.title }}</span>
+          </li>
+        {%- elsif template contains 'product' -%}
+          {%- if collection.url -%}
+            <li class="breadcrumb__item">
+              <a href="{{ collection.url }}">{{ collection.title }}</a>
+            </li>
+            <span class="breadcrumb__separator">/</span>
+          {%- endif -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__item--current" aria-current="page">{{ product.title }}</span>
+          </li>
+        {%- elsif template contains 'blog' -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__item--current" aria-current="page">{{ blog.title }}</span>
+          </li>
+        {%- elsif template contains 'article' -%}
+          <li class="breadcrumb__item">
+            <a href="{{ blog.url }}">{{ blog.title }}</a>
+          </li>
+          <span class="breadcrumb__separator">/</span>
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__item--current" aria-current="page">{{ article.title }}</span>
+          </li>
+        {%- elsif template contains 'page' -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__item--current" aria-current="page">{{ page.title }}</span>
+          </li>
+        {%- else -%}
+          <li class="breadcrumb__item">
+            <span class="breadcrumb__item--current" aria-current="page">{{ page_title }}</span>
+          </li>
+        {%- endif -%}
+      </ul>
+    </nav>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Section Dimensions"
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "min": 200,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "label": "Banner Height",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Background Overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show Overlay",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Page Title Typography"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom Title Override",
+      "info": "Leave blank to use the default page title."
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Title Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "title_margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Title Margin Bottom",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb Typography"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_link_color",
+      "label": "Link Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "breadcrumb_current_color",
+      "label": "Current Page Color",
+      "default": "#dddddd"
+    },
+    {
+      "type": "range",
+      "id": "breadcrumb_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Breadcrumb Font Size",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Banner"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,212 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/4.1-_Miss_Dior.jpg",
+        "text_alignment": "center",
+        "banner_height": 350,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "show_overlay": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 40,
+        "custom_title": "About ROSHAS",
+        "title_color": "#ffffff",
+        "title_font_size": 48,
+        "title_font_weight": "700",
+        "title_margin_bottom": 10,
+        "breadcrumb_link_color": "#ffffff",
+        "breadcrumb_current_color": "#dddddd",
+        "breadcrumb_font_size": 14
+      }
+    },
+    "our_story": {
+      "type": "our-story",
+      "blocks": {
+        "stat_1": {
+          "type": "progress_bar",
+          "settings": {
+            "percentage": 98,
+            "label": "HAPPY CUSTOMERS"
+          }
+        },
+        "stat_2": {
+          "type": "progress_bar",
+          "settings": {
+            "percentage": 85,
+            "label": "12 YEARS OF EXPERIENCE"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2"
+      ],
+      "settings": {
+        "container_width": 1400,
+        "background_color": "#ffffff",
+        "padding_top_desktop": 100,
+        "padding_bottom_desktop": 100,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "image": "shopify://shop_images/Untitled-design-3-4.png",
+        "heading": "Our Story",
+        "heading_font_size_desktop": 48,
+        "heading_font_size_tablet": 36,
+        "heading_font_size_mobile": 28,
+        "heading_color": "#000000",
+        "heading_font_weight": "700",
+        "heading_margin_bottom": 30,
+        "description": "<p><strong>At ROSHAS, we believe that every scent tells a story. Our journey began with a simple passion for authentic, world-class perfumery and a vision to transform the way our clients experience fragrance.</strong></p><p>We have spent over a decade curating a collection that represents the pinnacle of fragrance artistry. From the hidden gems of artisanal houses to the timeless classics of the world's most renowned brands, every bottle in our store is selected for its quality, longevity, and unique olfactory profile.</p><p>Our mission is to bring you closer to the scents that define your personality. We understand that choosing a perfume is a deeply personal experience, which is why we focus on providing a curated selection that caters to diverse tastes, moods, and moments in life.</p><p>Today, ROSHAS stands as a sanctuary for fragrance enthusiasts who value authenticity above all else. We continue to explore the ever-evolving world of scents, ensuring that our clients always have access to the most exclusive and genuine fragrances from around the globe.</p>",
+        "desc_font_size_desktop": 16,
+        "desc_font_size_tablet": 16,
+        "desc_font_size_mobile": 14,
+        "desc_color": "#4a4a4a",
+        "desc_font_weight": "400",
+        "desc_margin_bottom": 0
+      }
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "container_width": 1400,
+        "background_color": "#f9f9f9",
+        "padding_top_desktop": 100,
+        "padding_bottom_desktop": 100,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "image_1": "shopify://shop_images/this-section-content-is-why-choose-us-authenticity-quality-and-personalized-service-we-source-our-fragrances-directly-from-official-distributors-and-trusted-partners-to-guarantee-that.png",
+        "image_2": "shopify://shop_images/remove-the-text-above-on-that.png",
+        "subheading": "WHY CHOOSE US",
+        "subheading_color": "#804d63",
+        "heading": "Authenticity, Quality, and Personalized Service.",
+        "heading_font_size_desktop": 42,
+        "heading_font_size_tablet": 32,
+        "heading_font_size_mobile": 24,
+        "heading_color": "#000000",
+        "heading_font_weight": "700",
+        "heading_margin_bottom": 30,
+        "description": "<p>We source our fragrances directly from official distributors and trusted partners to guarantee that every bottle you purchase is 100% genuine. Our commitment to excellence goes beyond our products—we provide professional advice and a seamless shopping experience tailored to your needs.</p>",
+        "desc_font_size_desktop": 16,
+        "desc_font_size_tablet": 16,
+        "desc_font_size_mobile": 14,
+        "desc_color": "#4a4a4a",
+        "desc_font_weight": "400",
+        "desc_margin_bottom": 0,
+        "button_label": "EXPLORE MORE",
+        "button_link": "shopify://collections/all",
+        "video_link": ""
+      }
+    },
+    "newsletter_wnFR9R": {
+      "type": "newsletter",
+      "name": "Luxury Newsletter",
+      "settings": {
+        "image": "shopify://shop_images/11-_Overall.jpg",
+        "overlay_color": "#000000",
+        "overlay_opacity": 70,
+        "accent_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "subtitle": "EXCLUSIVE MEMBERSHIP",
+        "subtitle_margin_bottom": 0,
+        "heading": "Join The [Roshas] Circle",
+        "heading_font_size_desktop": 80,
+        "heading_font_size_tablet": 60,
+        "heading_font_size_mobile": 40,
+        "heading_font_weight": "400",
+        "heading_color": "#ffffff",
+        "heading_margin_top": 26,
+        "heading_margin_bottom": 30,
+        "description": "Subscribe to receive curated olfactory guides, private launch invitations, and bespoke offers reserved exclusively for our community.",
+        "desc_font_size": 14,
+        "desc_font_weight": "400",
+        "desc_color": "#ffffff",
+        "desc_margin_bottom": 0,
+        "input_placeholder": "Enter your E-mail Address",
+        "button_label": "CONFIRM SUBSCRIPTION",
+        "btn_bg_color": "#ffffff",
+        "btn_color": "#000000",
+        "btn_border_color": "#000000",
+        "btn_hover_bg_color": "#ffffff",
+        "privacy_text": "<p>BY JOINING, YOU AGREE TO OUR TERMS & PRIVACY POLICY</p>"
+      }
+    },
+    "blocks_KWhgR3": {
+      "type": "_blocks",
+      "blocks": {
+        "instafeed_app_block_rWqPpt": {
+          "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
+          "settings": {
+            "title": "Follow us on Instagram",
+            "title_color": "",
+            "title_size_v2": 0,
+            "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
+            "background_color": "",
+            "feed_id": "insta-title",
+            "html_area": ""
+          }
+        }
+      },
+      "block_order": [
+        "instafeed_app_block_rWqPpt"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "our_story",
+    "why_choose_us",
+    "newsletter_wnFR9R",
+    "blocks_KWhgR3"
+  ]
+}
