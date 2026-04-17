@@ -12,14 +12,31 @@
   }
 
   .faq-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px 80px;
-    align-items: flex-start;
+    display: block;
+  }
+
+  .faq-desktop-view {
+    display: none;
+  }
+
+  .faq-mobile-view {
+    display: block;
   }
 
   .faq-category-box {
-    /* Individual margin managed via block settings */
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .faq-desktop-view {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px 80px;
+    }
+    .faq-mobile-view {
+      display: none;
+    }
   }
 
   .faq-category-title {
@@ -138,10 +155,6 @@
   }
 
   @media screen and (max-width: 749px) {
-    .faq-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
     .faq-container-{{ section.id }} {
       padding: 0 var(--page-margin);
     }
@@ -152,72 +165,101 @@
   <div class="faq-container-{{ section.id }}">
     <div class="faq-grid">
       
-      {%- comment -%} Left Column {%- endcomment -%}
-      <div class="faq-column-left">
-        {%- assign current_cat_index = 0 -%}
+      {%- comment -%} Mobile View: Sequential Order {%- endcomment -%}
+      <div class="faq-mobile-view">
         {%- assign inside_box = false -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'category' -%}
-            {%- assign current_cat_index = current_cat_index | plus: 1 -%}
-          {%- endif -%}
-          
-          {%- assign column_side = current_cat_index | modulo: 2 -%}
-          {%- if column_side == 1 -%}
-             {%- if block.type == 'category' -%}
-                {%- if inside_box -%}</div>{%- endif -%}
-                <div class="faq-category-box" style="margin-bottom: {{ block.settings.margin_bottom | default: 50 }}px;" {{ block.shopify_attributes }}>
-                <h3 class="faq-category-title">{{ block.settings.title }}</h3>
-                {%- assign inside_box = true -%}
-             {%- elsif block.type == 'faq_item' -%}
-                <div class="faq-item" {{ block.shopify_attributes }}>
-                  <button class="faq-question-btn" aria-expanded="false">
-                    <span>{{ block.settings.question }}</span>
-                    <span class="faq-icon"></span>
-                  </button>
-                  <div class="faq-answer-wrap">
-                    <div class="faq-answer">
-                      {{ block.settings.answer }}
-                    </div>
-                  </div>
+            {%- if inside_box -%}</div>{%- endif -%}
+            <div class="faq-category-box" style="margin-bottom: {{ block.settings.margin_bottom | default: 50 }}px;" {{ block.shopify_attributes }}>
+              <h3 class="faq-category-title">{{ block.settings.title }}</h3>
+              {%- assign inside_box = true -%}
+          {%- elsif block.type == 'faq_item' -%}
+            <div class="faq-item" {{ block.shopify_attributes }}>
+              <button class="faq-question-btn" aria-expanded="false">
+                <span>{{ block.settings.question }}</span>
+                <span class="faq-icon"></span>
+              </button>
+              <div class="faq-answer-wrap">
+                <div class="faq-answer">
+                  {{ block.settings.answer }}
                 </div>
-             {%- endif -%}
+              </div>
+            </div>
           {%- endif -%}
         {%- endfor -%}
         {%- if inside_box -%}</div>{%- endif -%}
       </div>
 
-      {%- comment -%} Right Column {%- endcomment -%}
-      <div class="faq-column-right">
-        {%- assign current_cat_index = 0 -%}
-        {%- assign inside_box = false -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'category' -%}
-            {%- assign current_cat_index = current_cat_index | plus: 1 -%}
-          {%- endif -%}
-          
-          {%- assign column_side = current_cat_index | modulo: 2 -%}
-          {%- if column_side == 0 and current_cat_index > 0 -%}
-             {%- if block.type == 'category' -%}
-                {%- if inside_box -%}</div>{%- endif -%}
-                <div class="faq-category-box" style="margin-bottom: {{ block.settings.margin_bottom | default: 50 }}px;" {{ block.shopify_attributes }}>
-                <h3 class="faq-category-title">{{ block.settings.title }}</h3>
-                {%- assign inside_box = true -%}
-             {%- elsif block.type == 'faq_item' -%}
-                <div class="faq-item" {{ block.shopify_attributes }}>
-                  <button class="faq-question-btn" aria-expanded="false">
-                    <span>{{ block.settings.question }}</span>
-                    <span class="faq-icon"></span>
-                  </button>
-                  <div class="faq-answer-wrap">
-                    <div class="faq-answer">
-                      {{ block.settings.answer }}
+      {%- comment -%} Desktop View: Custom Split Control {%- endcomment -%}
+      <div class="faq-desktop-view">
+        
+        {%- comment -%} Left Column {%- endcomment -%}
+        <div class="faq-desktop-column">
+          {%- assign current_cat_index = 0 -%}
+          {%- assign inside_box = false -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              {%- assign current_cat_index = current_cat_index | plus: 1 -%}
+            {%- endif -%}
+            
+            {%- if current_cat_index <= section.settings.col_1_cat_count -%}
+               {%- if block.type == 'category' -%}
+                  {%- if inside_box -%}</div>{%- endif -%}
+                  <div class="faq-category-box" style="margin-bottom: {{ block.settings.margin_bottom | default: 50 }}px;" {{ block.shopify_attributes }}>
+                  <h3 class="faq-category-title">{{ block.settings.title }}</h3>
+                  {%- assign inside_box = true -%}
+               {%- elsif block.type == 'faq_item' -%}
+                  <div class="faq-item" {{ block.shopify_attributes }}>
+                    <button class="faq-question-btn" aria-expanded="false">
+                      <span>{{ block.settings.question }}</span>
+                      <span class="faq-icon"></span>
+                    </button>
+                    <div class="faq-answer-wrap">
+                      <div class="faq-answer">
+                        {{ block.settings.answer }}
+                      </div>
                     </div>
                   </div>
-                </div>
-             {%- endif -%}
-          {%- endif -%}
-        {%- endfor -%}
-        {%- if inside_box -%}</div>{%- endif -%}
+               {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if inside_box -%}</div>{%- endif -%}
+        </div>
+
+        {%- comment -%} Right Column {%- endcomment -%}
+        <div class="faq-desktop-column">
+          {%- assign current_cat_index = 0 -%}
+          {%- assign inside_box = false -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'category' -%}
+              {%- assign current_cat_index = current_cat_index | plus: 1 -%}
+            {%- endif -%}
+            
+            {%- if current_cat_index > section.settings.col_1_cat_count -%}
+               {%- if block.type == 'category' -%}
+                  {%- if inside_box -%}</div>{%- endif -%}
+                  <div class="faq-category-box" style="margin-bottom: {{ block.settings.margin_bottom | default: 50 }}px;" {{ block.shopify_attributes }}>
+                  <h3 class="faq-category-title">{{ block.settings.title }}</h3>
+                  {%- assign inside_box = true -%}
+               {%- elsif block.type == 'faq_item' -%}
+                  <div class="faq-item" {{ block.shopify_attributes }}>
+                    <button class="faq-question-btn" aria-expanded="false">
+                      <span>{{ block.settings.question }}</span>
+                      <span class="faq-icon"></span>
+                    </button>
+                    <div class="faq-answer-wrap">
+                      <div class="faq-answer">
+                        {{ block.settings.answer }}
+                      </div>
+                    </div>
+                  </div>
+               {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if inside_box -%}</div>{%- endif -%}
+        </div>
+
       </div>
 
     </div>
@@ -262,6 +304,15 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "col_1_cat_count",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Categories in First Column (Desktop)",
+      "default": 3
     },
     {
       "type": "header",

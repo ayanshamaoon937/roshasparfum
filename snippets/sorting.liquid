@@ -75,7 +75,6 @@
     {% endif %}
     {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}
       open
-      {% if suffix == 'mobile' or suffix == 'overflow' %}open-by-default-on-mobile{% endif %}
       {% if filter_style == 'vertical' and suffix == 'desktop' %}open-by-default-on-desktop{% endif %}
     {% endif %}
   >
@@ -335,10 +334,7 @@
   }
 
   .facets-mobile-wrapper .sorting-filter .facets__status {
-    display: inline-flex;
-    margin-inline-start: 4px;
-    font-size: 13px;
-    font-weight: 500;
+    display: none;
   }
 
   .facets-mobile-wrapper:has(> :nth-child(2)) .sorting-filter .sorting-filter__options {

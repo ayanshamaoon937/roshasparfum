@@ -496,7 +496,11 @@
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     visibility: hidden;
     border-bottom: 1px solid #f0f0f0;
+    @media screen and (max-width: 989px) {
+      padding: 15px 16px;
+    }
   }
+
 
   .search-bar-overlay.is-active {
     transform: translateY(0);
@@ -510,7 +514,10 @@
     display: flex;
     align-items: center;
     position: relative;
-    padding: 0 var(--page-margin);
+    padding: 0;
+    @media screen and (max-width: 989px) {
+      padding: 0;
+    }
   }
 
   .search-bar-input {
@@ -523,6 +530,10 @@
     color: #000;
     background: transparent;
     outline: none;
+    border-radius:0;
+    @media screen and (max-width: 989px) {
+      font-size: 20px;
+    }
   }
 
   .search-bar-input::placeholder {
@@ -541,8 +552,8 @@
     border-bottom: 1px solid #000;
     position: absolute;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0%;
+    transform: translateY(0%);
     background: none;
     border: none;
     color: #000;
@@ -552,6 +563,46 @@
   .search-close-btn svg {
     width: 16px;
     height: 16px;
+  }
+
+  .search-arrow-btn {
+    display: none;
+    @media screen and (max-width: 989px) {
+      display: block;
+      position: absolute;
+      right: 0;
+      bottom: 15px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+  }
+
+  .search-arrow-btn svg {
+    width: 24px;
+    height: 24px;
+    color: #000;
+  }
+
+  @media screen and (max-width: 989px) {
+    .search-close-btn {
+      position: absolute;
+      top: -45px;
+      right: 0;
+      border: none;
+      padding: 0;
+    }
+    .search-close-btn span {
+      display: none;
+    }
+    .search-close-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    .search-bar-overlay {
+      padding-top: 60px !important;
+    }
   }
 
   /* Mobile Responsive */
@@ -802,7 +853,7 @@
     top: 0;
     right: -100%;
     width: 450px;
-    max-width: 90%;
+    max-width: 95%;
     height: 100%;
     background: #fff;
     z-index: 2001;
@@ -983,7 +1034,7 @@
   }
 
   .cart-drawer-item-subtotal {
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 500;
     color: #000;
   }
@@ -1149,6 +1200,9 @@
   <div class="search-bar-overlay">
     <form action="/search" method="get" class="search-bar-form">
       <input type="text" name="q" placeholder="Type something" class="search-bar-input" autocomplete="off">
+      <button type="submit" class="search-arrow-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
       <button type="button" class="search-close-btn">
         <span>Close</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
