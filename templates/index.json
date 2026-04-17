@@ -50,6 +50,8 @@
         "heading_font_size_tablet": 60,
         "subtitle_margin_bottom": 0,
         "heading_font_size_mobile": 40,
+        "heading_margin_top": 20,
+        "heading_margin_bottom": 30,
         "description_font_size_desktop": 18,
         "description_font_size_tablet": 16,
         "description_font_size_mobile": 14,
@@ -653,63 +655,352 @@
     "brands_slider_nYqytF": {
       "type": "brands-slider",
       "blocks": {
-        "brand_6mBDPK": {
+        "brand_NNw8QH": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/dior-perfumes-logo.png",
-            "location": "",
-            "brand_name": "",
-            "brand_desc": "",
-            "link": ""
+            "logo": "shopify://shop_images/boss.png",
+            "brand_name": "boss",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
           }
         },
-        "brand_97DLyp": {
+        "brand_y3Hnjb": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/burberry-perfumes-logo-in-black-and-white.png",
-            "location": "",
-            "brand_name": "",
-            "brand_desc": "",
-            "link": ""
+            "brand_name": "Chanel",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
           }
         },
-        "brand_DeKTdk": {
+        "brand_jHnG8L": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/boss-perfumes-logo.png",
-            "location": "",
-            "brand_name": "",
-            "brand_desc": "",
-            "link": ""
+            "brand_name": "Chanel",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
           }
         },
-        "brand_bjGC3q": {
+        "brand_mb33rp": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/gucci-perfumes-logo.png",
-            "location": "",
-            "brand_name": "",
-            "brand_desc": "",
-            "link": ""
+            "logo": "shopify://shop_images/chanel.png",
+            "brand_name": "Chanel",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
           }
         },
-        "brand_rdaBw4": {
+        "brand_MJFNGB": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/prada-perfumes-logo.png",
-            "location": "",
-            "brand_name": "",
-            "brand_desc": "",
-            "link": ""
+            "logo": "shopify://shop_images/chloe.png",
+            "brand_name": "Chloé",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_8Rjwte": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/creed.png",
+            "brand_name": "Creed",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_i9V6Ye": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/davidoff.png",
+            "brand_name": "DAVIDOFF",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_URyLHJ": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "De Marly",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_e9xLig": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/dior.png",
+            "brand_name": "Dior",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_B8GB63": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/dolce_gabbana.png",
+            "brand_name": "Dolce&Gabbana",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_hnJA6g": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/dunhill.png",
+            "brand_name": "Dunhill",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_E837D3": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Emporio Armani",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_ggA4iB": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/emporio-armani.png",
+            "brand_name": "Giorgio Armani",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_DRbQmG": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Chanel",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_fAWAmc": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/givenchy.png",
+            "brand_name": "Givenchy",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_d3mFqe": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/gucci.png",
+            "brand_name": "Gucci",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_q4XGEy": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/hermes.png",
+            "brand_name": "Hermès",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_Y7dHrq": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/jean-paul-gaultier.png",
+            "brand_name": "Jean Paul Gaultier",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_krergc": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/kayali.png",
+            "brand_name": "KAYALI",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_wfdiJN": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/lancome.png",
+            "brand_name": "Lancôme",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_y9nz7Q": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/laverne.png",
+            "brand_name": "Laverne",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_jBbhtc": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Marc Jacobs",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_xRL7Dd": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/montblanc.png",
+            "brand_name": "Montblanc",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_FU6V8b": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Prada",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_xnpiq4": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/rabanne.png",
+            "brand_name": "Rabanne",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_wihY69": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/roshas.png",
+            "brand_name": "Roshas",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_rVCaE4": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/tom-ford.png",
+            "brand_name": "Tom Ford",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_XkFQi8": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Valentino",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_rcrrDm": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/versace.png",
+            "brand_name": "Versace",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_NpWHAV": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/victoria_s-secret.png",
+            "brand_name": "Victoria's Secret",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_AyHtqH": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/victoria_s-secret.png",
+            "brand_name": "Viktor & Rolf",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_UYMNPd": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/yes-saint-laurent.png",
+            "brand_name": "Yves Saint Laurent",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
           }
         }
       },
       "block_order": [
-        "brand_6mBDPK",
-        "brand_97DLyp",
-        "brand_DeKTdk",
-        "brand_bjGC3q",
-        "brand_rdaBw4"
+        "brand_NNw8QH",
+        "brand_y3Hnjb",
+        "brand_jHnG8L",
+        "brand_mb33rp",
+        "brand_MJFNGB",
+        "brand_8Rjwte",
+        "brand_i9V6Ye",
+        "brand_URyLHJ",
+        "brand_e9xLig",
+        "brand_B8GB63",
+        "brand_hnJA6g",
+        "brand_E837D3",
+        "brand_ggA4iB",
+        "brand_DRbQmG",
+        "brand_fAWAmc",
+        "brand_d3mFqe",
+        "brand_q4XGEy",
+        "brand_Y7dHrq",
+        "brand_krergc",
+        "brand_wfdiJN",
+        "brand_y9nz7Q",
+        "brand_jBbhtc",
+        "brand_xRL7Dd",
+        "brand_FU6V8b",
+        "brand_xnpiq4",
+        "brand_wihY69",
+        "brand_rVCaE4",
+        "brand_XkFQi8",
+        "brand_rcrrDm",
+        "brand_NpWHAV",
+        "brand_AyHtqH",
+        "brand_UYMNPd"
       ],
       "name": "Brands Slider",
       "settings": {
@@ -732,18 +1023,7 @@
         "desc_margin_top": 0,
         "logo_max_width": 120,
         "logo_margin_bottom": 0,
-        "border_color": "#f0f0f0",
-        "hover_border_color": "#000000",
-        "hover_content_color": "#000000",
-        "loc_size": 10,
-        "loc_weight": "600",
-        "loc_color": "#000000",
-        "name_size": 24,
-        "name_weight": "500",
-        "name_color": "#1a1a1a",
-        "desc_size": 9,
-        "desc_weight": "400",
-        "desc_color": "#999999"
+        "border_color": "#f0f0f0"
       }
     },
     "features_marquee_custom": {

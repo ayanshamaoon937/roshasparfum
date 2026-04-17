@@ -188,7 +188,8 @@
     height: 20px;
   }
 
-  .cart-count-badge {
+  .cart-count-badge,
+  .wishlist-count-badge {
     position: absolute;
     top: -8px;
     right: -10px;
@@ -202,6 +203,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .wishlist-count-badge.hidden {
+    display: none;
   }
 
   /* Mega Menu Container */
@@ -545,8 +550,7 @@
       flex: 0 0 auto;
       gap: 15px;
     }
-    .header-icons a[href="/account"],
-    .header-icons a[href="/apps/wishlist"] {
+    .header-icons a[href="/account"] {
       display: none;
     }
     .logo-link {
@@ -1288,10 +1292,11 @@
           <path d="M12.4625 11.6016L8.40469 7.54375C9.03438 6.72969 9.375 5.73438 9.375 4.6875C9.375 3.43438 8.88594 2.25937 8.00156 1.37344C7.11719 0.4875 5.93906 0 4.6875 0C3.43594 0 2.25781 0.489062 1.37344 1.37344C0.4875 2.25781 0 3.43438 0 4.6875C0 5.93906 0.489062 7.11719 1.37344 8.00156C2.25781 8.8875 3.43438 9.375 4.6875 9.375C5.73438 9.375 6.72813 9.03438 7.54219 8.40625L11.6 12.4625C11.6119 12.4744 11.626 12.4838 11.6416 12.4903C11.6571 12.4967 11.6738 12.5001 11.6906 12.5001C11.7075 12.5001 11.7241 12.4967 11.7397 12.4903C11.7552 12.4838 11.7694 12.4744 11.7812 12.4625L12.4625 11.7828C12.4744 11.7709 12.4838 11.7568 12.4903 11.7412C12.4967 11.7257 12.5001 11.709 12.5001 11.6922C12.5001 11.6754 12.4967 11.6587 12.4903 11.6431C12.4838 11.6276 12.4744 11.6135 12.4625 11.6016ZM7.1625 7.1625C6.5 7.82344 5.62187 8.1875 4.6875 8.1875C3.75313 8.1875 2.875 7.82344 2.2125 7.1625C1.55156 6.5 1.1875 5.62187 1.1875 4.6875C1.1875 3.75313 1.55156 2.87344 2.2125 2.2125C2.875 1.55156 3.75313 1.1875 4.6875 1.1875C5.62187 1.1875 6.50156 1.55 7.1625 2.2125C7.82344 2.875 8.1875 3.75313 8.1875 4.6875C8.1875 5.62187 7.82344 6.50156 7.1625 7.1625Z" fill="currentColor"/>
         </svg>
       </button>
-      <a href="/apps/wishlist" class="header-icon-link">
+      <a href="{{ section.settings.wishlist_link | default: '/apps/wishlist' }}" class="header-icon-link">
         <svg viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M14.75 0.75C11.55 0.75 9.75 3.417 9.75 4.75C9.75 3.417 7.95 0.75 4.75 0.75C1.55 0.75 0.75 3.417 0.75 4.75C0.75 11.75 9.75 16.75 9.75 16.75C9.75 16.75 18.75 11.75 18.75 4.75C18.75 3.417 17.95 0.75 14.75 0.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+        <span class="wishlist-count-badge hidden">0</span>
       </a>
       <a href="/account" class="header-icon-link">
         <svg viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1416,6 +1421,29 @@
 </div>
 
 <script>
+  // Wishlist Count Logic
+  function updateWishlistCount() {
+    const badge = document.querySelector('.wishlist-count-badge');
+    if (!badge) return;
+    
+    try {
+      const items = JSON.parse(localStorage.getItem('roshas_wishlist')) || [];
+      const count = items.length;
+      badge.textContent = count;
+      
+      if (count > 0) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    } catch(e) {
+      badge.classList.add('hidden');
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updateWishlistCount);
+  document.addEventListener('wishlist:updated', updateWishlistCount);
+
   function updateHeaderHeight() {
     const header = document.querySelector('.custom-header');
     const announcement = document.querySelector('.header-announcements') || document.querySelector('[class*="announcement-bar-"]');
@@ -1742,6 +1770,11 @@
       "id": "menu",
       "label": "Main Menu",
       "default": "main-menu"
+    },
+    {
+      "type": "url",
+      "id": "wishlist_link",
+      "label": "Wishlist Link"
     },
     {
       "type": "header",
