@@ -431,6 +431,7 @@ p:empty {
   }
 }
 
+
 /* Some section content break out to full width of the page */
 .section>.force-full-width {
   grid-column: 1 / -1;

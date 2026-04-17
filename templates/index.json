@@ -361,7 +361,7 @@
         "max_products": 16,
         "columns": 4,
         "columns_tablet": 2,
-        "columns_mobile": 1,
+        "columns_mobile": 2,
         "columns_gap": 24,
         "rows_gap": 24,
         "description_margin_top": 0,
@@ -883,7 +883,7 @@
       "settings": {
         "columns_desktop": 4,
         "columns_tablet": 2,
-        "columns_mobile": 1,
+        "columns_mobile": 2,
         "autoplay": true,
         "autoplay_speed": 3000,
         "gap_desktop": 24,

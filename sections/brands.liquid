@@ -18,7 +18,13 @@
   }
 
   .brand-group {
-    /* Margin managed via individual block settings */
+    margin-bottom: var(--group-margin-mobile, 20px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .brand-group {
+      margin-bottom: var(--group-margin, 60px);
+    }
   }
 
   .alphabet-header {
@@ -54,6 +60,9 @@
     text-align: center;
     box-sizing: border-box;
     opacity: 1;
+    @media (max-width: 768px) {
+      padding:10px;
+    }
   }
 
   .brand-logo-wrap {
@@ -180,7 +189,7 @@
       grid-template-columns: repeat({{ section.settings.columns_tablet | default: 2 }}, 1fr);
     }
     .brand-grid-wrapper {
-      padding: 0 20px;
+      padding: 0 16px;
     }
     .alphabet-header {
       font-size: calc({{ section.settings.alphabet_header_font_size }}px * 0.75);
@@ -229,7 +238,7 @@
           
           <div class="brand-group" 
                {{ block.shopify_attributes }}
-               style="margin-bottom: {{ block.settings.margin_bottom | default: section.settings.alphabet_group_margin_bottom }}px;"
+               style="--group-margin: {{ block.settings.margin_bottom | default: section.settings.alphabet_group_margin_bottom }}px; --group-margin-mobile: {{ block.settings.margin_bottom_mobile | default: section.settings.alphabet_group_margin_bottom_mobile | default: 20 }}px;"
           >
             <h2 class="alphabet-header">{{ block.settings.title }}</h2>
             <div class="brand-grid">
@@ -355,7 +364,7 @@
       "max": 4,
       "step": 1,
       "label": "Columns on Tablet",
-      "default": 2
+      "default": 3
     },
     {
       "type": "range",
@@ -364,7 +373,7 @@
       "max": 3,
       "step": 1,
       "label": "Columns on Mobile",
-      "default": 1
+      "default": 2
     },
     {
       "type": "range",
@@ -421,6 +430,16 @@
       "unit": "px",
       "label": "Group Margin Bottom",
       "default": 60
+    },
+    {
+      "type": "range",
+      "id": "alphabet_group_margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Group Margin Bottom (Mobile)",
+      "default": 20
     },
     {
       "type": "header",
@@ -513,6 +532,16 @@
           "unit": "px",
           "label": "Group Margin Bottom",
           "default": 60
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "px",
+          "label": "Group Margin Bottom (Mobile)",
+          "default": 20
         }
       ]
     },

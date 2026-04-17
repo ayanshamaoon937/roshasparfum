@@ -89,8 +89,19 @@
   }
 
   .logo-img {
-    max-height: 50px;
+    max-height: {{ section.settings.logo_max_height_mobile | default: 80 }}px;
+    max-width: {{ section.settings.logo_max_width_mobile | default: 80 }}px;
+    margin-left: {{ section.settings.logo_margin_left_mobile | default: 0 }}px;
     width: auto;
+  }
+
+  @media screen and (min-width: 991px) {
+    .logo-img {
+      max-height: {{ section.settings.logo_max_height_desktop | default: 50 }}px;
+      max-width: {{ section.settings.logo_max_width_desktop | default: 200 }}px;
+      margin-left: {{ section.settings.logo_margin_left_desktop | default: 0 }}px;
+      margin-right: 0;
+    }
   }
 
   /* Navigation */
@@ -149,6 +160,14 @@
   }
 
   .nav-link:hover {
+    color: #000000;
+  }
+
+  .nav-link.is-active::after {
+    width: 100%;
+  }
+
+  .nav-link.is-active {
     color: #000000;
   }
 
@@ -561,7 +580,7 @@
       letter-spacing: 2px;
     }
     .header-container {
-      padding: 0 20px;
+      padding: 0 16px;
     }
     .header-icon-link svg {
       width: 20px;
@@ -582,8 +601,21 @@
     transition: left 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     display: flex;
     flex-direction: column;
-    padding: 30px 20px;
+    padding: 20px 20px;
     box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+  }
+
+  .mobile-menu-drawer nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 0px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .mobile-menu-drawer nav::-webkit-scrollbar {
+    display: none;
   }
 
   .mobile-menu-drawer.active {
@@ -594,13 +626,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
+  }
+  .mobile-drawer-header .logo-link img{
+    margin-left:0
   }
 
   .mobile-drawer-close {
     background: none;
     border: none;
-    padding: 5px;
+    padding: 0px;
     cursor: pointer;
   }
 
@@ -610,7 +645,6 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 25px;
   }
 
   .mobile-nav-link {
@@ -640,6 +674,110 @@
   .mobile-menu-backdrop.active {
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Mobile Accordion Styles */
+  .mobile-nav-item {
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .mobile-nav-link-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .mobile-nav-link {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #000;
+    text-decoration: none;
+    flex: 1;
+  }
+
+  .mobile-toggle-btn {
+    background: none;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #999;
+    transition: transform 0.3s ease;
+  }
+
+  .mobile-toggle-btn.active {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav-dropdown {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    overflow: hidden;
+    padding-left: 0px;
+    opacity: 0;
+  }
+
+  .mobile-nav-dropdown.active {
+    grid-template-rows: 1fr;
+    padding-bottom: 20px;
+    opacity: 1;
+  }
+
+  .mobile-nav-dropdown-inner {
+    min-height: 0;
+  }
+
+  .mobile-sub-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin: 20px 0 10px;
+    color: #000;
+  }
+
+  .mobile-sub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-sub-list li {
+    margin-bottom: 12px;
+  }
+
+  .mobile-sub-link {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    display: block;
+  }
+
+  .mobile-mega-featured {
+    margin-top: 25px;
+    padding: 20px;
+    background: #fcfcfc;
+    border: 1px solid #f2f2f2;
+    text-align: center;
+  }
+
+  .mobile-mega-featured-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    margin: 0 auto 15px;
   }
   /* Cart Drawer Styles */
   .cart-drawer-overlay {
@@ -1053,7 +1191,7 @@
           -%}
 
           <li class="nav-item">
-            <a href="{{ link.url }}" class="nav-link">
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} is-active{% endif %}">
               {{ link.title }}
               {% if has_mega %}
                 <span class="chevron">
@@ -1321,26 +1459,218 @@
 <div class="mobile-menu-backdrop"></div>
 <div class="mobile-menu-drawer">
   <div class="mobile-drawer-header">
-    <span class="logo-link">{{ logo_text }}</span>
+    <a href="/" class="logo-link">
+      {% if logo_image %}
+        <img src="{{ logo_image | img_url: '400x' }}" alt="{{ logo_text }}" class="logo-img">
+      {% else %}
+        {{ logo_text }}
+      {% endif %}
+    </a>
     <button class="mobile-drawer-close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
     </button>
   </div>
-  <div class="mobile-drawer-search">
-    <form action="/search" method="get" class="mobile-search-form">
-      <input type="text" name="q" placeholder="SEARCH FOR PRODUCTS..." class="mobile-search-input">
-      <button type="submit" class="mobile-search-submit">
-        <svg viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
-          <path d="M12.4625 11.6016L8.40469 7.54375C9.03438 6.72969 9.375 5.73438 9.375 4.6875C9.375 3.43438 8.88594 2.25937 8.00156 1.37344C7.11719 0.4875 5.93906 0 4.6875 0C3.43594 0 2.25781 0.489062 1.37344 1.37344C0.4875 2.25781 0 3.43438 0 4.6875C0 5.93906 0.489062 7.11719 1.37344 8.00156C2.25781 8.8875 3.43438 9.375 4.6875 9.375C5.73438 9.375 6.72813 9.03438 7.54219 8.40625L11.6 12.4625C11.6119 12.4744 11.626 12.4838 11.6416 12.4903C11.6571 12.4967 11.6738 12.5001 11.6906 12.5001C11.7075 12.5001 11.7241 12.4967 11.7397 12.4903C11.7552 12.4838 11.7694 12.4744 11.7812 12.4625L12.4625 11.7828C12.4744 11.7709 12.4838 11.7568 12.4903 11.7412C12.4967 11.7257 12.5001 11.709 12.5001 11.6922C12.5001 11.6754 12.4967 11.6587 12.4903 11.6431C12.4838 11.6276 12.4744 11.6135 12.4625 11.6016ZM7.1625 7.1625C6.5 7.82344 5.62187 8.1875 4.6875 8.1875C3.75313 8.1875 2.875 7.82344 2.2125 7.1625C1.55156 6.5 1.1875 5.62187 1.1875 4.6875C1.1875 3.75313 1.55156 2.87344 2.2125 2.2125C2.875 1.55156 3.75313 1.1875 4.6875 1.1875C5.62187 1.1875 6.50156 1.55 7.1625 2.2125C7.82344 2.875 8.1875 3.75313 8.1875 4.6875C8.1875 5.62187 7.82344 6.50156 7.1625 7.1625Z" fill="currentColor"/>
-        </svg>
-      </button>
-    </form>
-  </div>
   <nav>
     <ul class="mobile-nav-list">
       {% for link in main_menu.links %}
-        <li>
-          <a href="{{ link.url }}" class="mobile-nav-link">{{ link.title }}</a>
+        {%- liquid
+          assign has_mega = false
+          assign mega_block = null
+          for block in section.blocks
+            assign trigger = block.settings.trigger_label | downcase | strip
+            assign link_title = link.title | downcase | strip
+            if trigger == link_title
+              assign has_mega = true
+              assign mega_block = block
+              break
+            endif
+          endfor
+        -%}
+
+        <li class="mobile-nav-item">
+          <div class="mobile-nav-header js-mobile-toggle">
+            <span class="mobile-nav-link">{{ link.title }}</span>
+            {% if has_mega %}
+              <button class="mobile-toggle-btn" aria-label="Toggle Submenu">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            {% else %}
+               <a href="{{ link.url }}" class="mobile-nav-link-overlay"></a>
+            {% endif %}
+          </div>
+
+          {% if has_mega %}
+            <div class="mobile-nav-dropdown js-mobile-dropdown">
+              <div class="mobile-nav-dropdown-inner">
+              <!-- Column 1 Heading -->
+              <h4 class="mobile-sub-heading">{{ mega_block.settings.col1_heading }}</h4>
+              <ul class="mobile-sub-list">
+                {% for block_item in section.blocks %}
+                  {%- liquid
+                    assign item_trigger = block_item.settings.trigger_label | downcase | strip
+                    assign current_link_title = link.title | downcase | strip
+                  -%}
+                  {% if item_trigger == current_link_title and block_item.settings.column == '1' %}
+                    {% if block_item.type == 'mega_item' or block_item.type == 'mega_brand_item' %}
+                      {% assign coll = block_item.settings.collection %}
+                      <li>
+                        <a href="{{ coll.url }}" class="mobile-sub-link">
+                          {{ block_item.settings.custom_title | default: coll.title }}
+                        </a>
+                      </li>
+                    {% elsif block_item.type == 'mega_manual_brand' %}
+                      {% assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />' %}
+                      {% for vendor_item in vendor_list_raw %}
+                        {% assign brands_by_comma = vendor_item | split: ',' %}
+                        {% for vendor_name_raw in brands_by_comma %}
+                          {% assign vendor_name = vendor_name_raw | strip_html | strip %}
+                          {% if vendor_name != blank %}
+                            <li>
+                              <a href="/collections/vendors?q={{ vendor_name | url_encode }}" class="mobile-sub-link">{{ vendor_name }}</a>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                    {% elsif block_item.type == 'mega_tag_item' %}
+                      {%- liquid
+                        assign tag = block_item.settings.tag_name
+                        assign coll_context = block_item.settings.collection
+                        assign tag_handle = tag | handleize
+                        if coll_context != blank
+                          assign item_url = coll_context.url | append: '/' | append: tag_handle
+                        else
+                          assign item_url = '/collections/all/' | append: tag_handle
+                        endif
+                      -%}
+                      <li>
+                        <a href="{{ item_url }}" class="mobile-sub-link">
+                          {{ block_item.settings.custom_title | default: tag }}
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+              <!-- Column 2 Heading -->
+              <h4 class="mobile-sub-heading">{{ mega_block.settings.col2_heading }}</h4>
+              <ul class="mobile-sub-list">
+                {% for block_item in section.blocks %}
+                  {%- liquid
+                    assign item_trigger = block_item.settings.trigger_label | downcase | strip
+                    assign current_link_title = link.title | downcase | strip
+                  -%}
+                  {% if item_trigger == current_link_title and block_item.settings.column == '2' %}
+                    {% if block_item.type == 'mega_item' or block_item.type == 'mega_brand_item' %}
+                      {% assign coll = block_item.settings.collection %}
+                      <li>
+                        <a href="{{ coll.url }}" class="mobile-sub-link">
+                          {{ block_item.settings.custom_title | default: coll.title }}
+                        </a>
+                      </li>
+                    {% elsif block_item.type == 'mega_manual_brand' %}
+                      {% assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />' %}
+                      {% for vendor_item in vendor_list_raw %}
+                        {% assign brands_by_comma = vendor_item | split: ',' %}
+                        {% for vendor_name_raw in brands_by_comma %}
+                          {% assign vendor_name = vendor_name_raw | strip_html | strip %}
+                          {% if vendor_name != blank %}
+                            <li>
+                              <a href="/collections/vendors?q={{ vendor_name | url_encode }}" class="mobile-sub-link">{{ vendor_name }}</a>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                    {% elsif block_item.type == 'mega_tag_item' %}
+                      {%- liquid
+                        assign tag = block_item.settings.tag_name
+                        assign coll_context = block_item.settings.collection
+                        assign tag_handle = tag | handleize
+                        if coll_context != blank
+                          assign item_url = coll_context.url | append: '/' | append: tag_handle
+                        else
+                          assign item_url = '/collections/all/' | append: tag_handle
+                        endif
+                      -%}
+                      <li>
+                        <a href="{{ item_url }}" class="mobile-sub-link">
+                          {{ block_item.settings.custom_title | default: tag }}
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+              <!-- Column 3 Heading -->
+               <h4 class="mobile-sub-heading">{{ mega_block.settings.col3_heading }}</h4>
+              <ul class="mobile-sub-list">
+                {% for block_item in section.blocks %}
+                  {%- liquid
+                    assign item_trigger = block_item.settings.trigger_label | downcase | strip
+                    assign current_link_title = link.title | downcase | strip
+                  -%}
+                  {% if item_trigger == current_link_title and block_item.settings.column == '3' %}
+                    {% if block_item.type == 'mega_item' or block_item.type == 'mega_brand_item' %}
+                      {% assign coll = block_item.settings.collection %}
+                      <li>
+                        <a href="{{ coll.url }}" class="mobile-sub-link">
+                          {{ block_item.settings.custom_title | default: coll.title }}
+                        </a>
+                      </li>
+                    {% elsif block_item.type == 'mega_manual_brand' %}
+                      {% assign vendor_list_raw = block_item.settings.vendor_names | newline_to_br | split: '<br />' %}
+                      {% for vendor_item in vendor_list_raw %}
+                        {% assign brands_by_comma = vendor_item | split: ',' %}
+                        {% for vendor_name_raw in brands_by_comma %}
+                          {% assign vendor_name = vendor_name_raw | strip_html | strip %}
+                          {% if vendor_name != blank %}
+                            <li>
+                              <a href="/collections/vendors?q={{ vendor_name | url_encode }}" class="mobile-sub-link">{{ vendor_name }}</a>
+                            </li>
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                    {% elsif block_item.type == 'mega_tag_item' %}
+                      {%- liquid
+                        assign tag = block_item.settings.tag_name
+                        assign coll_context = block_item.settings.collection
+                        assign tag_handle = tag | handleize
+                        if coll_context != blank
+                          assign item_url = coll_context.url | append: '/' | append: tag_handle
+                        else
+                          assign item_url = '/collections/all/' | append: tag_handle
+                        endif
+                      -%}
+                      <li>
+                        <a href="{{ item_url }}" class="mobile-sub-link">
+                          {{ block_item.settings.custom_title | default: tag }}
+                        </a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </ul>
+
+              <!-- Featured Item -->
+              {% assign featured_product = mega_block.settings.featured_product %}
+              {% if featured_product != blank or mega_block.settings.featured_image != blank %}
+                <div class="mobile-mega-featured">
+                  <img 
+                    src="{% if mega_block.settings.featured_image != blank %}{{ mega_block.settings.featured_image | img_url: '300x300', crop: 'center' }}{% else %}{{ featured_product.featured_image | img_url: '300x300', crop: 'center' }}{% endif %}" 
+                    class="mobile-mega-featured-img" 
+                    alt="{{ mega_block.settings.featured_title | default: featured_product.title }}"
+                  >
+                  <div style="font-size: 11px; color: #999; letter-spacing: 1px; text-transform: uppercase;">{{ mega_block.settings.featured_subtitle }}</div>
+                  <h5 style="font-family: 'Playfair Display', serif; font-size: 18px; margin: 5px 0 15px;">{{ mega_block.settings.featured_title | default: featured_product.title }}</h5>
+                  <a href="{{ mega_block.settings.featured_link | default: featured_product.url }}" class="mobile-sub-link" style="text-decoration: underline; font-weight: 600;">
+                    {{ mega_block.settings.featured_button_text | default: 'SHOP NOW' }}
+                  </a>
+                </div>
+              {% endif %}
+              </div>
+            </div>
+          {% endif %}
         </li>
       {% endfor %}
     </ul>
@@ -1510,6 +1840,17 @@
     if (mobileTrigger) mobileTrigger.addEventListener('click', toggleMobileMenu);
     if (mobileClose) mobileClose.addEventListener('click', toggleMobileMenu);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', toggleMobileMenu);
+
+    // Mobile Accordion Logic
+    document.querySelectorAll('.js-mobile-toggle').forEach(header => {
+      header.addEventListener('click', () => {
+        const btn = header.querySelector('.mobile-toggle-btn');
+        if(!btn) return;
+        const dropdown = header.closest('.mobile-nav-item').querySelector('.js-mobile-dropdown');
+        btn.classList.toggle('active');
+        dropdown.classList.toggle('active');
+      });
+    });
     // Sticky scroll header — more robust implementation
     const stickyHeader = document.querySelector('.custom-header');
     if (stickyHeader) {
@@ -1771,6 +2112,70 @@
 {
   "name": "Custom Header",
   "settings": [
+    {
+      "type": "header",
+      "content": "Logo Branding"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height_desktop",
+      "min": 20,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Max Height (Desktop)",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width_desktop",
+      "min": 50,
+      "max": 400,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Max Width (Desktop)",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "logo_margin_left_desktop",
+      "min": -50,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Margin Left (Desktop)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height_mobile",
+      "min": 20,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Max Height (Mobile)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width_mobile",
+      "min": 20,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Max Width (Mobile)",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "logo_margin_left_mobile",
+      "min": -50,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo Margin Left (Mobile)",
+      "default": 0
+    },
     {
       "type": "image_picker",
       "id": "logo_image",

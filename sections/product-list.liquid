@@ -168,6 +168,12 @@
       background: var(--color-primary-button-background);
     }
 
+    @media (max-width: 768px) {
+      .trending-view-all {
+        padding: 12px 30px;
+      }
+    }
+
     .trending-view-all:hover {
       background-color: transparent;
       color: #1a1a1a !important;
@@ -177,10 +183,24 @@
     }
 
     .product-list-{{ section.id }} {
-      padding-top: {{ section.settings.padding-block-start }}px !important;
-      padding-bottom: {{ section.settings.padding-block-end }}px !important;
+      padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px !important;
+      padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px !important;
       background-color: {{ section.settings.background_color }} !important;
       color: {{ section.settings.text_color }} !important;
+    }
+
+    @media (min-width: 769px) {
+      .product-list-{{ section.id }} {
+        padding-top: {{ section.settings.padding_top_tablet | default: 60 }}px !important;
+        padding-bottom: {{ section.settings.padding_bottom_tablet | default: 60 }}px !important;
+      }
+    }
+
+    @media (min-width: 1025px) {
+      .product-list-{{ section.id }} {
+        padding-top: {{ section.settings.padding-block-start | default: 80 }}px !important;
+        padding-bottom: {{ section.settings.padding-block-end | default: 80 }}px !important;
+      }
     }
     .product-list-{{ section.id }} .product-list-container {
       max-width: var(--page-width);
@@ -193,7 +213,7 @@
     }
     @media (max-width: 768px) {
       .product-list-{{ section.id }} .product-list-container {
-        padding: 0 20px;
+        padding: 0 16px;
       }
     }
     .product-list-{{ section.id }} .resource-list__slide {
@@ -784,6 +804,46 @@
       "step": 2,
       "unit": "px",
       "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "label": "Padding Top (Tablet)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "label": "Padding Bottom (Tablet)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 40
     }
   ],
   "presets": [

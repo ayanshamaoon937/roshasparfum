@@ -228,6 +228,12 @@
         "mega_manual_brand_6xra8F"
       ],
       "settings": {
+        "logo_max_height_desktop": 50,
+        "logo_max_width_desktop": 200,
+        "logo_margin_left_desktop": 0,
+        "logo_max_height_mobile": 80,
+        "logo_max_width_mobile": 80,
+        "logo_margin_left_mobile": 40,
         "logo_image": "shopify://shop_images/logo.png",
         "logo_text": "ROSHAS",
         "menu": "new-menu"

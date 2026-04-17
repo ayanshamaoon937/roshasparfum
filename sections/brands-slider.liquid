@@ -6,8 +6,23 @@
 
 {%- style -%}
   .brands-slider-{{ section.id }} {
-    padding: 80px 0;
+    padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px;
     background: {{ section.settings.bg_color | default: '#ffffff' }};
+  }
+
+  @media (min-width: 769px) {
+    .brands-slider-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_tablet | default: 60 }}px;
+      padding-bottom: {{ section.settings.padding_bottom_tablet | default: 60 }}px;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .brands-slider-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top | default: 80 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | default: 80 }}px;
+    }
   }
 
   .brands-container {
@@ -79,6 +94,8 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 5px;
+    justify-content: flex-end;
+    width: 100%;
   }
 
   /* Nav Buttons */
@@ -117,7 +134,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 60px 40px;
+    padding: 40px 20px;
     border: 1px solid {{ section.settings.border_color | default: '#f0f0f0' }};
     background: #fff;
     text-decoration: none !important;
@@ -126,6 +143,9 @@
     position: relative;
     text-align: center;
     box-sizing: border-box;
+    @media (max-width: 768px) {
+      padding:10px;
+    }
   }
 
   .brand-logo-wrap {
@@ -138,10 +158,16 @@
   }
 
   .brand-logo-wrap img {
-    max-width: {{ section.settings.logo_max_width | default: 120 }}px;
+    max-width: {{ section.settings.logo_max_width_mobile | default: 100 }}px;
     height: auto;
     object-fit: contain;
     transition: transform 0.4s ease;
+  }
+
+  @media (min-width: 769px) {
+    .brand-logo-wrap img {
+      max-width: {{ section.settings.logo_max_width | default: 120 }}px;
+    }
   }
 
   /* Hover Effects - Matched to brands.liquid */
@@ -167,7 +193,7 @@
   }
 
   @media (max-width: 768px) {
-    .brands-container { padding: 0 20px; }
+    .brands-container { padding: 0 16px; }
     .brands-title { font-size: 36px; }
     .brands-header {
       flex-direction: column;
@@ -175,7 +201,7 @@
       margin-bottom: 40px;
     }
     .brands-nav-wrap {
-       margin-top: 20px;
+       margin-top: 0px;
     }
   }
 {%- endstyle -%}
@@ -420,7 +446,7 @@
        "max": 3,
        "step": 1,
        "label": "Slides to show on Mobile",
-       "default": 1
+       "default": 2
     },
     {
       "type": "checkbox",
@@ -453,6 +479,70 @@
       "id": "bg_color",
       "label": "Background Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_tablet",
+      "label": "Padding Top (Tablet)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_tablet",
+      "label": "Padding Bottom (Tablet)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Padding Top (Mobile)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Padding Bottom (Mobile)",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "default": 40
     },
     {
       "type": "header",
@@ -556,6 +646,16 @@
       "unit": "px",
       "label": "Logo Max Width",
       "default": 120
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width_mobile",
+      "min": 50,
+      "max": 250,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Max Width (Mobile)",
+      "default": 100
     },
     {
       "type": "range",

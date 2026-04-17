@@ -145,6 +145,13 @@
       margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
     }
   }
+
+  .product-grid-container {
+    @media screen and (max-width: 749px) {
+      /* stylelint-disable-next-line declaration-no-important */
+      --padding-block-start: 20px !important;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
