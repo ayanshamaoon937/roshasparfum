@@ -546,7 +546,7 @@
         "brand_XeiJUA": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/carolina-herrera_0213de7b-2680-4202-97e0-865d4bf7cec6.png",
+            "logo": "shopify://shop_images/carolina-herrera_507282e9-bea9-4006-bfcd-c3955a4ea65a.png",
             "brand_name": "Carolina Herrera",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
@@ -603,15 +603,6 @@
             "custom_logo_width": 120
           }
         },
-        "brand_8R3N6x": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Chanel",
-            "custom_bg_color": "#ffffff",
-            "custom_text_color": "#1a1a1a",
-            "custom_logo_width": 120
-          }
-        },
         "brand_e9xLig": {
           "type": "brand",
           "settings": {
@@ -662,15 +653,6 @@
             "custom_logo_width": 120
           }
         },
-        "brand_DRbQmG": {
-          "type": "brand",
-          "settings": {
-            "brand_name": "Chanel",
-            "custom_bg_color": "#ffffff",
-            "custom_text_color": "#1a1a1a",
-            "custom_logo_width": 120
-          }
-        },
         "brand_fAWAmc": {
           "type": "brand",
           "settings": {
@@ -694,7 +676,7 @@
         "brand_q4XGEy": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/hermes.png",
+            "logo": "shopify://shop_images/hermes_bbf50c1a-d4f9-4ee2-b47b-296c0ad81b06.png",
             "brand_name": "Hermès",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
@@ -744,6 +726,7 @@
         "brand_jBbhtc": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/marc-jacobs.png",
             "brand_name": "Marc Jacobs",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
@@ -763,6 +746,17 @@
         "brand_FU6V8b": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/narcisco.png",
+            "brand_name": "Narcisco",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_y8ENRp": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/prada.png",
             "brand_name": "Prada",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
@@ -802,6 +796,7 @@
         "brand_XkFQi8": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/valentino.png",
             "brand_name": "Valentino",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
@@ -859,13 +854,11 @@
         "brand_8Rjwte",
         "brand_i9V6Ye",
         "brand_URyLHJ",
-        "brand_8R3N6x",
         "brand_e9xLig",
         "brand_B8GB63",
         "brand_hnJA6g",
         "brand_E837D3",
         "brand_ggA4iB",
-        "brand_DRbQmG",
         "brand_fAWAmc",
         "brand_d3mFqe",
         "brand_q4XGEy",
@@ -876,6 +869,7 @@
         "brand_jBbhtc",
         "brand_xRL7Dd",
         "brand_FU6V8b",
+        "brand_y8ENRp",
         "brand_xnpiq4",
         "brand_wihY69",
         "brand_rVCaE4",
