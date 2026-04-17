@@ -17,9 +17,9 @@
     <facet-remove-component
       data-url="{{ results_url }}"
     >
-      <button
-        type="button"
-        class="button button-secondary facets__clear-all{% if is_active %} active{% endif %}"
+        <button
+          type="button"
+          class="button button-secondary facets__clear-all{% if is_active %} active{% endif %}"
         ref="clearButton"
         {% if form_component != blank %}
           on:click="/removeFilter?form={{ form_component }}"
@@ -48,6 +48,7 @@
 {% stylesheet %}
   /* Facets - Actions */
   .facets__actions {
+    background-color:#ffffff;
     --to-top-gradient-background: linear-gradient(
       to top,
       rgb(var(--color-background-rgb) / var(--opacity-90)),
@@ -74,6 +75,8 @@
   .facets:not(.facets--drawer) .facets__actions {
     @media screen and (min-width: 750px) {
       position: static;
+      background-color: transparent;
+      background-image: none;
     }
   }
 
@@ -93,6 +96,7 @@
       align-items: center;
       margin-top: initial;
       background-image: none;
+      background-color: transparent;
     }
   }
 
@@ -140,6 +144,7 @@
     transform: translateY(100%);
     flex-grow: 1;
     padding-block: var(--padding-lg);
+    border-radius: 0;
   }
 
   .facets:not(.facets--drawer) .facets__clear-all {
@@ -210,6 +215,7 @@
     min-width: var(--facets-see-results-min-width);
     flex-grow: 1;
     padding-block: var(--padding-lg);
+    border-radius: 0;
   }
 
   .facets:not(.facets--drawer) .facets__see-results {

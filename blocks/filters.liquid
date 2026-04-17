@@ -62,7 +62,7 @@
     assign should_show_pane = block_settings.enable_filtering
   endif
 
-  assign should_use_select_on_mobile = true
+  assign should_use_select_on_mobile = false
   if block_settings.enable_filtering == false and block_settings.enable_sorting
     assign should_use_select_on_mobile = false
   endif
@@ -350,6 +350,7 @@
               results: results,
               sort_by: sort_by,
               filter_style: block_settings.filter_style,
+              suffix: 'mobile',
               sort_position: 'mobile',
               should_use_select_on_mobile: should_use_select_on_mobile,
               section_id: section.id
@@ -634,12 +635,21 @@
     border-right: var(--style-border-drawer);
     box-shadow: var(--shadow-drawer);
     padding-inline: 0;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+                display 0.4s allow-discrete,
+                overlay 0.4s allow-discrete;
   }
 
   .facets--drawer[open] {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transform: translateX(0);
+
+    @starting-style {
+      transform: translateX(100%);
+    }
   }
 
   .facets.facets-controls-wrapper {

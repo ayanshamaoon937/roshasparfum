@@ -73,9 +73,10 @@
       data-disable-animation-on-desktop="true"
       data-close-with-escape="true"
     {% endif %}
-    {% if filter_style == 'vertical' %}
+    {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}
       open
-      open-by-default-on-desktop
+      {% if suffix == 'mobile' or suffix == 'overflow' %}open-by-default-on-mobile{% endif %}
+      {% if filter_style == 'vertical' and suffix == 'desktop' %}open-by-default-on-desktop{% endif %}
     {% endif %}
   >
     <details
@@ -85,14 +86,14 @@
       class="facets__panel {% if should_use_select_on_mobile %} mobile:hidden {% endif %}"
       data-auto-close-details="{% if filter_style == 'vertical' %}mobile{% else %}desktop,mobile{% endif %}"
       on:toggle="/handleToggle"
-      {% if filter_style == 'vertical' %}
+      {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}
         open
       {% endif %}
     >
       <summary
         class="facets__summary"
         role="button"
-        aria-expanded="false"
+        aria-expanded="{% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}true{% else %}false{% endif %}"
         aria-controls="sorting-options-{{ section_id }}"
         ref="summary"
       >
@@ -334,7 +335,10 @@
   }
 
   .facets-mobile-wrapper .sorting-filter .facets__status {
-    display: none;
+    display: inline-flex;
+    margin-inline-start: 4px;
+    font-size: 13px;
+    font-weight: 500;
   }
 
   .facets-mobile-wrapper:has(> :nth-child(2)) .sorting-filter .sorting-filter__options {
