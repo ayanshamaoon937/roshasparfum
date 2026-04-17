@@ -54,26 +54,25 @@
     }
   }
 
-  .why-choose-us__subheading-wrapper {
+  .why-choose-us__subheading {
     display: flex;
     align-items: center;
     gap: 15px;
     margin-bottom: 15px;
-  }
-
-  .why-choose-us__subheading-line {
-    width: 40px;
-    height: 1px;
-    background-color: #333333;
-    display: inline-block;
-  }
-
-  .why-choose-us__subheading {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: {{ section.settings.subtitle_font_weight | default: 500 }};
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: #5e5e5e;
+  }
+
+  .why-choose-us__subheading::before,
+  .why-choose-us__subheading::after {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background-color: #333333;
   }
 
   .why-choose-us__heading {
@@ -192,9 +191,8 @@
   <div class="why-choose-us__container">
     <div class="why-choose-us__content">
       {%- if section.settings.subheading != blank -%}
-        <div class="why-choose-us__subheading-wrapper">
-          <span class="why-choose-us__subheading-line"></span>
-          <span class="why-choose-us__subheading">{{ section.settings.subheading }}</span>
+        <div class="why-choose-us__subheading">
+          {{ section.settings.subheading }}
         </div>
       {%- endif -%}
 
@@ -363,6 +361,15 @@
       "id": "subheading_color",
       "label": "Sub-heading Color",
       "default": "#804d63"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Subtitle Font Weight",
+      "default": 500
     },
     {
       "type": "text",

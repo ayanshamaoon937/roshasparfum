@@ -36,16 +36,20 @@
   .brands-subtitle {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 15px;
     color: {{ section.settings.header_subtitle_color | default: '#5e5e5e' }};
     font-size: 11px;
-    font-weight: 600;
+    font-weight: {{ section.settings.subtitle_font_weight | default: 500 }};
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: {{ section.settings.subtitle_margin_bottom | default: 0 }}px;
   }
 
-  .brands-subtitle .line {
+  .brands-subtitle::before,
+  .brands-subtitle::after {
+    content: '';
+    display: inline-block;
     width: 30px;
     height: 1px;
     background: {{ section.settings.header_subtitle_color | default: '#5e5e5e' }};
@@ -182,7 +186,6 @@
       <div class="brands-header-center">
         {%- if section.settings.subtitle != blank -%}
           <div class="brands-subtitle">
-            <span class="line"></span>
             {{ section.settings.subtitle }}
           </div>
         {%- endif -%}
@@ -466,6 +469,15 @@
       "id": "header_subtitle_color",
       "label": "Subtitle Color",
       "default": "#5e5e5e"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Subtitle Font Weight",
+      "default": 500
     },
     {
        "type": "range",

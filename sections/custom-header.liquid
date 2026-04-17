@@ -106,12 +106,13 @@
     margin: 0;
     padding: 0;
     list-style: none !important;
-   
+    pointer-events: none;
   }
 
   .nav-list li {
     list-style: none !important;
-    
+    display: flex;
+    align-items: center;
   }
 
 
@@ -129,6 +130,7 @@
     gap: 6px;
     transition: color 0.3s ease;
     position: relative;
+    pointer-events: auto;
   }
 
   .nav-link::after {
@@ -229,6 +231,7 @@
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    pointer-events: auto;
   }
 
   .mega-menu-content {
@@ -1507,32 +1510,46 @@
     if (mobileTrigger) mobileTrigger.addEventListener('click', toggleMobileMenu);
     if (mobileClose) mobileClose.addEventListener('click', toggleMobileMenu);
     if (mobileBackdrop) mobileBackdrop.addEventListener('click', toggleMobileMenu);
-    // Sticky scroll header — fix to top only after scrolling past announcement bar
+    // Sticky scroll header — more robust implementation
     const stickyHeader = document.querySelector('.custom-header');
     if (stickyHeader) {
-      // Create a placeholder to prevent layout jump when header becomes fixed
       const placeholder = document.createElement('div');
       placeholder.className = 'custom-header-placeholder';
-      placeholder.style.height = stickyHeader.offsetHeight + 'px';
       stickyHeader.parentNode.insertBefore(placeholder, stickyHeader.nextSibling);
 
-      function handleHeaderSticky() {
-        const announcement = document.querySelector('.header-announcements, [class*="announcement-bar-"]');
-        const announcementHeight = announcement ? announcement.offsetHeight : 0;
-
-        if (window.scrollY > announcementHeight) {
-          stickyHeader.classList.add('is-sticky', 'scrolled');
-          placeholder.classList.add('is-active');
+      const updatePlaceholderHeight = () => {
+        if (!stickyHeader.classList.contains('is-sticky')) {
           placeholder.style.height = stickyHeader.offsetHeight + 'px';
-        } else {
-          stickyHeader.classList.remove('is-sticky', 'scrolled');
-          placeholder.classList.remove('is-active');
         }
-      }
+      };
+
+      const handleHeaderSticky = () => {
+        const scrollThreshold = 150;
+        if (window.scrollY > scrollThreshold) {
+          if (!stickyHeader.classList.contains('is-sticky')) {
+            updatePlaceholderHeight();
+            stickyHeader.classList.add('is-sticky', 'scrolled');
+            placeholder.classList.add('is-active');
+          }
+        } else {
+          if (stickyHeader.classList.contains('is-sticky')) {
+            stickyHeader.classList.remove('is-sticky', 'scrolled');
+            placeholder.classList.remove('is-active');
+          }
+        }
+      };
 
       window.addEventListener('scroll', handleHeaderSticky, { passive: true });
-      window.addEventListener('resize', handleHeaderSticky);
-      handleHeaderSticky();
+      window.addEventListener('resize', () => {
+        updatePlaceholderHeight();
+        handleHeaderSticky();
+      });
+      
+      // Initialize after a small delay to ensure styles are applied
+      setTimeout(() => {
+        updatePlaceholderHeight();
+        handleHeaderSticky();
+      }, 500);
     }
 
     // Cart Drawer Logic

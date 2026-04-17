@@ -48,6 +48,7 @@
         "overlay_opacity": 30,
         "heading_font_size_desktop": 80,
         "heading_font_size_tablet": 60,
+        "subtitle_font_weight": 500,
         "subtitle_margin_bottom": 0,
         "heading_font_size_mobile": 40,
         "heading_margin_top": 20,
@@ -443,149 +444,6 @@
         "btn_hover_color": "#808080"
       }
     },
-    "featured_blog_posts_acGTXX": {
-      "type": "featured-blog-posts",
-      "blocks": {
-        "static-blog-title": {
-          "type": "_featured-blog-posts-title",
-          "name": "t:names.title",
-          "static": true,
-          "settings": {
-            "text": "<h3>{{ closest.blog.title }}</h3>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "static-blog-post-card": {
-          "type": "_featured-blog-posts-card",
-          "name": "t:names.blog_card",
-          "static": true,
-          "settings": {
-            "alignment": "left",
-            "gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "image": {
-              "type": "_featured-blog-posts-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "square",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            },
-            "title": {
-              "type": "_heading",
-              "name": "t:names.title",
-              "static": true,
-              "settings": {
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "text": "<h4>{{ closest.article.title }}</h4>",
-                "read_only": false,
-                "alignment": "left",
-                "show_alignment": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "blog-post-info-text": {
-              "type": "_blog-post-info-text",
-              "name": "t:names.details",
-              "static": true,
-              "settings": {
-                "show_date": true,
-                "show_author": true,
-                "type_preset": "",
-                "alignment": "left",
-                "show_alignment": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
-            "blog-post-description": {
-              "type": "_blog-post-description",
-              "name": "t:names.excerpt",
-              "static": true,
-              "settings": {
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 8,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "disabled": true,
-      "name": "t:names.blog_posts_carousel",
-      "settings": {
-        "blog": "news",
-        "layout_type": "carousel",
-        "carousel_on_mobile": true,
-        "post_limit": 5,
-        "columns": 3,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 16,
-        "icons_style": "arrow",
-        "icons_shape": "circle",
-        "section_width": "page-width",
-        "gap": 12,
-        "color_scheme": "scheme-2",
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
     "newsletter_eYNjCm": {
       "type": "newsletter",
       "name": "Luxury Newsletter",
@@ -668,7 +526,8 @@
         "brand_y3Hnjb": {
           "type": "brand",
           "settings": {
-            "brand_name": "Chanel",
+            "logo": "shopify://shop_images/burberry_8e252f63-3a9b-4b56-8df3-43f61dd40fd9.png",
+            "brand_name": "Burberry",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
             "custom_logo_width": 120
@@ -677,7 +536,18 @@
         "brand_jHnG8L": {
           "type": "brand",
           "settings": {
-            "brand_name": "Chanel",
+            "logo": "shopify://shop_images/bvlgari_bd467eba-ef05-4761-a249-f961a16d3d2a.png",
+            "brand_name": "Bvlgari",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_XeiJUA": {
+          "type": "brand",
+          "settings": {
+            "logo": "shopify://shop_images/carolina-herrera_0213de7b-2680-4202-97e0-865d4bf7cec6.png",
+            "brand_name": "Carolina Herrera",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
             "custom_logo_width": 120
@@ -726,7 +596,17 @@
         "brand_URyLHJ": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/de-marly.png",
             "brand_name": "De Marly",
+            "custom_bg_color": "#ffffff",
+            "custom_text_color": "#1a1a1a",
+            "custom_logo_width": 120
+          }
+        },
+        "brand_8R3N6x": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "Chanel",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
             "custom_logo_width": 120
@@ -765,6 +645,7 @@
         "brand_E837D3": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/emporio-armani_d3e1c9c7-da30-4cbd-a6f7-e069df5b7498.png",
             "brand_name": "Emporio Armani",
             "custom_bg_color": "#ffffff",
             "custom_text_color": "#1a1a1a",
@@ -972,11 +853,13 @@
         "brand_NNw8QH",
         "brand_y3Hnjb",
         "brand_jHnG8L",
+        "brand_XeiJUA",
         "brand_mb33rp",
         "brand_MJFNGB",
         "brand_8Rjwte",
         "brand_i9V6Ye",
         "brand_URyLHJ",
+        "brand_8R3N6x",
         "brand_e9xLig",
         "brand_B8GB63",
         "brand_hnJA6g",
@@ -1013,6 +896,7 @@
         "bg_color": "#f0f0f0",
         "subtitle": "THE ROSHAS CURATION",
         "header_subtitle_color": "#5e5e5e",
+        "subtitle_font_weight": 500,
         "subtitle_margin_bottom": 0,
         "title": "The Ateliers",
         "header_title_color": "#1a1a1a",
@@ -1215,7 +1099,6 @@
     "collections_slider_Y8VXJp",
     "product_list_EEnkLe",
     "collection_grid_XrnmQQ",
-    "featured_blog_posts_acGTXX",
     "newsletter_eYNjCm",
     "1773914832eaad83ee",
     "brands_slider_nYqytF",

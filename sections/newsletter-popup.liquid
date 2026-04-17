@@ -1,0 +1,546 @@
+{%- liquid
+  assign show_popup = section.settings.enable_popup
+  assign delay = section.settings.delay | times: 1000
+-%}
+
+{%- if show_popup and template.name == 'index' -%}
+  <style>
+    /* ... existing styles ... */
+    .newsletter-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .newsletter-popup-overlay.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .newsletter-popup-modal {
+      background: #fff;
+      width: 90%;
+      max-width: 850px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      transform: translateY(20px);
+      transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .newsletter-popup-overlay.is-active .newsletter-popup-modal {
+      transform: translateY(0);
+    }
+
+    .newsletter-popup-image {
+      width: 100%;
+      height: 100%;
+      min-height: 450px;
+      position: relative;
+    }
+
+    .newsletter-popup-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .newsletter-popup-content {
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      background: #fff;
+    }
+
+    .newsletter-popup-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #000;
+      padding: 5px;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    .newsletter-popup-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .newsletter-popup-subtitle {
+      font-size: {{ section.settings.subtitle_size }}px;
+      font-weight: {{ section.settings.subtitle_weight }};
+      color: {{ section.settings.subtitle_color }};
+      margin-top: {{ section.settings.subtitle_margin_top }}px;
+      margin-bottom: {{ section.settings.subtitle_margin_bottom }}px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .newsletter-popup-content h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: {{ section.settings.heading_size }}px;
+      font-weight: {{ section.settings.heading_weight }};
+      color: {{ section.settings.heading_color }};
+      margin-top: {{ section.settings.heading_margin_top }}px;
+      margin-bottom: {{ section.settings.heading_margin_bottom }}px;
+      line-height: 1.2;
+    }
+
+    .newsletter-popup-content p {
+      font-size: {{ section.settings.desc_size }}px;
+      font-weight: {{ section.settings.desc_weight }};
+      color: {{ section.settings.desc_color }};
+      margin-top: {{ section.settings.desc_margin_top }}px;
+      margin-bottom: {{ section.settings.desc_margin_bottom }}px;
+      line-height: 1.6;
+    }
+
+    .newsletter-popup-form {
+      margin-top: 10px;
+    }
+
+    .newsletter-popup-input-wrap {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .newsletter-popup-input {
+      width: 100%;
+      padding: 15px 0;
+      border: none;
+      border-bottom: 1px solid #e0e0e0;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s ease;
+      border-radius:0;
+    }
+
+    .newsletter-popup-input:focus {
+      border-bottom-color: #000;
+    }
+
+    .newsletter-popup-submit {
+      width: 100%;
+      padding: 15px;
+      background: #000;
+      color: #fff;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .newsletter-popup-submit:hover {
+      background: #333;
+    }
+
+    .newsletter-popup-footer {
+      font-size: {{ section.settings.footer_size }}px;
+      font-weight: {{ section.settings.footer_weight }};
+      color: {{ section.settings.footer_color }};
+      margin-top: {{ section.settings.footer_margin_top }}px;
+      margin-bottom: {{ section.settings.footer_margin_bottom }}px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .newsletter-popup-modal {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+      .newsletter-popup-image {
+        display: none;
+      }
+      .newsletter-popup-content {
+        padding: 50px 30px;
+      }
+    }
+  </style>
+
+  <div class="newsletter-popup-overlay" id="NewsletterPopup">
+    <div class="newsletter-popup-modal">
+      <button class="newsletter-popup-close" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="newsletter-popup-image">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | img_url: '800x' }}" alt="{{ section.settings.title }}" loading="lazy">
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+
+      <div class="newsletter-popup-content">
+        {%- if section.settings.subtitle != blank -%}
+          <div class="newsletter-popup-subtitle">{{ section.settings.subtitle }}</div>
+        {%- endif -%}
+        
+        <h2>{{ section.settings.title | default: 'Join the Roshas Atelier' }}</h2>
+        <p>{{ section.settings.description | default: 'Subscribe to receive the latest arrivals, exclusive offers and olfactory news.' }}</p>
+
+        <div class="newsletter-popup-form">
+          {%- form 'customer' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="newsletter-popup-input-wrap">
+              <input type="email" name="contact[email]" class="newsletter-popup-input" placeholder="ENTER YOUR EMAIL ADDRESS" required>
+            </div>
+            <button type="submit" class="newsletter-popup-submit">{{ section.settings.button_label | default: 'SUBSCRIBE' }}</button>
+            
+            {%- if form.posted_successfully? -%}
+              <p class="newsletter-popup-success" style="color: #4CAF50; margin-top: 15px;">Thank you for subscribing!</p>
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                   // Keep open for a second then hide
+                   setTimeout(() => {
+                     document.getElementById('NewsletterPopup').classList.remove('is-active');
+                   }, 2000);
+                });
+              </script>
+            {%- endif -%}
+          {%- endform -%}
+        </div>
+
+        {%- if section.settings.footer_text != blank -%}
+          <div class="newsletter-popup-footer">{{ section.settings.footer_text }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const popup = document.getElementById('NewsletterPopup');
+      const closeBtn = popup.querySelector('.newsletter-popup-close');
+      const delay = {{ delay }};
+      const storageKey = 'roshas_newsletter_popup_shown';
+
+      function showPopup() {
+        if (sessionStorage.getItem(storageKey)) return;
+        
+        setTimeout(() => {
+          popup.classList.add('is-active');
+        }, delay);
+      }
+
+      function closePopup() {
+        popup.classList.remove('is-active');
+        sessionStorage.setItem(storageKey, 'true');
+      }
+
+      if (popup && closeBtn) {
+        closeBtn.addEventListener('click', closePopup);
+        popup.addEventListener('click', (e) => {
+          if (e.target === popup) closePopup();
+        });
+        
+        // Handle form submission success (if not handled by Liquid script above)
+        const form = popup.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', () => {
+            // Optional: session storage set on submit too
+            sessionStorage.setItem(storageKey, 'true');
+          });
+        }
+
+        window.addEventListener('load', showPopup);
+      }
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Newsletter Popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_popup",
+      "label": "Enable Newsletter Popup",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "delay",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Delay Before Showing",
+      "default": 3
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Popup Image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "EXCLUSIVE MEMBER ACCESS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Join the Roshas Atelier"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Subscribe to receive the latest arrivals, exclusive offers and olfactory news from the world of luxury fragrances."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "SUBSCRIBE"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "*BY SUBSCRIBING YOU AGREE TO OUR PRIVACY POLICY"
+    },
+    {
+      "type": "header",
+      "content": "Subtitle Styling"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 8,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "subtitle_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Color",
+      "default": "#999999"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_margin_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "subtitle_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Heading Styling"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 32
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "heading_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Description Styling"
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "desc_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "desc_margin_top",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "desc_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Footer Styling"
+    },
+    {
+      "type": "range",
+      "id": "footer_size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 11
+    },
+    {
+      "type": "select",
+      "id": "footer_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "color",
+      "id": "footer_color",
+      "label": "Color",
+      "default": "#999999"
+    },
+    {
+      "type": "range",
+      "id": "footer_margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "footer_margin_bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

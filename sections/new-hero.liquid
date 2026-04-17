@@ -112,19 +112,20 @@
      text-transform: uppercase;
      color: #fff;
      margin-bottom: {{ section.settings.subtitle_margin_bottom }}px;
-     display: block;
-     position: relative;
+     display: flex;
+     align-items: center;
+     justify-content: flex-start;
+     gap: 15px;
+     font-weight: {{ section.settings.subtitle_font_weight | default: 500 }};
   }
 
-  .new-hero-subtitle::before {
+  .new-hero-subtitle::before,
+  .new-hero-subtitle::after {
     content: '';
     display: inline-block;
-    vertical-align: middle;
     width: 30px;
     height: 1px;
     background: #fff;
-    margin-right: 15px;
-    margin-bottom: 2px;
   }
 
   .new-hero-heading {
@@ -423,6 +424,15 @@
       "unit": "px",
       "label": "Heading Font Size (Tablet)",
       "default": 60
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "label": "Subtitle Font Weight",
+      "default": 500
     },
     {
       "type": "range",
