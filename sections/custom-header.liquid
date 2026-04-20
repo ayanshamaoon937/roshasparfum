@@ -699,7 +699,9 @@
     border: none;
     padding: 0px;
     cursor: pointer;
+    color:#000;
   }
+
 
   .mobile-nav-list {
     list-style: none;
@@ -733,7 +735,7 @@
     left: 0;
     width: 30px;
     height: 1px;
-    background: #000;
+    background: transparent;
   }
 
   .mobile-menu-backdrop {
@@ -1043,6 +1045,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color:#000;
   }
   .qty-input {
     width: 35px;
@@ -1883,7 +1886,10 @@
         </div>
       {% endfor %}
     {% else %}
-      <div style="text-align:center; padding: 50px 0;">Your cart is empty</div>
+      <div style="text-align:center; padding: 50px 0;">
+        <div style="margin-bottom: 20px;">Your cart is empty</div>
+        <a href="{{ routes.all_products_collection_url }}" class="continue-shopping-btn">Continue Shopping</a>
+      </div>
     {% endif %}
   </div>
 
