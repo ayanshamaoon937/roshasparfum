@@ -615,6 +615,49 @@
     }
   }
 
+  /* Override drawer animation: use left transition only */
+  .facets--drawer.dialog-drawer--left {
+    left: 0;
+    right: auto;
+    animation: none !important;
+    transform: translateX(-100%);
+    /* Enable transition only after first frame of opening */
+    transition: none;
+    will-change: transform;
+  }
+
+  /* Ensure theme keyframe animations never apply (except our custom left-drawer close) */
+  .facets--drawer.dialog-drawer[open],
+  .facets--drawer.dialog-drawer.dialog-closing:not(.dialog-drawer--left) {
+    animation: none !important;
+  }
+
+  /* Open state is always visible (prevents backdrop-only state after section refresh) */
+  .facets--drawer.dialog-drawer--left[open] {
+    transform: translateX(0);
+    animation: none !important;
+  }
+
+  /* Transition gets enabled one frame after open */
+  .facets--drawer.dialog-drawer--left.is-ready {
+    transition: transform 0.35s ease;
+  }
+
+  .facets--drawer.dialog-drawer--left.dialog-closing {
+    /* DialogComponent waits for *animations* (not transitions) before closing */
+    transition: none !important;
+    animation: facets-left-drawer-slide-out 0.35s ease forwards !important;
+  }
+
+  @keyframes facets-left-drawer-slide-out {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
   .facets--vertical {
     display: none;
 
@@ -637,7 +680,8 @@
     }
   }
 
-  .facets--drawer {
+  /* Right-side drawer base styles (not used by left filter drawer) */
+  .facets--drawer:not(.dialog-drawer--left) {
     border-radius: 0;
     border-right: var(--style-border-drawer);
     box-shadow: var(--shadow-drawer);
@@ -648,7 +692,7 @@
                 overlay 0.4s allow-discrete;
   }
 
-  .facets--drawer[open] {
+  .facets--drawer:not(.dialog-drawer--left)[open] {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1190,6 +1234,35 @@
     }
   }
 {% endstylesheet %}
+
+<script>
+  (() => {
+    const wrapper = document.getElementById('filters-drawer');
+    if (!wrapper) return;
+
+    const getDialog = () => wrapper.querySelector('dialog.facets--drawer');
+
+    wrapper.addEventListener('dialog:open', () => {
+      const dialog = getDialog();
+      if (!dialog) return;
+
+      // Uncollapse sorting + all filters every time drawer opens
+      dialog.querySelectorAll('details').forEach((el) => {
+        el.open = true;
+      });
+
+      // Smooth slide-in (avoid initial frame jump)
+      dialog.classList.remove('is-ready');
+      requestAnimationFrame(() => dialog.classList.add('is-ready'));
+    });
+
+    wrapper.addEventListener('dialog:close', () => {
+      const dialog = getDialog();
+      if (!dialog) return;
+      dialog.classList.remove('is-ready');
+    });
+  })();
+</script>
 
 {% schema %}
 {

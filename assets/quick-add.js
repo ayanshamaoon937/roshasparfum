@@ -77,6 +77,12 @@ export class QuickAddComponent extends Component {
       }
     }
 
+    // If we couldn't fetch (e.g., 429/verification), fallback to product page instead of looping requests
+    if (!productGrid) {
+      window.location.href = currentUrl;
+      return;
+    }
+
     if (productGrid) {
       // Use a fresh clone from the cache
       const freshContent = /** @type {Element} */ (productGrid.cloneNode(true));
@@ -128,7 +134,12 @@ export class QuickAddComponent extends Component {
         signal: this.#abortController.signal,
       });
 
+      // Shopify/Cloudflare may rate-limit or require verification.
+      // Avoid throwing (which can cause repeated attempts) and let caller fallback.
       if (!response.ok) {
+        if (response.status === 429 || response.status === 403) {
+          return null;
+        }
         throw new Error(`Failed to fetch product page: HTTP error ${response.status}`);
       }
 

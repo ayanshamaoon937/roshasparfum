@@ -72,6 +72,17 @@
     margin-top: auto;
   }
 
+  /* Prevent empty wrapper from reserving flex space */
+  .facets__actions facet-remove-component {
+    display: contents;
+  }
+
+  /* When there's only one visible action, make it full width */
+  .facets__actions > .button:only-child {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
   .facets:not(.facets--drawer) .facets__actions {
     @media screen and (min-width: 750px) {
       position: static;

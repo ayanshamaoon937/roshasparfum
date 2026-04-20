@@ -82,13 +82,42 @@ class FacetsFormComponent extends Component {
   /**
    * Updates the section
    */
-  #updateSection() {
-    const viewTransition = !this.closest('dialog');
+  async #updateSection() {
+    const activeDialog = this.closest('dialog');
+    const viewTransition = !activeDialog;
+
+    // If facets update happens inside a drawer dialog, the section re-render will replace
+    // the dialog DOM and effectively "close" it. Preserve open state by reopening after render.
+    const dialogComponentId =
+      activeDialog instanceof HTMLDialogElement && activeDialog.open
+        ? activeDialog.closest('dialog-component')?.id
+        : undefined;
+
+    const reopenDrawer = async () => {
+      if (!dialogComponentId) return;
+
+      // Wait one frame so custom elements reconnect after morph
+      await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+
+      const dialogComponent = document.getElementById(dialogComponentId);
+      if (!dialogComponent) return;
+
+      // `dialog-component` exposes `showDialog()`
+      if (typeof dialogComponent.showDialog === 'function') {
+        dialogComponent.showDialog();
+      } else if (typeof dialogComponent.toggleDialog === 'function') {
+        const dialog = dialogComponent.querySelector?.('dialog');
+        if (!(dialog instanceof HTMLDialogElement) || !dialog.open) dialogComponent.toggleDialog();
+      }
+    };
 
     if (viewTransition) {
-      startViewTransition(() => sectionRenderer.renderSection(this.sectionId), ['product-grid']);
+      startViewTransition(async () => {
+        await sectionRenderer.renderSection(this.sectionId);
+      }, ['product-grid']);
     } else {
-      sectionRenderer.renderSection(this.sectionId);
+      await sectionRenderer.renderSection(this.sectionId);
+      await reopenDrawer();
     }
   }
 

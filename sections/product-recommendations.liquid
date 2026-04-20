@@ -93,6 +93,10 @@
     padding-top: 15px !important;
     gap:4px;
   }
+
+  .product-recommendations__media {
+    position: relative;
+  }
   
 {%- endstyle -%}
 
@@ -115,7 +119,12 @@
           {%- for product in recommendations.products -%}
             <div class="product-recommendations__item">
               {%- capture card_children -%}
-                {%- render 'card-gallery', product: product -%}
+                <div class="product-recommendations__media">
+                  {%- render 'card-gallery', product: product -%}
+                  {%- if settings.quick_add and product.available -%}
+                    {%- render 'quick-add', product: product, section_id: section.id, force_add: true -%}
+                  {%- endif -%}
+                </div>
                 <product-title>
                   <a href="{{ product.url }}" class="product-card__link-title">
                     {{ product.title }}

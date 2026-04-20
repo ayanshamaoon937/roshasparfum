@@ -316,7 +316,7 @@
         "share_snapchat": false,
         "share_snapchat_label": "Snapchat",
         "share_copy": true,
-        "share_copy_label": "Copy link",
+        "share_copy_label": "Share",
         "color_scheme": "scheme-2",
         "padding-block-start": 0,
         "padding-block-end": 30

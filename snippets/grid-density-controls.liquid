@@ -17,20 +17,6 @@
       <label class="column-options__option">
         <input
           type="radio"
-          name="grid-mobile"
-          value="mobile-single"
-          class="column-options__option-input"
-          aria-label="{{ 'content.grid_view.single_item' | t }}"
-          on:change="results-list/updateLayout"
-        >
-        <span class="column-picker column-picker-mobile--single">
-          {{- 'icon-one-col-mobile.svg' | inline_asset_content -}}
-        </span>
-      </label>
-
-      <label class="column-options__option">
-        <input
-          type="radio"
           class="column-options__option-input"
           name="grid-mobile"
           value="default"
@@ -113,7 +99,6 @@
     position: relative;
   }
 
-  .column-options__option:has(.column-picker-mobile--single),
   .column-options__option:has(.column-picker-mobile--double) {
     @media screen and (max-width: 749px) {
       display: flex;

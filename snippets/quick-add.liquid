@@ -10,6 +10,7 @@
   assign block_id_safe = block.id | default: 'pi'
   assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block_id_safe
   assign add_to_cart_text = 'actions.add' | t
+  assign force_add = force_add | default: false
 
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
   assign variant_to_use = product.selected_or_first_available_variant
@@ -97,7 +98,7 @@
         value="{% if variant_to_use.quantity_rule.min %}{{ variant_to_use.quantity_rule.min }}{% else %}1{% endif %}"
       >
       {% comment %} If there is one variant option but it's swatches or if it's a single variant product, then use add to cart button {% endcomment %}
-      {%- if product.variants.size == 1 or product.options.size == 1 -%}
+      {%- if force_add or product.variants.size == 1 or product.options.size == 1 -%}
         {% render 'add-to-cart-button',
           add_to_cart_text: add_to_cart_text,
           class: 'button quick-add__button quick-add__button--add',

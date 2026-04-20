@@ -1267,7 +1267,7 @@ results-list[initialized] {
 }
 
 .dialog-drawer--left {
-  --dialog-drawer-opening-animation: slideInRight;
+  --dialog-drawer-opening-animation: slideInLeft;
   --dialog-drawer-closing-animation: slideOutLeft;
   left: 0;
   right: auto;

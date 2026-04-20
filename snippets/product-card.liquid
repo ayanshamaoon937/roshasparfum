@@ -163,7 +163,9 @@
     "
   >
     {{ children }}
-    <div class="product-card__vendor-label">{{ product.vendor }}</div>
+    <div class="product-card__meta" ref="meta">
+      <div class="product-card__vendor-label">{{ product.vendor }}</div>
+    </div>
   </div>
 </product-card>
 {%- if settings.transition_to_main_product -%}
@@ -173,10 +175,21 @@
 {% style %}
   .product-card {
     position: relative;
-    overflow: hidden;
+    /* allow hover shadow to render outside the card */
+    overflow: visible;
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
+  }
+
+  .product-card__content {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    will-change: box-shadow, transform;
+  }
+
+  .product-card:hover .product-card__content {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
   }
 
   /* Force correct ordering of blocks */
@@ -194,6 +207,13 @@
     object-fit: cover !important;
     height: 415px !important;
     width: 100% !important;
+    transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+
+  /* Hover effect: no overlay, just subtle zoom */
+  .product-card:hover .card-gallery img {
+    transform: scale(1.04);
   }
 
   @media screen and (max-width: 749px) {
@@ -242,6 +262,10 @@
     border: none !important;
     box-shadow: none !important;
     text-align: left !important;
+    @media (max-width:749px){
+      font-size: 18px !important;
+    }
+    
   }
 
   /* Price Styling */
@@ -254,6 +278,16 @@
     letter-spacing: -0.01em;
     text-align: left !important;
     display: block !important;
+  }
+
+  /* Meta wrapper (brand + title + price) */
+  .product-card__meta {
+    order: 2;
+    padding: 15px;
+  }
+
+  .product-card__meta :is(product-title, product-price, .text-block, .priceContainer) {
+    width: 100%;
   }
 
   .product-card .product-card__vendor-label {
@@ -289,19 +323,10 @@
      margin: 0 !important;
   }
 
+  /* Disable any overlay layer (use hover zoom instead) */
   .product-card__overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(242, 242, 244, 0.1);
-    opacity: 1;
-    transition: background-color 0.3s ease;
-    pointer-events: none;
-    z-index: 2;
+    display: none !important;
   }
-
-    /*.product-card:hover .product-card__overlay {
-    background-color: rgba(0, 0, 0, 0.2);
-  }*/
 
   /* Activity Buttons (Wishlist, Quickview) */
   .product-card__actions {
@@ -370,7 +395,8 @@
     min-height: 45px;
     height: 45px;
     border-radius: 0 !important;
-    width: 100% !important;
+    width: calc(100% - 30px) !important;
+    margin-inline: 15px !important;
     justify-content: center;
     align-items: center;
     pointer-events: auto;
@@ -564,3 +590,41 @@
     fill: none !important;
   }
 {% endstyle %}
+
+<script>
+  (() => {
+    const SELECTOR =
+      'product-title, product-price, .priceContainer, [id="priceContainer"], [class*="text-block--"][class*="product_title"]';
+
+    const moveMeta = (root = document) => {
+      root.querySelectorAll('product-card.product-card').forEach((card) => {
+        const meta = card.querySelector('.product-card__meta');
+        if (!meta) return;
+
+        card.querySelectorAll(SELECTOR).forEach((node) => {
+          if (!(node instanceof Element)) return;
+          if (meta.contains(node)) return;
+          meta.appendChild(node);
+        });
+      });
+    };
+
+    // Initial run
+    moveMeta(document);
+
+    // Handle AJAX-injected cards (e.g., product recommendations)
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        m.addedNodes.forEach((n) => {
+          if (!(n instanceof Element)) return;
+          if (n.matches?.('product-card.product-card')) {
+            moveMeta(n.parentElement ?? document);
+          } else if (n.querySelector?.('product-card.product-card')) {
+            moveMeta(n);
+          }
+        });
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  })();
+</script>
