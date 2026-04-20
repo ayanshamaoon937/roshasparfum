@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "page_banner": {
@@ -23,11 +32,98 @@
     },
     "terms_of_service_content": {
       "type": "terms-of-services",
+      "blocks": {
+        "section_1": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Orders and Availability",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>Placing an order on our platform implies agreement with the terms outlined here. Orders are subject to availability, and while we make every effort to ensure accurate stock levels, we reserve the right to cancel any order if a product becomes unavailable. Prices and availability may change without prior notice, and while we aim to maintain up-to-date information, occasional discrepancies may occur.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "start_new_column": false
+          }
+        },
+        "section_2": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Shopping Experience and Security",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>The shopping experience on our website is intended to be seamless and secure. All transactions are processed through encrypted payment gateways to ensure your information is protected. It is your responsibility to provide accurate and complete information at checkout. Failure to do so may result in delays or order cancellation.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "start_new_column": false
+          }
+        },
+        "section_3": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Prohibited Uses",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>Misuse of our website—including fraudulent orders, tampering with content, or attempts to extract data unlawfully—is strictly prohibited. All content, branding, and imagery on this site remain the intellectual property of ROSHAS and may not be copied or reproduced for commercial use without written permission.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "start_new_column": false
+          }
+        },
+        "section_4": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "User Conduct and Changes",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>By using our services, you agree to conduct interactions with honesty and respect. ROSHAS reserves the right to refuse service or block access to individuals who abuse our policies or compromise the integrity of our operations. Any future changes to these terms will be posted on this page, and continued use of the site indicates acceptance of such changes.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "start_new_column": false
+          }
+        },
+        "section_5": {
+          "type": "policy_block",
+          "settings": {
+            "heading": "Additional Information",
+            "heading_font_size": 20,
+            "heading_color": "#121212",
+            "heading_font_weight": "600",
+            "heading_margin_bottom": 12,
+            "content": "<p>For shipping, returns, and refund information, please refer to our Shipping Policy and Return & Refund Policy.</p>",
+            "content_font_size": 16,
+            "content_color": "#4a4a4a",
+            "content_font_weight": "400",
+            "start_new_column": false
+          }
+        }
+      },
+      "block_order": [
+        "section_1",
+        "section_2",
+        "section_3",
+        "section_4",
+        "section_5"
+      ],
       "settings": {
         "container_width": 1200,
         "background_color": "#ffffff",
         "padding_top": 60,
         "padding_bottom": 60,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40,
+        "container_padding_mobile": 16,
         "text_alignment": "left",
         "heading": "Terms of Service",
         "heading_font_size_desktop": 40,
@@ -38,57 +134,18 @@
         "heading_margin_bottom": 24,
         "description": "<p>By visiting and purchasing from roshasparfum.com, you acknowledge that you are engaging with a curated retail platform offering authentic, premium fragrances. All products featured on our website are carefully selected from official, trusted sources. We do not manufacture perfumes but instead provide our clients access to genuine, original scents from renowned fragrance houses.</p>",
         "desc_font_size_desktop": 16,
+        "desc_font_size_mobile": 16,
         "desc_color": "#4a4a4a",
         "desc_font_weight": "400",
         "desc_margin_bottom": 48,
+        "desc_margin_bottom_mobile": 40,
+        "grid_gap": 40,
+        "grid_margin_top": 40,
         "footer_contact_heading": "Contact",
-        "footer_contact_content": "<p>Questions about the Terms of Service should be sent to us at <strong>laviniaperfumee@gmail.com</strong>.</p>",
-        "footer_margin_top": 60
-      },
-      "blocks": {
-        "section_1": {
-          "type": "policy_block",
-          "settings": {
-            "heading": "Orders and Availability",
-            "content": "<p>Placing an order on our platform implies agreement with the terms outlined here. Orders are subject to availability, and while we make every effort to ensure accurate stock levels, we reserve the right to cancel any order if a product becomes unavailable. Prices and availability may change without prior notice, and while we aim to maintain up-to-date information, occasional discrepancies may occur.</p>"
-          }
-        },
-        "section_2": {
-          "type": "policy_block",
-          "settings": {
-            "heading": "Shopping Experience and Security",
-            "content": "<p>The shopping experience on our website is intended to be seamless and secure. All transactions are processed through encrypted payment gateways to ensure your information is protected. It is your responsibility to provide accurate and complete information at checkout. Failure to do so may result in delays or order cancellation.</p>"
-          }
-        },
-        "section_3": {
-          "type": "policy_block",
-          "settings": {
-            "heading": "Prohibited Uses",
-            "content": "<p>Misuse of our website—including fraudulent orders, tampering with content, or attempts to extract data unlawfully—is strictly prohibited. All content, branding, and imagery on this site remain the intellectual property of ROSHAS and may not be copied or reproduced for commercial use without written permission.</p>"
-          }
-        },
-        "section_4": {
-          "type": "policy_block",
-          "settings": {
-            "heading": "User Conduct and Changes",
-            "content": "<p>By using our services, you agree to conduct interactions with honesty and respect. ROSHAS reserves the right to refuse service or block access to individuals who abuse our policies or compromise the integrity of our operations. Any future changes to these terms will be posted on this page, and continued use of the site indicates acceptance of such changes.</p>"
-          }
-        },
-        "section_5": {
-          "type": "policy_block",
-          "settings": {
-            "heading": "Additional Information",
-            "content": "<p>For shipping, returns, and refund information, please refer to our Shipping Policy and Return & Refund Policy.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "section_1",
-        "section_2",
-        "section_3",
-        "section_4",
-        "section_5"
-      ]
+        "footer_contact_content": "<p>Questions about the Terms of Service should be sent to us at <a href=\"mailto:laviniaperfumee@gmail.com\" title=\"mailto:laviniaperfumee@gmail.com\"><strong>laviniaperfumee@gmail.com</strong></a>.</p>",
+        "footer_margin_top": 60,
+        "footer_margin_top_mobile": 40
+      }
     }
   },
   "order": [

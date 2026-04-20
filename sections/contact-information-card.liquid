@@ -1,0 +1,330 @@
+<style>
+  .contact-info-section {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+  }
+
+  .contact-info-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    
+    @media screen and (max-width: 749px) {
+        padding: 0 16px;
+    }
+  }
+
+  .contact-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  .contact-info-card {
+    background: {{ section.settings.card_bg_color }};
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid {{ section.settings.card_border_color }};
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact-info-card:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border-color: {{ section.settings.card_hover_border_color }};
+  }
+
+  .contact-info-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+  }
+
+  .contact-info-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .contact-info-title {
+    font-family: 'Jost', sans-serif;
+    font-size: {{ section.settings.title_font_size }}px;
+    font-weight: {{ section.settings.title_font_weight }};
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: {{ section.settings.title_color }};
+  }
+
+  .contact-info-text {
+    font-family: 'Jost', sans-serif;
+    font-size: {{ section.settings.text_font_size }}px;
+    color: {{ section.settings.text_color }};
+    line-height: 1.6;
+    margin: 0;
+    text-decoration: none;
+  }
+
+  a.contact-info-text:hover {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  @media screen and (max-width: 749px) {
+    .contact-info-section {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .contact-info-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .contact-info-card {
+      padding: 35px 20px;
+    }
+  }
+</style>
+
+<section class="contact-info-section">
+  <div class="contact-info-container">
+    <div class="contact-info-grid">
+      {%- for block in section.blocks -%}
+        <div class="contact-info-card" {{ block.shopify_attributes }}>
+          <div class="contact-info-icon">
+            {%- if block.settings.custom_svg != blank -%}
+              {{ block.settings.custom_svg }}
+            {%- else -%}
+              {%- case block.settings.icon_type -%}
+                {%- when 'email' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                {%- when 'phone' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.81 12.81 0 0 0 .62 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.62A2 2 0 0 1 22 16.92z"></path></svg>
+                {%- when 'location' -%}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.5-7-11.5a7 7 0 1 1 14 0c0 4-7 11.5-7 11.5Z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+              {%- endcase -%}
+            {%- endif -%}
+          </div>
+          <h3 class="contact-info-title">{{ block.settings.title }}</h3>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="contact-info-text">{{ block.settings.text }}</a>
+          {%- else -%}
+            <p class="contact-info-text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Info Cards",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Card Styling"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "card_hover_border_color",
+      "label": "Card Hover Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Heading Font Size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Heading Font Weight",
+      "options": [
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi-Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Heading Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Text Font Size",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Desktop Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Mobile Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "info_card",
+      "name": "Info Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon Type",
+          "options": [
+            { "value": "email", "label": "Email" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "location", "label": "Location" }
+          ],
+          "default": "email"
+        },
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "Custom SVG (Optional)",
+          "info": "Paste SVG code here to override default icons"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Contact Us"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Contact Detail",
+          "default": "info@example.com"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (Optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Info Cards",
+      "blocks": [
+        {
+          "type": "info_card",
+          "settings": {
+            "icon_type": "email",
+            "title": "Email",
+            "text": "contact@roshasparfum.com",
+            "link": "mailto:contact@roshasparfum.com"
+          }
+        },
+        {
+          "type": "info_card",
+          "settings": {
+            "icon_type": "phone",
+            "title": "Phone",
+            "text": "+962 798 182 184",
+            "link": "tel:+962798182184"
+          }
+        },
+        {
+          "type": "info_card",
+          "settings": {
+            "icon_type": "location",
+            "title": "Location",
+            "text": "Amman, Jordan"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

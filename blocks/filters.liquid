@@ -392,7 +392,7 @@
   >
     <dialog
       ref="dialog"
-      class="facets facets--drawer dialog-modal drawer dialog-drawer dialog-drawer--right spacing-style"
+      class="facets facets--drawer dialog-modal dialog-drawer dialog-drawer--left spacing-style"
       style="{% render 'spacing-style', settings: block_settings %}"
       scroll-lock
       aria-labelledby="filters-drawer-heading"
@@ -419,18 +419,6 @@
               class="facets-drawer__title h3"
             >
               {{ 'blocks.filter' | t }}
-
-              {% if total_active_values > 0 %}
-                <span
-                  class="bubble facets__bubble"
-                  aria-hidden="true"
-                >
-                  {{ total_active_values }}
-                </span>
-                <span class="visually-hidden">
-                  {{ 'accessibility.filter_count' | t: count: total_active_values }}
-                </span>
-              {% endif %}
             </h2>
             <button
               class="button facets-drawer__close button-unstyled close-button"
@@ -454,6 +442,18 @@
               should_show_clear_all: false
             %}
 
+            {% if block_settings.enable_sorting %}
+              {% render 'sorting',
+                results: results,
+                sort_by: sort_by,
+                filter_style: 'vertical',
+                suffix: 'overflow',
+                should_use_select_on_mobile: false,
+                section_id: section.id,
+                open_by_default: true
+              %}
+            {% endif %}
+
             <div class="facets__filters-wrapper">
               {% assign total_active_values = 0 %}
               {% assign is_active = false %}
@@ -473,7 +473,7 @@
                         assign is_active = true
                       endif
 
-                      render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, autofocus: should_autofocus
+                      render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, autofocus: should_autofocus, open_by_default: true
                     -%}
                   {% else %}
                     {% liquid
@@ -483,22 +483,11 @@
 
                       assign active_value_count = filter.active_values | size
                       assign total_active_values = total_active_values | plus: active_value_count
-                      render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, autofocus: should_autofocus, in_drawer: true, sectionId: section.id
+                      render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, autofocus: should_autofocus, in_drawer: true, sectionId: section.id, open_by_default: true
                     %}
                 {% endcase %}
               {%- endfor -%}
             </div>
-          {% endif %}
-
-          {% if block_settings.enable_sorting %}
-            {% render 'sorting',
-              results: results,
-              sort_by: sort_by,
-              filter_style: block_settings.filter_style,
-              suffix: 'overflow',
-              should_use_select_on_mobile: should_use_select_on_mobile,
-              section_id: section.id
-            %}
           {% endif %}
         </form>
       </facets-form-component>

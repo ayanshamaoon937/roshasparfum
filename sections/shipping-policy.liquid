@@ -11,6 +11,17 @@
     padding: 0 20px;
   }
 
+  @media screen and (max-width: 749px) {
+    #ShippingPolicySection-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .shipping-policy__container {
+      padding-left: {{ section.settings.container_padding_mobile }}px;
+      padding-right: {{ section.settings.container_padding_mobile }}px;
+    }
+  }
+
   .shipping-policy__main-heading {
     color: {{ section.settings.heading_color }};
     font-weight: {{ section.settings.heading_font_weight }};
@@ -48,13 +59,14 @@
     }
   }
 
-  /* Mobile Font Sizes */
+  /* Mobile Font Sizes & Spacing */
   @media screen and (max-width: 749px) {
     .shipping-policy__main-heading {
       font-size: {{ section.settings.heading_font_size_mobile }}px;
     }
     .shipping-policy__main-description {
       font-size: {{ section.settings.desc_font_size_mobile }}px;
+      margin-bottom: {{ section.settings.desc_margin_bottom_mobile }}px;
     }
   }
 
@@ -95,7 +107,6 @@
     .shipping-policy__block-{{ block.id }} .shipping-policy__block-content {
       font-size: {{ block.settings.content_font_size }}px;
       color: {{ block.settings.content_color }};
-      margin-bottom: {{ block.settings.content_margin_bottom }}px;
       font-weight: {{ block.settings.content_font_weight }};
       line-height: 1.6;
     }
@@ -103,6 +114,7 @@
 
   .shipping-policy__footer-contact {
     text-align: {{ section.settings.text_alignment }};
+    margin-top: {{ section.settings.footer_margin_top }}px;
   }
 
   .shipping-policy__footer-heading {
@@ -112,11 +124,34 @@
     line-height: 1.2;
   }
 
+  /* Responsive Adjustments */
+  @media screen and (max-width: 749px) {
+    .shipping-policy__footer-contact {
+      margin-top: {{ section.settings.footer_margin_top_mobile }}px;
+    }
+  }
+
   .shipping-policy__footer-content {
     color: {{ section.settings.desc_color }};
     font-weight: {{ section.settings.desc_font_weight }};
     font-size: {{ section.settings.desc_font_size_desktop }}px;
     line-height: 1.6;
+  }
+
+  .shipping-policy__main-description a,
+  .shipping-policy__block-content a,
+  .shipping-policy__footer-content a {
+    text-decoration: underline !important;
+    text-decoration-color: #4a4a4a !important;
+    transition: opacity 0.3s ease;
+  }
+
+  .shipping-policy__main-description a:hover,
+  .shipping-policy__block-content a:hover,
+  .shipping-policy__footer-content a:hover {
+    opacity: 0.8;
+    text-decoration: underline !important;
+    text-decoration-color: #4a4a4a !important;
   }
 
   /* Footer Heading Responsive Sizes */
@@ -166,7 +201,7 @@
     </div>
 
     {%- if section.settings.footer_contact_heading != blank or section.settings.footer_contact_content != blank -%}
-      <div class="shipping-policy__footer-contact" style="margin-top: {{ section.settings.footer_margin_top }}px;">
+      <div class="shipping-policy__footer-contact">
         {%- if section.settings.footer_contact_heading != blank -%}
           <h3 class="shipping-policy__footer-heading">{{ section.settings.footer_contact_heading }}</h3>
         {%- endif -%}
@@ -211,7 +246,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Top",
+      "label": "Padding Top (Desktop)",
       "default": 40
     },
     {
@@ -221,8 +256,38 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding Bottom",
+      "label": "Padding Bottom (Desktop)",
       "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom (Mobile)",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "container_padding_mobile",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Container Side Padding (Mobile)",
+      "default": 16
     },
     {
         "type": "select",
@@ -321,7 +386,17 @@
       "max": 40,
       "step": 1,
       "unit": "px",
-      "label": "Font Size",
+      "label": "Font Size (Desktop)",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "desc_font_size_mobile",
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size (Mobile)",
       "default": 16
     },
     {
@@ -349,7 +424,17 @@
       "max": 100,
       "step": 2,
       "unit": "px",
-      "label": "Margin Bottom",
+      "label": "Margin Bottom (Desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "desc_margin_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Margin Bottom (Mobile)",
       "default": 40
     },
     {
@@ -399,8 +484,18 @@
       "max": 120,
       "step": 4,
       "unit": "px",
-      "label": "Footer Margin Top",
+      "label": "Footer Margin Top (Desktop)",
       "default": 60
+    },
+    {
+      "type": "range",
+      "id": "footer_margin_top_mobile",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Footer Margin Top (Mobile)",
+      "default": 40
     }
   ],
   "blocks": [
@@ -492,16 +587,6 @@
             { "value": "500", "label": "Medium" }
           ],
           "default": "400"
-        },
-        {
-          "type": "range",
-          "id": "content_margin_bottom",
-          "min": 0,
-          "max": 80,
-          "step": 2,
-          "unit": "px",
-          "label": "Margin Bottom",
-          "default": 30
         },
         {
           "type": "checkbox",

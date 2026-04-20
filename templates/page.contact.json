@@ -30,13 +30,68 @@
         "breadcrumb_font_size": 14
       }
     },
+    "contact-info": {
+      "type": "contact-information-card",
+      "blocks": {
+        "email": {
+          "type": "info_card",
+          "settings": {
+            "icon_type": "email",
+            "custom_svg": "",
+            "title": "Email",
+            "text": "contact@roshasparfum.com",
+            "link": "mailto:contact@roshasparfum.com"
+          }
+        },
+        "phone": {
+          "type": "info_card",
+          "settings": {
+            "icon_type": "phone",
+            "custom_svg": "",
+            "title": "Phone",
+            "text": "+962 798 182 184",
+            "link": "tel:+962798182184"
+          }
+        },
+        "location": {
+          "type": "info_card",
+          "settings": {
+            "icon_type": "location",
+            "custom_svg": "",
+            "title": "Location",
+            "text": "Amman, Jordan",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "email",
+        "phone",
+        "location"
+      ],
+      "settings": {
+        "bg_color": "#f9f9f9",
+        "card_bg_color": "#ffffff",
+        "card_border_color": "#f0f0f0",
+        "card_hover_border_color": "#000000",
+        "title_font_size": 14,
+        "title_font_weight": "600",
+        "title_color": "#000000",
+        "text_font_size": 16,
+        "text_color": "#555555",
+        "padding_top": 80,
+        "padding_bottom": 0,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 40
+      }
+    },
     "contact": {
       "type": "contact",
       "settings": {
         "bg_color": "#f9f9f9",
-        "padding_top_desktop": 80,
+        "padding_top_desktop": 60,
         "padding_bottom_desktop": 80,
-        "padding_top_tablet": 60,
+        "padding_top_tablet": 50,
         "padding_bottom_tablet": 60,
         "padding_top_mobile": 40,
         "padding_bottom_mobile": 40,
@@ -52,6 +107,9 @@
         "desc_font_size": 16,
         "desc_font_weight": "300",
         "desc_margin_bottom": 0,
+        "label_color": "#333333",
+        "label_font_weight": "400",
+        "required_color": "#d30505",
         "button_text": "SUBMIT",
         "btn_bg_color": "#000000",
         "btn_text_color": "#ffffff",
@@ -65,6 +123,7 @@
   },
   "order": [
     "banner",
+    "contact-info",
     "contact"
   ]
 }

@@ -32,19 +32,20 @@
     data-close-with-escape="true"
   {% endif %}
   open-by-default-on-mobile
-  {% if filter_style == 'vertical' %}
+  {% if filter_style == 'vertical' or open_by_default %}
     open
     open-by-default-on-desktop
   {% endif %}
   data-filter-param-name="{{ filter.param_name | escape | replace: '.', '-' }}"
 >
-  <details
-    id="Facet-Details-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
-    class="facets__panel"
-    {% if filter_style == 'horizontal' %}
-      data-auto-close-details="desktop"
-    {% endif %}
-  >
+      <details
+        id="Facet-Details-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
+        class="facets__panel"
+        {% if filter_style == 'horizontal' %}
+          data-auto-close-details="desktop"
+        {% endif %}
+        {% if open_by_default %}open{% endif %}
+      >
     <summary class="facets__summary">
       <span class="facets__label">{{ filter.label }}</span>
 

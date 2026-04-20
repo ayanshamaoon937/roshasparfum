@@ -69,13 +69,15 @@
   </div>
 
   <accordion-custom
+    class="facets__item"
     {% if filter_style == 'horizontal' %}
       data-disable-animation-on-desktop="true"
       data-close-with-escape="true"
     {% endif %}
-    {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}
+    open-by-default-on-mobile
+    {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' or open_by_default %}
       open
-      {% if filter_style == 'vertical' and suffix == 'desktop' %}open-by-default-on-desktop{% endif %}
+      open-by-default-on-desktop
     {% endif %}
   >
     <details
@@ -83,16 +85,13 @@
       id="Sorting-{{ section_id }}"
       data-default-sort-by="{{ default_sort_by }}"
       class="facets__panel {% if should_use_select_on_mobile %} mobile:hidden {% endif %}"
-      data-auto-close-details="{% if filter_style == 'vertical' %}mobile{% else %}desktop,mobile{% endif %}"
       on:toggle="/handleToggle"
-      {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}
-        open
-      {% endif %}
+      {% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' or open_by_default %}open{% endif %}
     >
       <summary
         class="facets__summary"
         role="button"
-        aria-expanded="{% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' %}true{% else %}false{% endif %}"
+        aria-expanded="{% if suffix == 'mobile' or suffix == 'overflow' or filter_style == 'vertical' and suffix == 'desktop' or open_by_default %}true{% else %}false{% endif %}"
         aria-controls="sorting-options-{{ section_id }}"
         ref="summary"
       >
@@ -113,7 +112,11 @@
           </span>
         </div>
       </summary>
-      <floating-panel-component
+      {% if filter_style == 'vertical' %}
+        <div
+      {% else %}
+        <floating-panel-component
+      {% endif %}
         id="sorting-options-{{ section_id }}"
         class="sorting-filter__options {% if filter_style == 'vertical' %}facets__inputs facets__panel-content details-content{% else %}color-{{ settings.popover_color_scheme }}{% endif %}"
         role="listbox"
@@ -195,7 +198,11 @@
         {% if filter_style == 'vertical' %}
           </ul>
         {% endif %}
-      </floating-panel-component>
+      {% if filter_style == 'vertical' %}
+        </div>
+      {% else %}
+        </floating-panel-component>
+      {% endif %}
     </details>
   </accordion-custom>
 </sorting-filter-component>

@@ -18,7 +18,7 @@
   {% endif %}
 
   open-by-default-on-mobile
-  {% if filter_style == 'vertical' %}
+  {% if filter_style == 'vertical' or open_by_default %}
     open
     open-by-default-on-desktop
   {% endif %}
@@ -28,6 +28,7 @@
     {% if filter_style == 'horizontal' %}
       data-auto-close-details="desktop"
     {% endif %}
+    {% if open_by_default %}open{% endif %}
   >
     <summary class="facets__summary">
       <span class="facets__label">{{ filter.label }}</span>
