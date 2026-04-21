@@ -100,6 +100,16 @@
             "custom_description": "Elegant & Floral scents"
           }
         },
+        "mega_item_rD3PY4": {
+          "type": "mega_item",
+          "settings": {
+            "trigger_label": "Collections",
+            "column": "3",
+            "collection": "fragrance-bestsellers",
+            "custom_title": "",
+            "custom_description": "Testing Collection"
+          }
+        },
         "mega_item_jrz7F3": {
           "type": "mega_item",
           "settings": {
@@ -115,7 +125,7 @@
           "settings": {
             "trigger_label": "Collections",
             "column": "3",
-            "collection": "frontpage",
+            "collection": "arabic",
             "custom_title": "Arabic",
             "custom_description": "Arabic"
           }
@@ -215,6 +225,7 @@
       "block_order": [
         "collections_mega_Ymaiwi",
         "mega_item_y9WWPT",
+        "mega_item_rD3PY4",
         "mega_item_jrz7F3",
         "mega_item_ek6hXQ",
         "mega_item_hLXYyM",
@@ -236,7 +247,12 @@
         "logo_margin_left_mobile": 40,
         "logo_image": "shopify://shop_images/logo.png",
         "logo_text": "ROSHAS",
-        "menu": "new-menu"
+        "menu": "new-menu",
+        "wishlist_link": "",
+        "cart_drawer_title": "Cart",
+        "cart_disclaimer": "DUTIES AND TAXES INCLUDED. SHIPPING IS CALCULATED AT CHECKOUT.",
+        "view_order_label": "View Order",
+        "checkout_label": "Proceed To Checkout"
       }
     }
   },
