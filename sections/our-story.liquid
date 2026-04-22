@@ -138,10 +138,10 @@
 
   .our-story__stats-box {
     position: absolute;
-    bottom: -60px;
-    right: -40px;
+    bottom: -70px;
+    right: -45px;
     background: #ffffff;
-    padding: 16px;
+    padding: 14px;
     width: 100%;
     max-width: 270px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -161,12 +161,14 @@
   }
 
   .our-story__stat-item {
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   }
 
   .our-story__stat-item:last-child {
     margin-bottom: 0;
   }
+  
+  
 
   .our-story__stat-header {
     display: flex;
@@ -174,7 +176,9 @@
     align-items: center;
     margin-bottom: 12px;
   }
-
+.our-story__stat-item:last-child .our-story__stat-header{
+    margin-bottom: 0;
+  }
   .our-story__stat-bubble {
     background: #000000; /* Branded color */
     color: #ffffff;
@@ -243,6 +247,19 @@
               </div>
             {%- endif -%}
           {%- endfor -%}
+
+          {%- if section.settings.experience_label != blank -%}
+            <div class="our-story__stat-item"our-story__stat-header>
+              <div class="our-story__stat-header">
+                <div class="our-story__stat-bubble">
+                  {{ section.settings.experience_value }}
+                </div>
+                <div class="our-story__stat-label">
+                  {{ section.settings.experience_label | downcase }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
         </div>
       {%- endif -%}
     </div>
@@ -507,6 +524,22 @@
       "unit": "px",
       "label": "Description Margin Bottom",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Footer Stat Settings"
+    },
+    {
+      "type": "text",
+      "id": "experience_value",
+      "label": "Experience Value",
+      "default": "12+"
+    },
+    {
+      "type": "text",
+      "id": "experience_label",
+      "label": "Experience Label",
+      "default": "Years of Experience"
     }
   ],
   "blocks": [
@@ -541,14 +574,14 @@
           "type": "progress_bar",
           "settings": {
             "percentage": 98,
-            "label": "HAPPY CUSTOMERS"
+            "label": "Happy Customers"
           }
         },
         {
           "type": "progress_bar",
           "settings": {
-            "percentage": 85,
-            "label": "12 YEARS OF EXPERIENCE"
+            "percentage": 100,
+            "label": "Customer Retention Rate"
           }
         }
       ]

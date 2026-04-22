@@ -43,8 +43,8 @@
         "stat_2": {
           "type": "progress_bar",
           "settings": {
-            "percentage": 85,
-            "label": "12 YEARS OF EXPERIENCE"
+            "percentage": 100,
+            "label": "Customer Retention Rate"
           }
         }
       },
