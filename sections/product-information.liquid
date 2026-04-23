@@ -741,6 +741,18 @@
   .pi-related .product-card .product-card__vendor-label{
     margin-top:0 !important;
   }
+  .pi-related .product-card__meta {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1;
+  }
+  .pi-related .product-card__info-wrapper,
+  .pi-related .product-card__atc-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
   .pi-related .product-card slideshow-slides,
   .pi-related .product-card .product-media-container,
   .pi-related .product-card .product-media {
@@ -751,6 +763,9 @@
   @media screen and (max-width: 749px) {
     .pi-related__grid {
       grid-template-columns: var(--resource-list-columns-mobile);
+    }
+    .pi-related .product-card h3{
+      font-size:15px !important;
     }
   }
 

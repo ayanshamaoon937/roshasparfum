@@ -164,7 +164,9 @@
   >
     {{ children }}
     <div class="product-card__meta" ref="meta">
-      <div class="product-card__vendor-label">{{ product.vendor }}</div>
+      <div class="product-card__info-wrapper" ref="info">
+        <div class="product-card__vendor-label">{{ product.vendor }}</div>
+      </div>
       {%- if product.available -%}
         <div class="product-card__atc-wrapper">
           {% render 'quick-add',
@@ -193,6 +195,9 @@
   .product-card__content {
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     will-change: box-shadow, transform;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   .product-card__content{
     border:1px solid transparent;
@@ -288,7 +293,7 @@
     background: transparent !important; /* Remove any gold bars */
     border: none !important;
     box-shadow: none !important;
-    text-align: left !important;
+    text-align: center !important;
     @media (max-width:749px){
       font-size: 15px !important;
     }
@@ -303,7 +308,7 @@
     color: #787676 !important;
     font-weight: 600 !important;
     letter-spacing: -0.01em;
-    text-align: left !important;
+    text-align: center !important;
     display: block !important;
   }
 
@@ -313,6 +318,15 @@
     padding: 0 15px 15px 15px;
     display: flex !important;
     flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1;
+  }
+
+  .product-card__info-wrapper, 
+  .product-card__atc-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
 
   .product-card__meta :is(product-title, product-price, .text-block, .priceContainer, .product-card__atc-wrapper) {
@@ -321,7 +335,7 @@
 
   .product-card .product-card__vendor-label {
     font-family: var(--font-body) !important;
-    text-align: left !important;
+    text-align: center !important;
   }
 
   /* Ensure Add to Cart component is full width */
@@ -444,48 +458,38 @@
   .product-card__meta .quick-add__button {
     background-color: transparent !important;
     color: #000 !important;
-    width: 100% !important;
-    min-height: 45px !important;
-    height: 45px !important;
-    display: flex !important;
+    width: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: inline-flex !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     text-transform: uppercase !important;
     font-size: 13px !important;
     font-weight: 600 !important;
     letter-spacing: 0.1em !important;
-    border: 1px solid #000 !important;
+    border: none !important;
     border-radius: 0 !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
     opacity: 1 !important;
     visibility: visible !important;
     transform: none !important;
-    transition: color 0.4s ease !important;
-    gap: 10px !important;
+    transition: color 0.3s ease !important;
+    gap: 8px !important;
     position: relative !important;
-    overflow: hidden !important;
     z-index: 1 !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+    outline: none !important;
   }
 
-  .product-card__meta .quick-add__button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    transform: translateX(-101%);
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    z-index: -1;
-  }
+  /* Removed background hover effect */
 
-  /* Swipe trigger on CARD hover */
-  .product-card:hover .quick-add__button::before {
-    transform: translateX(0);
-  }
+  /* Removed background hover effect */
 
   .product-card:hover .quick-add__button {
-    color: #fff !important;
+    color: #787676 !important;
   }
 
   .product-card__meta .quick-add__button svg {
@@ -548,25 +552,11 @@
     }
   }
 
-  .product-card .quick-add__button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
-    transform: translateX(-101%);
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: -1;
-  }
-
-  .product-card .quick-add__button:hover::before {
-    transform: translateX(0);
-  }
+  /* Removed swipe background */
 
   .product-card .quick-add__button:hover {
-    color: #ffffff !important;
+    color: #787676 !important;
+    text-decoration: none !important;
   }
 
   .product-card .quick-add__button .svg-wrapper,
@@ -671,7 +661,7 @@
 
   @media screen and (max-width: 749px) {
     .card-gallery slideshow-arrows .slideshow-control {
-      opacity: 1 !important;
+      opacity: 0 !important;
       width: 20px !important;
       height: 20px !important;
       min-width: 20px !important;
@@ -708,12 +698,18 @@
     const moveMeta = (root = document) => {
       root.querySelectorAll('product-card.product-card').forEach((card) => {
         const meta = card.querySelector('.product-card__meta');
-        if (!meta) return;
+        const info = card.querySelector('.product-card__info-wrapper');
+        if (!meta || !info) return;
 
-        card.querySelectorAll(SELECTOR).forEach((node) => {
+        const nodes = Array.from(card.querySelectorAll(SELECTOR));
+        nodes.forEach((node) => {
           if (!(node instanceof Element)) return;
-          if (meta.contains(node)) return;
-          meta.appendChild(node);
+          // Skip if already in the info container
+          if (info.contains(node)) return;
+          // Avoid moving a child if its parent is also being moved by this selector
+          if (nodes.some(other => other !== node && other.contains(node))) return;
+          
+          info.appendChild(node);
         });
       });
     };

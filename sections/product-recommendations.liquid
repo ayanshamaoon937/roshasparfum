@@ -54,6 +54,7 @@
   .product-recommendations__title {
     font-family: 'Playfair Display', serif;
     font-size: 42px;
+    font-weight: 500;
     color: {{ section.settings.text_color }};
     margin: 0;
     line-height: 1.2;
@@ -69,6 +70,12 @@
     .product-recommendations__grid {
       grid-template-columns: repeat({{ columns_desktop }}, 1fr);
       gap: 30px;
+    }
+    
+  }
+  @media screen and (max-width: 750px) {
+  .product-recommendations__title {
+      font-size: 30px !important;
     }
   }
 
@@ -87,11 +94,29 @@
   .product-recommendations .product-card {
     background: transparent;
     padding-bottom: 0;
+    height: 100%;
   }
 
   .product-recommendations .product-card__content {
     padding-top: 15px !important;
-    gap:4px;
+    gap: 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-recommendations .product-card__meta {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1;
+  }
+
+  .product-recommendations .product-card__info-wrapper,
+  .product-recommendations .product-card__atc-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
   }
 
   .product-recommendations__media {
