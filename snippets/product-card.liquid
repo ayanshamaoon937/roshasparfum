@@ -165,6 +165,15 @@
     {{ children }}
     <div class="product-card__meta" ref="meta">
       <div class="product-card__vendor-label">{{ product.vendor }}</div>
+      {%- if product.available -%}
+        <div class="product-card__atc-wrapper">
+          {% render 'quick-add',
+            product: product,
+            section_id: section.id,
+            block: block
+          %}
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </product-card>
@@ -179,17 +188,23 @@
     overflow: visible;
     display: flex;
     flex-direction: column;
-    padding-bottom: 20px;
   }
 
   .product-card__content {
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     will-change: box-shadow, transform;
   }
-
+  .product-card__content{
+    border:1px solid transparent;
+  }
   .product-card:hover .product-card__content {
+
+    /*
+    border:1px solid #808080;
+    */
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.10);
     transform: translateY(-2px);
+    
   }
 
   /* Force correct ordering of blocks */
@@ -198,30 +213,39 @@
     margin-bottom: 15px !important; 
   }
   
-  .product-card slideshow-slides {
-    min-height: 415px !important;
+  .product-card slideshow-slides,
+  .product-card .product-media-container,
+  .product-card .product-media {
+    height: 300px !important;
+    min-height: 300px !important;
     display: flex !important;
+    overflow: hidden;
   }
   
-  .product-card .card-gallery img {
+  .product-card .card-gallery img,
+  .product-card .product-media img {
     object-fit: cover !important;
-    height: 415px !important;
+    height: 100% !important;
     width: 100% !important;
     transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
     will-change: transform;
   }
 
   /* Hover effect: no overlay, just subtle zoom */
-  .product-card:hover .card-gallery img {
+  .product-card:hover .card-gallery img,
+  .product-card:hover .product-media img {
     transform: scale(1.04);
   }
 
   @media screen and (max-width: 749px) {
-    .product-card slideshow-slides {
-      min-height: 250px !important;
+    .product-card slideshow-slides,
+    .product-card .product-media-container,
+    .product-card .product-media {
+      height: 210px !important;
+      min-height: 210px !important;
     }
-    .product-card .card-gallery img {
-      height: 250px !important;
+    .product-card__meta {
+      padding: 0 !important;
     }
   }
   .product-card .product-card__vendor-label { order: 2; display: block !important; }
@@ -252,9 +276,9 @@
   .product-card h2,
   .product-card h3 {
     font-family: var(--font-display) !important;
-    font-size: 22px !important;
+    font-size: 19px !important;
     color: #000000 !important; /* Gold for title */
-    margin: 0 0 8px 0 !important;
+    margin: 0 0 5px 0 !important;
     line-height: 1.2;
     text-decoration: none !important;
     font-weight: 600 !important;
@@ -263,7 +287,7 @@
     box-shadow: none !important;
     text-align: left !important;
     @media (max-width:749px){
-      font-size: 18px !important;
+      font-size: 16px !important;
     }
     
   }
@@ -283,10 +307,12 @@
   /* Meta wrapper (brand + title + price) */
   .product-card__meta {
     order: 2;
-    padding: 15px;
+    padding: 0 15px 15px 15px;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  .product-card__meta :is(product-title, product-price, .text-block, .priceContainer) {
+  .product-card__meta :is(product-title, product-price, .text-block, .priceContainer, .product-card__atc-wrapper) {
     width: 100%;
   }
 
@@ -355,6 +381,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius:50%;
     color: #000;
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
@@ -371,42 +398,82 @@
     height: 18px;
   }
 
-  /* Add to Cart Bar */
-  .product-card .quick-add {
-    z-index: 10;
-    inset: auto 0 0 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    pointer-events: none;
+  /* Add to Cart Bar - Hidden in gallery, shown in meta */
+  .product-card .card-gallery .quick-add {
+    display: none !important;
   }
 
-  .product-card .quick-add__button {
-    /* Show on hover (like product cards) */
-    opacity: 0;
-    transform: translateY(100%);
-    visibility: hidden;
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-      opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
-      color 0.25s ease,
-      background-color 0.25s ease;
+  .product-card__atc-wrapper {
+    order: 10;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  .product-card__meta .quick-add {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    inset: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    pointer-events: auto !important;
+    z-index: 5;
+  }
+
+  .product-card__meta .quick-add__button {
+    background-color: transparent !important;
+    color: #000 !important;
+    width: 100% !important;
+    min-height: 48px !important;
+    height: 48px !important;
     display: flex !important;
-    background-color: #808080 !important;
-    color: #fff !important;
-    min-height: 45px;
-    height: 45px;
+    align-items: center !important;
+    justify-content: center !important;
+    text-transform: uppercase !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1em !important;
+    border: 1px solid #000 !important;
     border-radius: 0 !important;
-    width: calc(100% - 30px) !important;
-    margin-inline: 15px !important;
-    justify-content: center;
-    align-items: center;
-    pointer-events: auto;
-    font-weight: 400;
-    font-size: 12px;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    border: none;
-    text-transform: uppercase;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    transition: color 0.4s ease !important;
+    gap: 10px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
+  }
+
+  .product-card__meta .quick-add__button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: -1;
+  }
+
+  /* Swipe trigger on CARD hover */
+  .product-card:hover .quick-add__button::before {
+    transform: translateX(0);
+  }
+
+  .product-card:hover .quick-add__button {
+    color: #fff !important;
+  }
+
+  .product-card__meta .quick-add__button svg {
+    width: 18px !important;
+    height: 18px !important;
+    fill: none !important;
+    transition: color 0.4s ease !important;
+    color: inherit !important;
   }
 
   /* Quick-add "added" text animation: bottom -> top (and prevent it sitting on right) */
