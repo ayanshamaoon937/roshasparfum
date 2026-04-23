@@ -7,8 +7,6 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   data-testid="product-list"
-<div
-  data-testid="product-list"
   class="
     section-resource-list
     product-list-{{ section.id }}
@@ -58,9 +56,10 @@
     .product-list-{{ section.id }} .trending-title-row {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: center;
       gap: 20px;
       width: 100%;
+      margin-top: {{ section.settings.row_margin_top }}px;
     }
 
     .product-list-{{ section.id }} .header--centered .trending-title-row {
@@ -71,10 +70,9 @@
 
     .product-list-{{ section.id }} .trending-title {
       font-family: var(--font-display) !important;
-      font-size: clamp(32px, 5vw, 48px) !important;
+      font-size: {{ section.settings.title_font_size_mobile }}px !important;
       font-weight: 500 !important;
       color: {{ section.settings.text_color }} !important;
-      margin-top: {{ section.settings.title_margin_top }}px !important;
       margin-bottom: {{ section.settings.title_margin_bottom }}px !important;
       line-height: 1.1;
       letter-spacing: -0.01em;
@@ -148,9 +146,9 @@
       transition: none !important;
     }
 
-    .section-resource-list__footer {
+    .product-list-{{ section.id }} .section-resource-list__footer {
       text-align: center;
-      margin-top: 50px;
+      margin-top: {% if section.settings.layout_type == 'carousel' %}20px{% else %}50px{% endif %};
     }
 
     .trending-view-all {
@@ -172,6 +170,14 @@
       .trending-view-all {
         padding: 12px 30px;
       }
+      .pl-btn-{{ section.id }} {
+        width: 30px !important;
+        height: 30px !important;
+      }
+      .pl-btn-{{ section.id }} svg {
+        width: 16px !important;
+        height: 16px !important;
+      }
     }
 
     .trending-view-all:hover {
@@ -185,8 +191,13 @@
     .product-list-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px !important;
       padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px !important;
-      background-color: {{ section.settings.background_color }} !important;
       color: {{ section.settings.text_color }} !important;
+    }
+
+    @media (min-width: 769px) {
+      .product-list-{{ section.id }} .trending-title {
+        font-size: {{ section.settings.title_font_size_desktop }}px !important;
+      }
     }
 
     @media (min-width: 769px) {
@@ -226,6 +237,7 @@
     }
     .pl-custom-track-{{ section.id }} {
       display: flex;
+      align-items: flex-start;
       transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
     }
@@ -515,6 +527,26 @@
       "default": "Trending Now"
     },
     {
+      "type": "range",
+      "id": "title_font_size_desktop",
+      "min": 20,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size (Desktop)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title Font Size (Mobile)",
+      "default": 22
+    },
+    {
       "type": "richtext",
       "id": "description",
       "label": "Description",
@@ -638,15 +670,16 @@
       "unit": "px",
       "default": 0
     },
+
     {
       "type": "range",
-      "id": "title_margin_top",
-      "label": "Title Top Margin",
+      "id": "row_margin_top",
+      "label": "Title Row Top Margin",
       "min": 0,
       "max": 100,
       "step": 2,
       "unit": "px",
-      "default": 30
+      "default": 20
     },
     {
       "type": "range",
@@ -656,7 +689,7 @@
       "max": 100,
       "step": 2,
       "unit": "px",
-      "default": 30
+      "default": 20
     },
     {
       "type": "header",

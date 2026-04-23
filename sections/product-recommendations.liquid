@@ -8,7 +8,7 @@
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top_mobile }}px;
     padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
-    background-color: {{ section.settings.bg_color }};
+    background-color: #f2f2f4 !important;
   }
 
   @media screen and (min-width: 750px) {
@@ -121,9 +121,6 @@
               {%- capture card_children -%}
                 <div class="product-recommendations__media">
                   {%- render 'card-gallery', product: product -%}
-                  {%- if settings.quick_add and product.available -%}
-                    {%- render 'quick-add', product: product, section_id: section.id, force_add: true -%}
-                  {%- endif -%}
                 </div>
                 <product-title>
                   <a href="{{ product.url }}" class="product-card__link-title">
