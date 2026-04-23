@@ -54,6 +54,19 @@
     object-fit: cover;
   }
 
+  .new-hero-bg-image.mobile-only {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .new-hero-bg-image.desktop-only {
+      display: none;
+    }
+    .new-hero-bg-image.mobile-only {
+      display: block;
+    }
+  }
+
   .new-hero-slide-overlay {
     position: absolute;
     top: 0;
@@ -262,13 +275,30 @@
       
       <div class="new-hero-slide-item {% if is_active %}active{% endif %}" data-index="{{ slide_index }}">
         {%- if block.settings.image != blank -%}
-          {{ block.settings.image 
-             | image_url: width: 3840 
-             | image_tag: 
-               loading: 'eager', 
-               class: 'new-hero-bg-image',
-               data-index: slide_index
-          }}
+          {%- if block.settings.image_mobile != blank -%}
+            {{ block.settings.image 
+               | image_url: width: 3840 
+               | image_tag: 
+                 loading: 'eager', 
+                 class: 'new-hero-bg-image desktop-only',
+                 data-index: slide_index
+            }}
+            {{ block.settings.image_mobile 
+               | image_url: width: 1500 
+               | image_tag: 
+                 loading: 'eager', 
+                 class: 'new-hero-bg-image mobile-only',
+                 data-index: slide_index
+            }}
+          {%- else -%}
+            {{ block.settings.image 
+               | image_url: width: 3840 
+               | image_tag: 
+                 loading: 'eager', 
+                 class: 'new-hero-bg-image',
+                 data-index: slide_index
+            }}
+          {%- endif -%}
         {%- else -%}
           <div class="new-hero-bg-image">{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
         {%- endif -%}
@@ -557,6 +587,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Slide Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile Slide Image (Optional)"
         },
         {
           "type": "text",
