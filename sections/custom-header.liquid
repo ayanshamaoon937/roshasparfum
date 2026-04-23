@@ -1955,7 +1955,12 @@
     let totalHeight = 0;
     
     if (header) {
-      totalHeight += header.offsetHeight;
+      if (header.classList.contains('is-sticky')) {
+        const placeholder = document.querySelector('.custom-header-placeholder');
+        totalHeight += placeholder ? placeholder.offsetHeight : header.offsetHeight;
+      } else {
+        totalHeight += header.offsetHeight;
+      }
     }
     if (announcement) {
       totalHeight += announcement.offsetHeight;
@@ -2036,7 +2041,13 @@
 
       const updateSticky = () => {
         const scrollY = window.scrollY;
-        const threshold = 100;
+        let threshold = 100;
+        
+        // Find hero section if it exists to set as threshold
+        const heroSection = document.querySelector('[id^="NewHero-"]');
+        if (heroSection) {
+          threshold = heroSection.offsetTop + heroSection.offsetHeight;
+        }
         
         if (scrollY > threshold) {
           if (!stickyHeader.classList.contains('is-sticky')) {

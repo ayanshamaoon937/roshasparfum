@@ -155,7 +155,7 @@
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 28,
-        "background_color": "#ffffff",
+        "background_color": "#f2f2f4",
         "text_color": "#1a1a1a",
         "color_scheme": "scheme-1",
         "padding-block-start": 48,

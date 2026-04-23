@@ -192,6 +192,7 @@
       padding-top: {{ section.settings.padding_top_mobile | default: 40 }}px !important;
       padding-bottom: {{ section.settings.padding_bottom_mobile | default: 40 }}px !important;
       color: {{ section.settings.text_color }} !important;
+      background-color: {{ section.settings.background_color | default: 'transparent' }} !important;
     }
 
     @media (min-width: 769px) {
