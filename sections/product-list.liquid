@@ -14,6 +14,10 @@
   "
 >
   {% style %}
+
+    
+
+
     .product-list-{{ section.id }} .custom-trending-header {
       margin-bottom: 50px;
     }
@@ -238,13 +242,41 @@
     }
     .pl-custom-track-{{ section.id }} {
       display: flex;
-      align-items: flex-start;
+      /* Make all slides equal height (match tallest card) */
+      align-items: stretch;
+      gap: {{ section.settings.columns_gap | default: 16 }}px;
       transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
     }
     .pl-custom-slide-{{ section.id }} {
       flex-shrink: 0;
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+    }
+
+    /* Ensure the card stretches to slide height and width */
+    .product-list-{{ section.id }} .pl-custom-slide-{{ section.id }} .resource-list__item {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
+    .product-list-{{ section.id }} .pl-custom-slide-{{ section.id }} .product-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+    }
+
+    .product-list-{{ section.id }} .pl-custom-slide-{{ section.id }} .product-card__content,
+    .product-list-{{ section.id }} .pl-custom-slide-{{ section.id }} .product-card__meta {
+      flex: 1 1 auto;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0px !important;
     }
     .pl-custom-nav-{{ section.id }} {
       display: flex;
@@ -274,6 +306,7 @@
       height: 18px;
       pointer-events: none;
     }
+    
   {% endstyle %}
   {% liquid
     assign is_carousel = false
@@ -424,7 +457,6 @@
       var slides = track.querySelectorAll('.pl-custom-slide-{{ section.id }}');
       slides.forEach(function(s) {
         s.style.width = slideW + 'px';
-        s.style.marginRight = gapPx + 'px';
       });
       goTo(currentIndex, false);
     }

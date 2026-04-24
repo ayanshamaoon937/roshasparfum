@@ -159,7 +159,7 @@
       },
       "name": "Featured collection",
       "settings": {
-        "collection": "all",
+        "collection": "new-arrivals",
         "subtitle": "MOST WANTED",
         "title": "Trending Now",
         "title_font_size_desktop": 48,
