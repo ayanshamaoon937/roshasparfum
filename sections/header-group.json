@@ -190,7 +190,7 @@
           "settings": {
             "trigger_label": "Brands",
             "column": "2",
-            "vendor_names": "Dunhill\nEmporio Armani\nGiorgio Armani\nGivenchy\nGucci\nHermès\nJean Paul Gaultier\nKAYALI\nLancôme\nLaverne\nMarc Jacobs"
+            "vendor_names": "Dunhill\nEmporio Armani\nGiorgio Armani\nGivenchy\nGucci\nHermès\nJean Paul Gaultier\nKAYALI\nLancôme\nLaverne\nMarc Jacobs\nAzzaro"
           }
         },
         "mega_manual_brand_6xra8F": {
@@ -198,7 +198,7 @@
           "settings": {
             "trigger_label": "Brands",
             "column": "3",
-            "vendor_names": "Montblanc\nNarcisco\nPrada\nRabanne\nRoshas\nTom Ford\nValentino\nVersace\nVictoria's Secret\nViktor & Rolf\nYves Saint Laurent"
+            "vendor_names": "Montblanc\nNarcisco\nPrada\nRabanne\nRoshas\nTom Ford\nValentino\nVersace\nVictoria's Secret\nViktor & Rolf\nYves Saint Laurent\nCalvin Klein"
           }
         }
       },

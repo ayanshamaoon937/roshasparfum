@@ -1188,6 +1188,28 @@
     transform: translateY(-2px);
   }
 
+  /* Price Updating Shimmer Effect */
+  .price-updating {
+    position: relative;
+    overflow: hidden;
+    color: transparent !important;
+    min-width: 60px;
+    height: 1.2em;
+    background: #f0f0f0;
+    display: inline-block;
+  }
+  .price-updating::after {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+
   @media screen and (max-width: 480px) {
     .cart-drawer {
       width: 100%;
@@ -1897,6 +1919,30 @@
   </div>
 
   <div class="cart-drawer-footer">
+    {%- liquid
+      assign packing_variant_id = 46467267199175
+      assign is_packing_in_cart = false
+      for item in cart.items
+        if item.variant_id == packing_variant_id
+          assign is_packing_in_cart = true
+          break
+        endif
+      endfor
+    -%}
+    <div class="perfume-packing-wrapper drawer-packing-wrapper" style="margin-bottom: 20px; padding: 15px; background: #f9f9f9; border: 1px solid #eee; border-radius: 4px;">
+      <label class="packing-checkbox-container" style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+        <input type="checkbox" 
+               class="js-perfume-packing-input" 
+               data-variant-id="{{ packing_variant_id }}" 
+               {% if is_packing_in_cart %}checked{% endif %}
+               style="width: 18px; height: 18px; cursor: pointer;">
+        <div class="packing-text-content">
+          <div style="font-size: 13px; font-weight: 600; color: #000; letter-spacing: 0.5px;">Add Perfume Packing?</div>
+          <div style="font-size: 11px; color: #666; margin-top: 2px;">Luxury gift wrapping for your orders</div>
+        </div>
+      </label>
+    </div>
+
     <div class="drawer-summary-row">
       <span>SUBTOTAL</span>
       <span class="js-cart-subtotal">{{ cart.total_price | money }}</span>
@@ -2195,6 +2241,11 @@
     document.addEventListener('submit', (e) => {
       const form = e.target;
       if (form.matches('form[action^="/cart/add"]')) {
+        // Skip forms already handled by the theme's product-form-component web component
+        // (e.g. quick-add, product page forms) — those have their own submit handler
+        // and would cause the product to be added twice.
+        if (form.closest('product-form-component')) return;
+
         e.preventDefault();
         
         const formData = new FormData(form);
@@ -2224,6 +2275,105 @@
         .finally(() => {
           if (submitBtn) submitBtn.disabled = false;
         });
+      }
+    });
+
+    // Handle Perfume Packing checkbox (Event Delegation)
+    document.addEventListener('change', function(e) {
+      if (!e.target || !e.target.classList.contains('js-perfume-packing-input')) return;
+
+      const checkbox = e.target;
+      const isChecked = checkbox.checked;
+      const variantId = parseInt(checkbox.dataset.variantId, 10);
+      const wrapper = checkbox.closest('.perfume-packing-wrapper');
+
+      checkbox.disabled = true;
+
+      // Clear previous inline error
+      const existingError = wrapper?.nextElementSibling;
+      if (existingError && existingError.classList.contains('packing-error-msg')) {
+        existingError.remove();
+      }
+
+      // Shimmer the cart totals
+      document.querySelectorAll('.js-cart-subtotal, .js-cart-total').forEach(el => {
+        el.setAttribute('data-value', el.textContent.trim());
+        el.classList.add('price-updating');
+      });
+
+      const updateUI = () => {
+        if (window.updateCartState) {
+          window.updateCartState();
+        } else {
+          location.reload();
+        }
+      };
+
+      const showError = (msg) => {
+        checkbox.checked = !isChecked;
+        checkbox.disabled = false;
+        document.querySelectorAll('.price-updating').forEach(e => {
+          e.classList.remove('price-updating');
+          e.removeAttribute('data-value');
+        });
+        if (wrapper) {
+          const errEl = document.createElement('p');
+          errEl.className = 'packing-error-msg';
+          errEl.style.cssText = 'color:#c0392b;font-size:12px;margin:5px 0 0 0;padding:0;';
+          errEl.textContent = msg;
+          wrapper.insertAdjacentElement('afterend', errEl);
+          setTimeout(() => errEl.remove(), 5000);
+        }
+      };
+
+      if (isChecked) {
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+        })
+        .then(async res => {
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.description || data.message || 'Add failed');
+          return data;
+        })
+        .then(() => setTimeout(updateUI, 400))
+        .catch(err => {
+          console.error('[Perfume Packing] Add error:', err.message);
+          showError('⚠ ' + err.message);
+        });
+      } else {
+        fetch('/cart.js')
+        .then(res => res.json())
+        .then(cart => {
+          const item = cart.items.find(i => i.variant_id === variantId);
+          if (!item) return setTimeout(updateUI, 400);
+          return fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ id: item.key, quantity: 0 })
+          })
+          .then(async res => {
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.description || data.message || 'Remove failed');
+            return data;
+          })
+          .then(() => setTimeout(updateUI, 400));
+        })
+        .catch(err => {
+          console.error('[Perfume Packing] Remove error:', err.message);
+          showError('⚠ Could not remove packing. Please try again.');
+        });
+      }
+    });
+
+    // Listen for theme's native cart update events (fired by product-form-component)
+    document.addEventListener('cart:update', (e) => {
+      // Only trigger if the event didn't come from our own global handler above
+      // to avoid redundant calls, though updateCartState is idempotent enough.
+      if (e.detail?.data?.source === 'product-form-component') {
+        window.updateCartState();
+        window.toggleCartDrawer(true);
       }
     });
 
